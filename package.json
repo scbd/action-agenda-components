@@ -1,0 +1,78 @@
+{
+  "name": "action-agenda-components",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "NODE_ENV=stg vue-cli-service serve",
+    "bv": "vue-cli-service build  --target lib --formats umd-min --name actionView --dest dist/aaview src/components/AAView/index.vue",
+    "bf": "vue-cli-service build  --target lib --formats umd-min --name actionForm --dest dist/aaform src/components/AAForm/index.vue",
+    "bl": "vue-cli-service build  --target lib --formats umd-min --name actionList --dest dist/aalist src/components/AAList/index.vue",
+    "build": "yarn bf && yarn bl && yarn bv",
+    "deploy": "sh ./scripts/deploy.sh",
+    "lint": "vue-cli-service lint",
+    "test:e2e": "vue-cli-service test:e2e --config watchForFileChanges=true"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bootstrap-vue": "^2.0.0-rc.11",
+    "localforage": "^1.7.3",
+    "lodash.clone": "^4.5.0",
+    "lodash.compact": "^3.0.1",
+    "lodash.isempty": "^4.4.0",
+    "lodash.isnil": "^4.0.0",
+    "lodash.omitby": "^4.6.0",
+    "vee-validate": "^2.1.7",
+    "vue": "^2.6.6",
+    "vue-multiselect": "^2.1.3",
+    "vue-recaptcha-v3": "^1.4.0",
+    "vue-router": "^3.0.2",
+    "vue-upload-component": "^2.8.19"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.4.0",
+    "@vue/cli-plugin-e2e-cypress": "^3.4.0",
+    "@vue/cli-plugin-eslint": "^3.4.0",
+    "@vue/cli-service": "^3.4.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "vue-template-compiler": "^2.6.6"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {
+      "arrow-parens": 0,
+      "generator-star-spacing": 0,
+      "curly": 0,
+      "eqeqeq": 0,
+      "no-multi-spaces": 0,
+      "no-multiple-empty-lines": 0,
+      "padded-blocks": 0,
+      "semi": 0,
+      "unicode-bom": 0,
+      "no-unexpected-multiline": 0,
+      "no-console": 0,
+      "no-async-in-computed-properties": 0
+    },
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
+}
