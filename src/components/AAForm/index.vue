@@ -304,22 +304,17 @@ export default {
       this.$children.forEach(validateComponent)
       this.save()
     }
-  },
-  beforeUpdate(){
-    if(window.grecaptcha)
-      window.grecaptcha.ready(()=>{this.grecaptchaReady=true})
   }
   
 }
 async function save() {
       let data 
-      if(window.grecaptcha)
-         window.grecaptcha.ready(()=>{this.grecaptchaReady=true})
+
       try {
         let form    = this.cleanForm(this.form)
         let options = this.$baseReqOpts || {}
 
-        // options = await this.getRecaptchaToken(options)
+        options = await this.getRecaptchaToken(options)
         data    = await axios.post(`${this.$apiBaseUrl}/v2019/actions`,form, options)
 
         this.showSubmitted=true
@@ -335,10 +330,12 @@ async function save() {
 }
 async function getRecaptchaToken(options) {
  
-  if(!this.grecaptchaReady) return options
   let token = await this.$recaptcha('action')
-  if(token )
+  if(token) {
+    if(!options.headers) options.headers = {}
     options.headers['X-Captcha-Token'] = token 
+  }
+
   return options
 }
 function validateComponent(vm) {
