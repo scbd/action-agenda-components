@@ -2,12 +2,13 @@ import Vue        from 'vue'
 import axios      from 'axios'
 import AuthIFrame from './components/AuthIFrame'
 
+console.log(process.env)
 //reactive holder for me
 const vm = new Vue({
   data: {
     me: {},
     token:'',
-    env: 'dev'
+    env: process.env.NODE_ENV
   },
   methods:{
     getUser,
@@ -101,6 +102,12 @@ function receivePostMessage(event)
 
 async function loadUser(){
   let me = await getUser()
+  let profile = await getProfile(me.userID)
+
+  me.firstName = profile.FirstName
+  me.lastName = profile.LastName
+  me.country = profile.Country 
+
   Vue.nextTick(()=>{
     vm.me = me
   })
@@ -108,7 +115,7 @@ async function loadUser(){
 
     me.isAdmin = isAdmin()
     me.isStaff = isStaff() 
-    me.hasRole = hasRole()
+    me.isGov = isGov() 
     vm.me = me 
 
   })
@@ -120,15 +127,23 @@ function hasRole (role){
 
   return vm.me.roles.includes(role)
 }
+
 function isAdmin (){
   if(!vm.me || !vm.me.roles) return false
 
   return vm.me.roles.includes('Administrator') || vm.me.roles.includes('ActionAdmin')
 }
+
 function isStaff (){
   if(!vm.me || !vm.me.userGroups) return false
 
   return vm.me.userGroups.includes('SCBD')
+}
+
+function isGov (){
+  if(!vm.me || !vm.me.government || !vm.me.roles) return false
+
+  return vm.me.roles.includes('NFP-CBD') || vm.me.roles.includes('ChmNrNationalFocalPoint') || vm.me.roles.includes('ChmNrNationalAuthorizedUser')
 }
 
 function anonymous() {
@@ -153,9 +168,15 @@ function getUser() {
   return axios.get(`${accountsBaseUrl()}/api/v2013/authentication/user`, baseReqOpts() )
          .then((r) => {return r.data})
 }
+function getProfile(id) {
+
+  return axios.get(`${accountsBaseUrl()}/api/v2013/users/${id}`, baseReqOpts() )
+         .then((r) => {return r.data})
+}
 
 function accountsBaseUrl(){
-
+ 
+  if(process.env.VUE_APP_ACCOUNTS_URL) return process.env.VUE_APP_ACCOUNTS_URL
   if(vm.env==='dev')
     return 'https://accounts.cbddev.xyz'
 
@@ -170,6 +191,7 @@ function accountsBaseUrl(){
 
 function apiBaseUrl (){
 
+  if(process.env.VUE_APP_API) return process.env.VUE_APP_API
   if(vm.env==='dev')
     return 'https://api.cbddev.xyz/api'
 

@@ -4,13 +4,13 @@ Vue.use(VeeValidate, {fieldsBagName: 'veeFields',fastExit: false})
 import BFormGroup from 'bootstrap-vue/es/components/form-group/form-group'
 import BContainer from 'bootstrap-vue/es/components/layout/container'
 import BCol from 'bootstrap-vue/es/components/layout/col'
-import BFormRow from 'bootstrap-vue/es/components/form/form-row'
+import {BFormRow} from 'bootstrap-vue/es/components'
 import BFormInput from 'bootstrap-vue/es/components/form-input/form-input'
 import FieldErrorMessage from '../components/AAForm/controls/FieldErrorMessage'
 import BButton from 'bootstrap-vue/es/components/button/button'
 import  "bootstrap-vue/dist/bootstrap-vue.css"
 import { resetForm } from "./helpers"
-import {isNil, omitBy, isEmpty, clone, compact} from 'lodash'
+import {isNil, omitBy, isEmpty, clone} from 'lodash'
 export default {
     components: {
         BFormGroup,
@@ -53,7 +53,7 @@ async function isValid() {
     if (vm.$validator) await vm.$validator.validateAll();
     isValidFlag = !vm.$validator.errors.count();      
   }
-  console.log('isValid from mixing',isValidFlag)
+
   return isValidFlag
 }
 async function resetValidation() {

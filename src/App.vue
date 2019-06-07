@@ -5,9 +5,12 @@
     <div id="nav">
       Views:      
 
-      <router-link to="/aaform">AAForm</router-link> |
-      <router-link to="/aalistview">AAListView</router-link> |
-      <router-link to="/aaview">AAView</router-link> |
+      <router-link to="/aaform/individual">Individual</router-link> |
+      <router-link to="/aaform/organization">Org</router-link> |
+      <router-link to="/aaform/public">Public</router-link> |
+      <router-link to="/aaform/party">Party</router-link> |      
+      <!-- <router-link to="/aalistview">AAListView</router-link> |
+      <router-link to="/aaview">AAView</router-link> | -->
     </div>
       <!-- <div id="nav">
       Child Components: 
@@ -17,12 +20,14 @@
       <router-link to="/component/AAContact">AAContact</router-link> |
       <router-link to="/component/AAOrganization">AAOrganization</router-link> |
     </div> -->
+  
     <hr><br>
     <router-view/>
   </div>
 </template>
 <script>
 import Icons from "./components/Icons";
+
 export default {
     components:{Icons}
 }

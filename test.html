@@ -1,0 +1,14 @@
+<RoutingRules>
+  <RoutingRule>
+    <Condition>
+      <KeyPrefixEquals>scbd-components/action-agenda/demo</KeyPrefixEquals>
+      <HttpErrorCodeReturnedEquals>403</HttpErrorCodeReturnedEquals>
+    </Condition>
+    <Redirect>
+      <Protocol>https</Protocol>
+      <HostName>https://aa.staging.cbd.int</HostName>
+      <ReplaceKeyPrefixWith></ReplaceKeyPrefixWith>
+      <HttpRedirectCode>301</HttpRedirectCode>
+    </Redirect>
+  </RoutingRule>
+</RoutingRules>

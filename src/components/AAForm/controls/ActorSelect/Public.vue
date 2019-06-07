@@ -1,25 +1,43 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-12">
+      <div class="col-lg-12">
+        <BFormGroup id="hqcGroup">
+
+          <label  for="form.organization.country">Country  </label>
+          <SCBDSelect
+            @input="update"
+            type="Countries"
+            id="form.organization.country"
+            v-model="form.organization.country"
+            tag-view
+            v-validate="'required'"
+            :state="validateState('Country')"
+            name="Country"/>
+
+          <field-error-message :error="errors.collect('Country')"/>
+        </BFormGroup>
+      </div>
+
+      <div class="col-6">
         <BFormGroup id="orgNameGroup" >
-          <label data-req="*" for="form-organization-name">Name </label>
+          <label  for="form-organization-name">Name </label>
           <BFormInput
             @input="update"
             id="form-organization-name"
             type="text"
             v-model.trim="form.organization.name.en"
             v-validate="'required|max:140'"
-            :state="validateState('organization name',form.organization.name)"
-            name="organization name"/>
+            :state="validateState('name',form.organization.name)"
+            name="name"/>
 
           <field-error-message :error="errors.collect('organization name')"/>
+                    <small id="actionDescriptionHelpText" class="form-text text-muted">
+             City, region, department or office
+          </small>
         </BFormGroup>
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-6">
+            <div class="col-lg-6">
         <BFormGroup id="orgWebsiteGroup" label="Website" label-for="form-organization-website">
           <BFormInput
             @input="update"
@@ -34,34 +52,58 @@
           <field-error-message :error="errors.collect('website url')"/>
         </BFormGroup>
       </div>
+    </div>
 
+    <div class="row">
       <div class="col-lg-6">
+        <BFormGroup id="orgTypeGroup">
+          <label  for="form.organization.type">Type  </label>
+          <SCBDSelect
+            @input="update"
+            type="GovernmentType"
+            id="form.organization.type"
+            v-model="form.organization.types"
+            multi
+            tag-view
+            v-validate="'required'"
+            :state="validateState('government type',form.organization.types.length)"
+            name="government type"/>
+
+          <field-error-message :error="errors.collect('government type')"/>
+        </BFormGroup>
+      </div>
+      <div class="col-6" v-if="isOther">
+        <BFormGroup id="orgNameGroup" >
+          <label  for="form-typeOther-name">Other Type </label>
+          <BFormInput
+            @input="update"
+            id="form-typeOther-name"
+            type="text"
+            v-model.trim="form.organization.typeOther.en"
+            v-validate="'required|max:140'"
+            :state="validateState('organization type other',form.organization.typeOther)"
+            name="organization type other"/>
+
+          <field-error-message :error="errors.collect('organization type other')"/>
+        </BFormGroup>
+      </div>
+
+    </div>
+    <div class="row">
+
+
+      <div class="col-lg-12">
 
               <BFormGroup id="logoGroup" label="Logo" label-for="form-organization-logo">
         
                  <Links 
-                  id="attachments"
+                  id="form-organization-logo"
                   v-model="form.organization.image"
                   :type="['files','links']"
                   :multi='false'
                   name="logo"/>
 
               </BFormGroup>
-        <!-- <BFormGroup id="orgLogoGroup" label="Logo" label-for="form-organization-logo">
-          <b-form-file
-            ref="logo"
-            @input="update"
-            v-show="(orgLogo && !validateState('logo',true)) || !orgLogo"
-            v-model="form.organization.image"
-            id="form-organization-logo"
-            @change="showImage"
-            v-validate="'size:50'"
-            :state="validateState('logo',true)"
-            multiple
-            name="logo"/>
-
-          <field-error-message :error="errors.collect('logo')"/>
-        </BFormGroup> -->
         <BContainer v-if="orgLogo && validateState('logo',true)">
           <div class="row">
             <div class="col-11">
@@ -76,61 +118,17 @@
         </BContainer>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-6">
-        <BFormGroup id="orgTypeGroup">
-          <label data-req="*" for="form.organization.type">Type  </label>
-          <SCBDSelect
-            @input="update"
-            type="OrganizationType"
-            id="form.organization.type"
-            v-model="form.organization.types"
-            multi
-            tag-view
-            v-validate="'required'"
-            :state="validateState('organization type',form.organization.types.length)"
-            name="organization type"
-          />
-
-          <field-error-message
-            :error="errors.collect('organization type')"
-            :state="validateState('organization type',form.organization.types.length)"
-          />
-        </BFormGroup>
-      </div>
-      <div class="col-lg-6">
-        <BFormGroup id="hqcGroup">
-
-          <label data-req="*" for="form.organization.country">Location  </label>
-          <SCBDSelect
-            @input="update"
-            type="Countries"
-            id="form.organization.country"
-            v-model="form.organization.country"
-            tag-view
-            v-validate="'required'"
-            :state="validateState('Headquarters Country')"
-            name="Headquarters Country"
-          />
-
-          <field-error-message
-            :error="errors.collect('Headquarters Country')"
-            :state="validateState('Headquarters Country')"
-          />
-        </BFormGroup>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 
-  import AAFormMixin from '../../modules/AAFormMixin' 
-  import SCBDSelect from './controls/SCBDSelect' 
-  import Links from './controls/Links'
+  import AAFormMixin from '../../../../modules/AAFormMixin' 
+  import SCBDSelect from '../../controls/SCBDSelect' 
+  import Links from '../../controls/Links'
 
   export default {
-    name: 'AAOrganizationForm',
+    name: 'AAGovernmentForm',
     mixins: [AAFormMixin],
     components: {  SCBDSelect, Links },
     props: {
@@ -151,7 +149,9 @@
             url: '',
             image: {},
             types: [],
-            country: ''
+            country: '',
+            actorType:'public',
+            typeOther:{en:''},
           }
         },
         orgLogo: '', //temp holder for uploaded image
@@ -162,9 +162,19 @@
       update,
       showImage,
       deleteLogo
-    }
+    },
+        computed:{isOther}
   }
 
+function isOther(){
+  if (!this.form.organization.types || !this.form.organization.types.length) return false
+
+  for (let i = 0; i < this.form.organization.types.length; i++) 
+    if(this.form.organization.types[i].identifier === 'ORG-TYPE-OTHER') 
+      return true
+    
+  return false
+}
   function update() {
     let org = this.cleanForm(this.form.organization)
     return this.$emit('input', org ) 

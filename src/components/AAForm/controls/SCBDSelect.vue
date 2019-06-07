@@ -10,9 +10,9 @@
     @input="update"
     hideSelected
     class="fix"
-    :class="{'is-invalid':state===false}"
-  >
-    <template slot="option" slot-scope="props" v-if="type==='SDGs' ||type==='Aichi' ">
+    :class="{'is-invalid':state===false}">
+
+    <template slot="option" slot-scope="props" v-if="type==='SDGs' || type==='Aichi' ">
       <div class="row">
         <div class="col-1">
           <img class="option-image" :src="props.option.img" alt="No Man’s Sky">
@@ -28,12 +28,13 @@
 </template>
 
 <script>
-import ScbdCachedApis from "../../../modules/ScbdCachedApis";
-import Multiselect from "vue-multiselect";
-import "vue-multiselect/dist/vue-multiselect.min.css";
+import ScbdCachedApis from '../../../modules/ScbdCachedApis'
+import Multiselect from 'vue-multiselect'
+import LookUp from '../../../modules/ScbdCachedApisLookUp'
+import 'vue-multiselect/dist/vue-multiselect.min.css'
 
 export default {
-  name: "SCBDSelect",
+  name: 'SCBDSelect',
   components: { Multiselect },
   props: {
     name: {},
@@ -59,21 +60,32 @@ export default {
     },
     placeholder: {
       type: String,
-      default: "Search or select"
+      default: 'Search or select'
     }
   },
   data() {
     return {
-      values: this.value,
-      options: []
-    };
+      values: this.value  ,
+      options: [],
+      isLoading: false,
+      killWatch: false
+    }
   },
-  mounted: async function() {
-    this.options = await this.load();
+  created: async function() {
+    this.options = await this.load()
+   // this.values = this.value
+    this.killWatch = this.$watch('value',loadModelWatch)
   },
-  methods: { update, load }
-};
+  methods: { update, load, loadModelWatch }
+}
 
+async function loadModelWatch(newValue,oldValue,){
+  if(!oldValue && newValue){
+     this.values=newValue
+     this.killWatch()
+     this.values = await LookUp[`get${this.type}`](newValue, true)
+  }
+}
 function update() {
   // .map(clean)
   let returnValues 
@@ -81,7 +93,8 @@ function update() {
     returnValues = clean(this.values)
   else 
     returnValues = this.values.map(clean)
-  this.$emit("input",returnValues );
+
+  this.$emit('input',returnValues )
 }
 function clean(item) {
   if(item.code)
@@ -89,7 +102,7 @@ function clean(item) {
   return { identifier: item.identifier }
 }
 function load() {
-  return ScbdCachedApis[`get${this.type}`]();
+  return ScbdCachedApis[`get${this.type}`]()
 }
 </script>
 

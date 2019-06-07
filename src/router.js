@@ -11,77 +11,119 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home,
+      redirect: '/aaform/individual',
+      // name: 'home',
+      // component: Home,
+      component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
       props:{
-        env:process.env.NODE_ENV
+        actorType:'person'
       }
     },
+    // {
+    //   path: '/p2020',
+    //   name: 'p2020',
+
+    //   component: () => import(/* webpackChunkName: "Post2020Graph" */ './components/Post2020Graph/index.vue'),
+
+    // },
     {
-      path: '/aaform',
-      name: 'aaform',
+      path: '/aaform/individual',
+      name: 'individual',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
       props:{
-        env:process.env.NODE_ENV
+        actorType:'person'
       }
     },
     {
-      path: '/aalistview',
-      name: 'aalistview',
+      path: '/aaform/organization',
+      name: 'Organization/Business',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "AAList" */ './components/AAList/index.vue'),
+      component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
       props:{
-        env:process.env.NODE_ENV,
-        dataFn:queryActions
+        actorType:'organization'
       }
     },
     {
-      path: '/aaview',
-      name: 'aaview',
+      path: '/aaform/public',
+      name: 'Public',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "AAList" */ './components/AAView/index.vue'),
+      component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
       props:{
-        env:process.env.NODE_ENV,
+        actorType:'public'
       }
     },
     {
-      path: '/component/scbdselect',
-      name: 'scbdselect',
+      path: '/aaform/party',
+      name: 'Party',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "SCBDSelect" */ '../tests/stubs/SCBDSelect.vue')
-    },
-    {
-      path: '/component/entityselect',
-      name: 'entityselect',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "SCBDSelect" */ '../tests/stubs/ESDemo.vue')
-    },
-    {
-      path: '/component/links',
-      name: 'links',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "SCBDSelect" */ './components/AAForm/controls/Links.vue'),
+      component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
       props:{
-        value:[],
-        type:['files','links'],
-        multi:true,
-        name:'attachments',
-        label:'Attachments'
+        actorType:'party'
       }
-    },     
+    },
+    // {
+    //   path: '/aalistview',
+    //   name: 'aalistview',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import(/* webpackChunkName: "AAList" */ './components/AAList/index.vue'),
+    //   props:{
+    //     env:process.env.NODE_ENV,
+    //     dataFn:queryActions
+    //   }
+    // },
+    // {
+    //   path: '/aaview',
+    //   name: 'aaview',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import(/* webpackChunkName: "AAList" */ './components/AAView/index.vue'),
+    //   props:{
+    //     env:process.env.NODE_ENV,
+    //   }
+    // },
+    // {
+    //   path: '/component/scbdselect',
+    //   name: 'scbdselect',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import(/* webpackChunkName: "SCBDSelect" */ '../tests/stubs/SCBDSelect.vue')
+    // },
+    // {
+    //   path: '/component/entityselect',
+    //   name: 'entityselect',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import(/* webpackChunkName: "SCBDSelect" */ '../tests/stubs/ESDemo.vue')
+    // },
+    // {
+    //   path: '/component/links',
+    //   name: 'links',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import(/* webpackChunkName: "SCBDSelect" */ './components/AAForm/controls/Links.vue'),
+    //   props:{
+    //     value:[],
+    //     type:['files','links'],
+    //     multi:true,
+    //     name:'attachments',
+    //     label:'Attachments'
+    //   }
+    // },     
     // {
     //   path: '/component/AAContactForm',
     //   name: 'AAContact',

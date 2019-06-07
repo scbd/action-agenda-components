@@ -1,223 +1,121 @@
 <template>
   <div class="container-fluid" >
-  <section v-show="showSubmitted">
-    <div class="text-center">
-      <h1>Thank you! Your action has been submitted and is pending review.</h1>
-    </div>
-  </section>
 
-  <section v-show="!showSubmitted">
-    <div class="alert alert-danger" v-if="error">
-      <p>{{error.statusCode}} {{error.code}}</p>
-      <div class="card" v-for="(e,key,index) in error.errors" v-bind:key="index">
-        &nbsp;{{e.message}}
+    <section v-show="showSubmitted ">
+      <div class="text-center">
+        <h1>Thank you! Your action has been submitted and is pending review.</h1>
       </div>
-    </div>
-    <b-form @submit="onSubmit"  novalidate>
-      <EntitySelect
-        class="mb-3"
-        label="Submitter"
-        v-model="form.organizer"
-        :type="['organization','contact']"/>
+    </section>
 
-      <legend>Action</legend>
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <BFormGroup id="firstNameGroup" >
-                <label data-req="*" for="form.name">Name of the action </label>
-                <BFormInput
-                  id="form.name"
-                  type="text"
-                  v-validate="'required|max:140'"
-                  :state="validateState('action name',form.name)"
-                  v-model.trim="form.name.en"
-                  name="action name"
-                />
-                <field-error-message :error="errors.collect('action name')"/>
-              </BFormGroup>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <BFormGroup
-                ref="actionDescription"
-                id="actionDescription">
+    <section v-if="actorType==='party' && !$me.isGov">
+      <div class="alert alert-info">
+        <p><strong>In order to submit an Action as a party to the Convention on Biological Diversity, you must be:</strong></p>
+        <p class='party-auth'>
+          <ol>
+            <li>Be logged in with with you SCBD account from <a :href="`${$accountsBaseUrl}/signin?returnUrl=${location()}`" >accounts.cbd.int</a>, and;</li>
+            <li>Be the <a href="https://www.cbd.int/information/nfp.shtml" target="_blank">National Focal Point</a> with the CHM Publishing Authority role given to your account or;</li>  
+            <li>Have been granted the CHM National Authorized user role directly by your <a href="https://www.cbd.int/information/nfp.shtml" target="_blank">National Focal Point</a> within the <a href="https://chm.cbd.int" target="_blank">chm.cbd.int</a></li>    
+          </ol>
+        </p>
+      </div>
+    </section>
 
-                <label data-req="*" for="form.description">Description </label>
-                <b-form-textarea
-                  id="form.description"
-                  v-model="form.description.en"
-                  :rows="3"
-                  v-validate="'required|max:1000'"
-                  :state="validateState('action description',form.description.en)"
-                  name="action description"
-                />
-                <small id="actionDescriptionHelpText" class="form-text text-muted">
-                  Short summary of the action and how it contributes to biodiversity objectives.
-                </small>
-                <field-error-message :error="errors.collect('action description')"/>
-              </BFormGroup>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <BFormGroup id="testGroup" label="Attachments" label-for="attachments">
-        
-                 <Links 
-                  id="attachments"
-                  v-model="form.attachments"
-                  :type="['files','links']"
-                  multi
-                  name="attachments"/>
-
-              </BFormGroup>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <BFormGroup>
-
-                <label data-req="*" for="form.target">Operational Area(s) </label>
-                <SCBDSelect
-                  type="GeoLocations"
-                  id="form.target"
-                  v-model="form.operationalAreas"
-                  multi
-                  tag-view
-                  v-validate="'required'"
-                  :state="validateState('operational area(s)',form.operationalAreas)"
-                  name="operational area(s)"
-                />
-
-                <field-error-message :error="errors.collect('operational area(s)')"/>
-              </BFormGroup>
-            </div>
-            <div class="col-lg-6">
-              <BFormGroup  id="subjectGroup">
-                <label data-req="*" for="form.subjects">Thematic Areas(s) </label>
-                <SCBDSelect
-                  type="Subject"
-                  id="form.subjects"
-                  v-model="form.subjects"
-                  multi
-                  tag-view
-                  v-validate="'required'"
-                  :state="validateState('action Thematic Areas',form.subjects.length)"
-                  name="action Thematic Areas"/>
-
-                <field-error-message :error="errors.collect('action Thematic Areas')"/>
-              </BFormGroup>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <BFormGroup
-                id="aichiGroup"
-                label="Linkages to Aichi Biodiversity Targets "
-                label-for="form.aichi">
-
-                <SCBDSelect
-                  type="Aichi"
-                  id="form.aichi"
-                  v-model="form.aichiTargets"
-                  multi
-                  tag-view
-                  name="action aichi biodiversity target"
-                />
-              </BFormGroup>
-            </div>
-            <div class="col-lg-6">
-              <BFormGroup
-                id="SDGsGroup"
-                label="Linkages to Sustainable Development Goals "
-                label-for="SDGs">
-
-                <SCBDSelect
-                  type="SDGs"
-                  id="DGs"
-                  v-model="form.sdgs"
-                  multi
-                  tag-view
-                  name="SDGs"
-                />
-              </BFormGroup>
-            </div>
-          </div>
-          <div class="row" v-if="form.aichiTargets.length || form.sdgs.length">
-            <div class="col">
-              <BFormGroup
-                ref="actionDescriptionLinkages"
-                id="actionDescriptionLinkages"
-                label="Linkage(s) description"
-                label-for="form.descriptionLinkages"
-              >
-                <b-form-textarea
-                  id="form.descriptionLinkages"
-                  v-model="form.linkagesDescription.en"
-                  v-validate="'max:1000'"
-                  :state="validateState('action linkage description',form.linkagesDescription.en)"
-                  :rows="3"
-                  name="action linkage description"
-                />
-                <small
-                  id="actionlinkages"
-                  class="form-text text-muted">
-                  Describe how your action contributes to progress on the SDGs and/or ABTs selected above.
-                </small>
-                <field-error-message :error="errors.collect('action linkage description')"/>
-              </BFormGroup>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col">
-              <BFormGroup
-                ref="actionProgressMeasured"
-                id="actionProgressMeasured"
-                label="Progress tracking"
-                label-for="form.progressMeasured"
-              >
-                <b-form-textarea
-                  id="form.progressMeasured"
-                  v-model="form.progressMeasured.en"
-                  v-validate="'max:1000'"
-                  :state="validateState('progress measured',form.progressMeasured.en)"
-                  :rows="3"
-                  name="progress measured"
-                />
-                <small id="actionprogressMeasured" class="form-text text-muted">
-                  Describe how your Action measures progress. Provide a link if relevant.
-                </small>
-                <field-error-message :error="errors.collect('progress measured')"/>
-              </BFormGroup>
-            </div>
-          </div>
+    <section v-show="!showSubmitted" >
+      <div class="alert alert-danger" v-if="error">
+        <p>{{error.statusCode}} {{error.code}}</p>
+        <div class="card" v-for="(e,key,index) in error.errors" v-bind:key="index">
+          &nbsp;{{e.message}}
         </div>
       </div>
 
-      <EntitySelect
-        class="mb-3"
-        multi
-        label="Partner(s)"
-        v-model="form.partners"
-        :type="['contact', 'organization']"/>
 
-      <EntitySelect 
-        class="mb-3"
-        multi 
-        label="Contact(s)" 
-        v-model="form.contacts" 
-        :type="'contact'"/>
+      <b-form v-if="(actorType!=='party') || (actorType==='party' && $me.isGov)" @submit="onSubmit"  novalidate>
+  
+        <ActorSelect class="mb-3"  v-model="form.actor" :type="[actorType]" @input="updateContacts"/>
+        <Contact class="mb-3" v-model="form.contacts[0]"/>
 
-      <div class="text-right">
+        <!-- <ActorSelect class="mb-3" v-if="config.contacts"  label="Contact"  v-model="form.contacts"  :type="'person'"/> -->
 
-        <BButton type="submit" variant="primary">Submit</BButton>&nbsp;
+        <Action class="mb-3" v-model="form.action" :options="{label:'Action'}"/>
+
+        <div  class="row" v-if="config.mailingList">
+          <div class="col-lg-12">
+            <BFormRow >
+              <BCol>
+                <div class="form-check-inline">
+                  <input
+                    v-model="input.subscription"
+                    :value="false"
+                    type="checkbox"
+                    id="`RadioInline`"
+                    name="RadioInline`"
+                    class="form-check-input"
+                    v-on:change="toggleSubscription()">
+                  <label
+                    class="form-check-label align-text-bottom"
+                    for="`RadioInline`"
+                  >{{config.mailingList.msg}}</label>
+                </div>
+              </BCol>
+              
+            </BFormRow>
+             <hr/>
+          </div>
+        </div>
+
+        <div  v-if="!$me.isAuthenticated && config.accountSignup" class="row" >
+          <div class="col-lg-12">
+           
+            <BFormRow >
+              <BCol>
+                <div class="form-check-inline">
+                  <input
+                    v-model="form.accountSignup"
+                    :value="false"
+                    type="checkbox"
+                    id="`RadioInline`"
+                    name="RadioInline`"
+                    class="form-check-input"
+                    v-on:change="toggleAccountSignup()"
+                  >
+                  <label class="form-check-label align-text-bottom" for="`RadioInline`" >
+                    Create an account to access your action for edits or updates<br>
+                  </label>
+                </div>
+              </BCol>
+        
+            </BFormRow>
+             <!-- <small class="form-text text-muted account"> A reset password email will be sent to you.  You can do it manually after submition here: <a href="https://accounts.cbd.int/password/reset">accounts.cbd.int/password/reset</a>.</small> -->
+              <hr/>
+          </div>
+        </div>
+
+        <div  v-if="actionComplete" class=" mb-3">
+          <hr/>
+            <h3>Optional Information - <a href="#ss" class="title-link">Skip and SUBMIT</a></h3>
+          <hr/>
+        </div>
+
+        <ActionDetails class="mb-3" v-if="actionComplete" v-model="form.actionDetails" :options="{label:'Action Details', subjects:config.subjects, operationalAreas:config.operationalAreas}"/>
+
+        <ActorSelect class="mb-3" v-if="config.partners && actionComplete"  multi label="Partner(s)" v-model="form.partners" :type="['person', 'organization', 'public', 'party']"/>
+
+
+
+
+        <div id="ss" class="text-right">
+          <BButton type="submit" variant="primary">Submit</BButton>&nbsp;
+        </div>
+      </b-form>
+       <div class="alert alert-danger" v-if="error">
+        <p>{{error.statusCode}} {{error.code}}</p>
+        <div class="card" v-for="(e,key,index) in error.errors" v-bind:key="index">
+          &nbsp;{{e.message}}
+        </div>
       </div>
-    </b-form>
-
-  </section>
+      <pre>{{form}}</pre>
+      <pre>{{$me}}</pre>
+    </section>
   </div>
   
 </template>
@@ -236,77 +134,89 @@ Vue.use(VueReCaptcha, {
 })
 
 //AAForm mixin
-import axios from 'axios'
+import axios       from 'axios'
 import AAFormMixin from '../../modules/AAFormMixin'
 
 //bootstrap vue
-import bForm from 'bootstrap-vue/es/components/form/form'
-import bFormTextarea from 'bootstrap-vue/es/components/form-textarea/form-textarea'
+import bForm         from 'bootstrap-vue/es/components/form/form'
+
 
 //scbd controls
-import EntitySelect from './controls/EntitySelect'
-import SCBDSelect from './controls/SCBDSelect'
-import Links from './controls/Links'
+import ActorSelect   from './controls/ActorSelect/index'
+import Contact       from './Contact'
+import Action        from './Action'
+import ActionDetails from './ActionDetails'
+
+  const configMap = {
+    'person':{
+      contacts:false,
+      partners:false,
+      anonymous:true, 
+      accountSignup:true, 
+      mailingList:{list:'action-agenda', tags:['person'], msg:'Join our mailing list and receive updates on the Action Agenda.'}, 
+    },
+    'organization':{
+      operationalAreas:true,
+      subjects:true,
+      contacts:true,
+      partners:true,
+      anonymous:true, 
+      accountSignup:true, 
+      mailingList:{list:'action-agenda', tags:['organization'], msg:'Join our mailing list and receive updates on the Action Agenda.'}, 
+    },
+    'public':{
+      operationalAreas:true,
+      subjects:true,
+      contacts:true,
+      partners:true,
+      anonymous:true, 
+      accountSignup:true, 
+      mailingList:{list:'action-agenda', tags:['public'], msg:'Join our mailing list and receive updates on the Action Agenda.'}, 
+    },
+    'party':{
+      operationalAreas:true,
+      subjects:true,
+      contacts:true,
+      partners:true,
+      anonymous:false, 
+      accountSignup:true, 
+      mailingList:{list:'action-agenda', tags:['party'], msg:'Join our mailing list and receive updates on the Action Agenda.'}, 
+    }
+  }
 
 export default {
   name: 'AAForm',
-  mixins: [AAFormMixin],
-  components: {
-    SCBDSelect,
-    bForm,
-    bFormTextarea,
-    EntitySelect,
-    Links
-  },
-  data() {
-    return {
-      grecaptchaReady:false,
-      showSubmitted:false,
-      error:'',
-      helpTexts: [],
-      options: {
-        mainEntityTypes: [
-          {
-            name: 'Organization',
-            value: 'organization'
-          },
-          {
-            name: 'Individual',
-            value: 'contact'
-          }
-        ]
-      },
-      form:{
-        organizer: {},
-        name: {en:''},
-        description: {en:''},
-        website:'',
-        attachments: [],
-        operationalAreas: [],
-        subjects: [],
-        aichiTargets: [],
-        sdgs: [],
-        linkagesDescription: {en:''},
-        progressMeasured: {en:''},
-        partners: [],
-        contacts: []
-      }
-    }
-  },
-  methods: {
-    save,
-    getRecaptchaToken,
-    onSubmit(evt) {
- 
-      evt.preventDefault()
-      this.$validator.validate()
-
-      this.$children.forEach(validateComponent)
-      this.save()
-    }
+  mixins    : [ AAFormMixin ],
+  props     : {  actorType: { type: String, required: false }  },
+  components: { bForm, ActorSelect, Action, ActionDetails, Contact },
+  data,
+  methods:  { save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup, location, updateContacts },
+  computed: { config, actionComplete },
+  async mounted(){
+    this.toggleSubscription()
   }
-  
 }
+
+function updateContacts(){
+  if(this.actorType === 'person')
+    this.form.contacts[0] = this.form.actor
+}
+
+function location(){
+  return window.location.href
+}
+
+function actionComplete(){
+  let name =  this.form.action.name && this.form.action.name.en
+  let description =  this.form.action.description && this.form.action.description.en
+
+  return name && description
+}
+
+function config(){
+  return configMap[this.actorType]
+}
+
 async function save() {
       let data 
 
@@ -338,10 +248,52 @@ async function getRecaptchaToken(options) {
 
   return options
 }
+
 function validateComponent(vm) {
   if (vm.$validator) vm.$validator.validateAll()
-  if (vm.$children) vm.$children.forEach(validateComponent)
+  if (vm.$children ) vm.$children.forEach(validateComponent)
 }
+
+function data () {
+    return {
+      grecaptchaReady: false,
+      showSubmitted  : false,
+      error          : '',
+      helpTexts      : [],
+      options: { },
+      input:{
+        subscription:true
+      },
+      form:{
+        actor         : {},
+        action        : {},
+        actionDetails : {},
+        partners      : [],
+        contacts      : [{}],
+        subscription  : {},
+        accountSignup: new Date()
+
+      }
+    }
+  }
+  function onSubmit(evt) {
+ 
+    evt.preventDefault()
+    this.$validator.validate()
+    this.$children.forEach(validateComponent)
+    if(this.$me.isAuthenticated) delete(this.form.accountSignup)
+    this.save()
+  }
+  function toggleSubscription() {
+ 
+    if(this.form.subscription) this.form.subscription = {list:this.config.mailingList.list, tags:this.config.mailingList.tags, requested:new Date()}
+    
+  }
+  function toggleAccountSignup() {
+
+    if(this.form.accountSignup) this.form.accountSignup = new Date()
+    
+  }
 </script>
 
 <style>
@@ -353,6 +305,13 @@ function validateComponent(vm) {
 </style>
 
 <style scoped>
+.title-link{
+  color: black;
+  font-weight: 500;
+}
+.party-auth{
+  padding: 0 2em 0 2em;
+}
 .alert{
   position:relative;
 }
@@ -380,5 +339,9 @@ function validateComponent(vm) {
   label::after {
       content: attr(data-req) ;
       color: red ;
+  }
+  .account{
+    margin-top:-5px;
+    margin-left:1.5em;
   }
 </style>
