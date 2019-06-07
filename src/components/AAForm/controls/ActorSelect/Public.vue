@@ -4,7 +4,7 @@
       <div class="col-lg-12">
         <BFormGroup id="hqcGroup">
 
-          <label  for="form.organization.country">Country  </label>
+          <label  for="form.organization.country">Country of actor  </label>
           <SCBDSelect
             @input="update"
             type="Countries"
@@ -12,44 +12,41 @@
             v-model="form.organization.country"
             tag-view
             v-validate="'required'"
-            :state="validateState('Country')"
-            name="Country"/>
+            :state="validateState('country of actor')"
+            name="country of actor"/>
 
-          <field-error-message :error="errors.collect('Country')"/>
+          <field-error-message :error="errors.collect('country of actor')"/>
         </BFormGroup>
       </div>
 
       <div class="col-6">
         <BFormGroup id="orgNameGroup" >
-          <label  for="form-organization-name">Name </label>
+          <label  for="form-organization-name">Name of actor </label>
           <BFormInput
             @input="update"
             id="form-organization-name"
             type="text"
             v-model.trim="form.organization.name.en"
             v-validate="'required|max:140'"
-            :state="validateState('name',form.organization.name)"
-            name="name"/>
+            :state="validateState('name of actor ',form.organization.name)"
+            name="name of actor"/>
 
-          <field-error-message :error="errors.collect('organization name')"/>
-                    <small id="actionDescriptionHelpText" class="form-text text-muted">
-             City, region, department or office
-          </small>
+          <field-error-message :error="errors.collect('name of actor')"/>
+          <small id="actionDescriptionHelpText" class="form-text text-muted"> City, region, department or office </small>
         </BFormGroup>
       </div>
-            <div class="col-lg-6">
-        <BFormGroup id="orgWebsiteGroup" label="Website" label-for="form-organization-website">
+      <div class="col-lg-6">
+        <BFormGroup id="orgWebsiteGroup" label="Website of actor" label-for="form-organization-website">
           <BFormInput
             @input="update"
             id="form-organization-website"
             type="url"
             v-model.trim="form.organization.url"
-            placeholder="https:// "
             v-validate="'url'"
-            :state="validateState('website url',form.organization.url)"
-            name="website url"/>
+            :state="validateState('website of actor',form.organization.url)"
+            name="website of actor"/>
 
-          <field-error-message :error="errors.collect('website url')"/>
+          <field-error-message :error="errors.collect('website of actor')"/>
         </BFormGroup>
       </div>
     </div>
@@ -57,7 +54,7 @@
     <div class="row">
       <div class="col-lg-6">
         <BFormGroup id="orgTypeGroup">
-          <label  for="form.organization.type">Type  </label>
+          <label  for="form.organization.type">Type of actor  </label>
           <SCBDSelect
             @input="update"
             type="GovernmentType"
@@ -66,10 +63,10 @@
             multi
             tag-view
             v-validate="'required'"
-            :state="validateState('government type',form.organization.types.length)"
-            name="government type"/>
+            :state="validateState('type of actor',form.organization.types.length)"
+            name="type of actor"/>
 
-          <field-error-message :error="errors.collect('government type')"/>
+          <field-error-message :error="errors.collect('type of actor')"/>
         </BFormGroup>
       </div>
       <div class="col-6" v-if="isOther">
@@ -81,10 +78,10 @@
             type="text"
             v-model.trim="form.organization.typeOther.en"
             v-validate="'required|max:140'"
-            :state="validateState('organization type other',form.organization.typeOther)"
-            name="organization type other"/>
+            :state="validateState('actor  other type',form.organization.typeOther)"
+            name="actor  other type"/>
 
-          <field-error-message :error="errors.collect('organization type other')"/>
+          <field-error-message :error="errors.collect('actor  other type')"/>
         </BFormGroup>
       </div>
 
@@ -94,17 +91,17 @@
 
       <div class="col-lg-12">
 
-              <BFormGroup id="logoGroup" label="Logo" label-for="form-organization-logo">
+              <BFormGroup id="logoGroup" label="Logo of actor" label-for="form-organization-logo">
         
                  <Links 
                   id="form-organization-logo"
                   v-model="form.organization.image"
                   :type="['files','links']"
                   :multi='false'
-                  name="logo"/>
+                  name="logo of actor"/>
 
               </BFormGroup>
-        <BContainer v-if="orgLogo && validateState('logo',true)">
+        <BContainer v-if="orgLogo && validateState('logo of actor',true)">
           <div class="row">
             <div class="col-11">
               <img :src="orgLogo" class="logo">

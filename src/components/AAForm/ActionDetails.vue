@@ -1,8 +1,8 @@
 <template>
   <section>
-    <legend>{{options.label}}</legend>
-        <div class="card">
-          <div class="card-body">
+    <!-- <legend>{{options.label}}</legend> -->
+        <!-- <div class="card">
+          <div class="card-body"> -->
             
 
           <div class="row" >
@@ -104,8 +104,8 @@
                 </BFormGroup>
               </div>
             </div>
-          </div>
-        </div>
+          <!-- </div>
+        </div> -->
   </section>
 </template>
 

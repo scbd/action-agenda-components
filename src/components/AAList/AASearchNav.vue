@@ -31,7 +31,7 @@
         </ul>
         <form class="form-inline">
             <div class="input-group mr-sm-2">
-                <input class="form-control " type="params" placeholder="search" aria-label="search" v-model="text">
+                <input class="form-control " type="params" placeholder=" " aria-label="search" v-model="text">
                 <div class="input-group-append">
                     <button class="btn btn-outline-dark btn-sm" type="button"  v-on:click="text=''">
                         <svg class="icon align-middle mb-1">

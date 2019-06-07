@@ -1,8 +1,8 @@
 <template >
   <section>
-    <legend>{{label || getTypeName(type)}}  </legend>
+    <!-- <legend>{{label || getTypeName(type)}}  </legend>
     <div class="card">
-      <div class="card-body">
+      <div class="card-body"> -->
         <BFormRow v-if="!isSingleType()">
           <BCol>
             <div v-for="(t,index) in type" v-bind:key="index" class="form-check-inline" >
@@ -43,8 +43,8 @@
         </div>
       </div>
       </section>
-      </div>
-    </div>
+      <!-- </div>
+    </div> -->
   </section>
 </template>
 

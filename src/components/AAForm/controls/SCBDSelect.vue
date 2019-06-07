@@ -60,7 +60,7 @@ export default {
     },
     placeholder: {
       type: String,
-      default: 'Search or select'
+      default: ' '
     }
   },
   data() {

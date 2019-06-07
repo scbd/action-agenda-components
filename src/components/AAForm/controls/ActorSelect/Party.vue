@@ -44,7 +44,6 @@
             id="form-organization-website"
             type="url"
             v-model.trim="form.organization.url"
-            placeholder="https:// "
             v-validate="'url'"
             :state="validateState('website url',form.organization.url)"
             name="website url"/>

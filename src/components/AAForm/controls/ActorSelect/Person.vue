@@ -26,24 +26,24 @@
     <div class="row">
       <div class="col-lg-9">
         <BFormGroup id="fullNameGroup">
-          <label  for="form.person.fullName">Name</label>
+          <label  for="form.person.fullName">Name of actor</label>
           <BFormInput
             id="form.person.fullName"
             type="text"
             v-model.trim="form.person.fullName.en"
             @input="update"
             v-validate="'required|max:140'"
-            :state="validateState('name',form.person.fullName.en)"
-            name="name"
+            :state="validateState('name of actor',form.person.fullName.en)"
+            name="name of actor"
           />
 
-          <field-error-message :error="errors.collect('name')"/>
+          <field-error-message :error="errors.collect('name of actor')"/>
         </BFormGroup>
       </div>
 
       <div class="col-lg-3">
         <BFormGroup id="countryGroup">
-          <label  for="form.person.country">Country</label>
+          <label  for="form.person.country">Country of actor</label>
 
           <SCBDSelect
             @input="update"
@@ -51,11 +51,11 @@
             id="form.person.country"
             v-model="form.person.country"
             v-validate="'required'"
-            :state="validateState('contact country',form.person.country.identifier)"
-            name="contact country"
+            :state="validateState('country of actor',form.person.country.identifier)"
+            name="country of actor"
           />
 
-          <field-error-message :error="errors.collect('contact country',form.person.country.identifier)" />
+          <field-error-message :error="errors.collect('country of actor',form.person.country.identifier)" />
         </BFormGroup>
       </div>
     </div>
@@ -63,19 +63,18 @@
     <div class="row">
       <div class="col-lg-12">
         <BFormGroup id="emailGroup">
-          <label  for="form.person.email">Email</label>
+          <label  for="form.person.email">Email of actor</label>
           <BFormInput
             id="form.person.email"
             type="email"
             v-model.trim="form.person.email"
             @input="update"
             v-validate="'email|required'"
-            :state="validateState('contact email',form.person.email)"
-            placeholder="example: user@domain.com "
-            name="contact email"
+            :state="validateState('email of actor',form.person.email)"
+            name="email of actor"
           />
 
-          <field-error-message :error="errors.collect('contact email')"/>
+          <field-error-message :error="errors.collect('email of actor')"/>
         </BFormGroup>
       </div>
     </div>

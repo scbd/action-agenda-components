@@ -30,15 +30,14 @@
 
 
       <b-form v-if="(actorType!=='party') || (actorType==='party' && $me.isGov)" @submit="onSubmit"  novalidate>
-  
-        <ActorSelect class="mb-3"  v-model="form.actor" :type="[actorType]" @input="updateContacts"/>
-        <Contact class="mb-3" v-model="form.contacts[0]"/>
+      <legend>Action  </legend>
+      <div class="card">
+        <div class="card-body"> 
+          <ActorSelect class="mb-3"  v-model="form.actor" :type="[actorType]" @input="updateContacts"/>
+          <Action class="mb-3" v-model="form.action" :options="{label:'Action'}"/>
+          <Contact class="mb-3" v-model="form.contacts[0]"/>
 
-        <!-- <ActorSelect class="mb-3" v-if="config.contacts"  label="Contact"  v-model="form.contacts"  :type="'person'"/> -->
-
-        <Action class="mb-3" v-model="form.action" :options="{label:'Action'}"/>
-
-        <div  class="row" v-if="config.mailingList">
+                  <div  class="row" v-if="config.mailingList">
           <div class="col-lg-12">
             <BFormRow >
               <BCol>
@@ -89,19 +88,27 @@
               <hr/>
           </div>
         </div>
+        </div>
+      </div>
 
-        <div  v-if="actionComplete" class=" mb-3">
+        
+
+      <section v-if="actionComplete">
+        <!-- <div  v-if="actionComplete" class=" mb-3">
           <hr/>
             <h3>Optional Information - <a href="#ss" class="title-link">Skip and SUBMIT</a></h3>
           <hr/>
-        </div>
-
+        </div> -->
+      <legend>Optional Information - <a href="#ss" class="title-link">Skip and SUBMIT</a></legend>
+      <div class="card" v-if="actionComplete">
+        <div class="card-body"> 
         <ActionDetails class="mb-3" v-if="actionComplete" v-model="form.actionDetails" :options="{label:'Action Details', subjects:config.subjects, operationalAreas:config.operationalAreas}"/>
 
-        <ActorSelect class="mb-3" v-if="config.partners && actionComplete"  multi label="Partner(s)" v-model="form.partners" :type="['person', 'organization', 'public', 'party']"/>
+        <!-- <ActorSelect class="mb-3" v-if="config.partners && actionComplete"  multi label="Partner(s)" v-model="form.partners" :type="['person', 'organization', 'public', 'party']"/> -->
 
-
-
+        </div>
+      </div>
+      </section>
 
         <div id="ss" class="text-right">
           <BButton type="submit" variant="primary">Submit</BButton>&nbsp;
@@ -333,7 +340,7 @@ function data () {
   }
   .card {
     margin-bottom: 1.5em;
-    background-color: #ddd;
+    /* background-color: #ddd; */
   }
 
   label::after {

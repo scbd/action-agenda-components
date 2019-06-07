@@ -53,7 +53,6 @@
             @input="update"
             v-validate="'email|required'"
             :state="validateState('contact email',form.person.email)"
-            placeholder="example: user@domain.com "
             name="contact email"
           />
 
