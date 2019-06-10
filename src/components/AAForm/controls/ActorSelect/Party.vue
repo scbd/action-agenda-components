@@ -4,7 +4,7 @@
       <div class="col-lg-12">
         <BFormGroup id="hqcGroup">
 
-          <label  for="form.organization.country">Government  </label>
+          <label  for="form.organization.country">Government of actor </label>
           <SCBDSelect
             @input="update"
             type="Countries"
@@ -12,16 +12,16 @@
             v-model="form.organization.country"
             tag-view
             v-validate="'required'"
-            :state="validateState('Country')"
-            name="Country"/>
+            :state="validateState('government of actor')"
+            name="government of actor"/>
 
-          <field-error-message :error="errors.collect('Country')"/>
+          <field-error-message :error="errors.collect('government of actor')"/>
         </BFormGroup>
       </div>
 
       <div class="col-6">
         <BFormGroup id="orgNameGroup" >
-          <label  for="form-organization-name">Name </label>
+          <label  for="form-organization-name">Name of actor </label>
           <BFormInput
             @input="update"
             id="form-organization-name"
@@ -32,23 +32,22 @@
             name="name"/>
 
           <field-error-message :error="errors.collect('organization name')"/>
-                    <small id="actionDescriptionHelpText" class="form-text text-muted">
-              Office, department or branch of the government
-          </small>
+           <small id="actionDescriptionHelpText" class="form-text text-muted"> Office, department or branch of the government </small>
         </BFormGroup>
       </div>
-            <div class="col-lg-6">
-        <BFormGroup id="orgWebsiteGroup" label="Website" label-for="form-organization-website">
+      
+       <div class="col-lg-6">
+        <BFormGroup id="orgWebsiteGroup" label="Website of actor" label-for="form-organization-website">
           <BFormInput
             @input="update"
             id="form-organization-website"
             type="url"
             v-model.trim="form.organization.url"
             v-validate="'url'"
-            :state="validateState('website url',form.organization.url)"
-            name="website url"/>
+            :state="validateState('website of actor',form.organization.url)"
+            name="website of actor"/>
 
-          <field-error-message :error="errors.collect('website url')"/>
+          <field-error-message :error="errors.collect('website of actor')"/>
         </BFormGroup>
       </div>
     </div>

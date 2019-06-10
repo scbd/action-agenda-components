@@ -61,13 +61,12 @@
 
 import Links         from './controls/Links'
 import AAFormMixin   from '../../modules/AAFormMixin'
-import SCBDSelect    from './controls/SCBDSelect'
 import bFormTextarea from 'bootstrap-vue/es/components/form-textarea/form-textarea'
 
 export default {
   name: 'Action',
   mixins: [AAFormMixin],
-  components: { SCBDSelect, Links, bFormTextarea },
+  components: {  Links, bFormTextarea },
   props: {
     options: {
       type: Object, // later user options to overwrite props

@@ -69,12 +69,12 @@
 
 <script>
 import AAFormMixin from '../../modules/AAFormMixin'         
-import SCBDSelect  from './controls/SCBDSelect'             
+// import SCBDSelect  from './controls/SCBDSelect'             
 import HumanParser from 'humanparser'              
 export default {
   name: 'Person',
   mixins: [ AAFormMixin ],
-  components: { SCBDSelect },
+  // components: { SCBDSelect },
   props: {
     value: { type: [Array, Object], required: true },
     multi: { type: Boolean, default: false },

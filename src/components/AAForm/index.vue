@@ -105,7 +105,7 @@
         <ActionDetails class="mb-3" v-if="actionComplete" v-model="form.actionDetails" :options="{label:'Action Details', subjects:config.subjects, operationalAreas:config.operationalAreas}"/>
 
         <!-- <ActorSelect class="mb-3" v-if="config.partners && actionComplete"  multi label="Partner(s)" v-model="form.partners" :type="['person', 'organization', 'public', 'party']"/> -->
-
+        <Partners v-model="form.partners" label="Partners"/>
         </div>
       </div>
       </section>
@@ -120,16 +120,16 @@
           &nbsp;{{e.message}}
         </div>
       </div>
-      <pre>{{form}}</pre>
-      <pre>{{$me}}</pre>
+      <!-- <pre>{{form}}</pre>
+      <pre>{{$me}}</pre> -->
     </section>
   </div>
   
 </template>
 
 <script>
-import Vue from 'vue'
-import Auth from '../../modules/AuthPlugin'
+import   Vue            from 'vue'
+import   Auth           from '../../modules/AuthPlugin'
 import { VueReCaptcha } from 'vue-recaptcha-v3'
 
 Vue.use(Auth,{env:process.env.NODE_ENV})
@@ -153,6 +153,7 @@ import ActorSelect   from './controls/ActorSelect/index'
 import Contact       from './Contact'
 import Action        from './Action'
 import ActionDetails from './ActionDetails'
+import Partners      from './controls/Partners'
 
   const configMap = {
     'person':{
@@ -195,7 +196,7 @@ export default {
   name: 'AAForm',
   mixins    : [ AAFormMixin ],
   props     : {  actorType: { type: String, required: false }  },
-  components: { bForm, ActorSelect, Action, ActionDetails, Contact },
+  components: { bForm, ActorSelect, Action, ActionDetails, Contact, Partners },
   data,
   methods:  { save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup, location, updateContacts },
   computed: { config, actionComplete },
