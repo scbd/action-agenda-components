@@ -217,29 +217,12 @@ export default {
   mixins: [AAFormMixin],
   components: {FileUpload,Icons},
   props: {
-    value: {
-      type: [Array, Object]
-    },
-    label: {
-      type: String,
-   
-    },
-    type: {
-      type: [Array, String],
-      required: true
-    },
-    multi: {
-      type: Boolean,
-      required: false
-    },
-    name: {
-      type: String,
-      required: true
-    },
-    noDrop: {
-      type: Boolean,
-      default: false
-    }
+    value: { type: [Array, Object] },
+    label: { type: String, },
+    type: { type: [Array, String], required: true },
+    multi: { type: Boolean, required: false },
+    name: { type: String, required: true },
+    noDrop: { type: Boolean, default: false }
   },
   data() {
     return {

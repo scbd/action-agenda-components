@@ -1,32 +1,13 @@
 <template>
-  <div class="container-fluid" >
+<FormFeedback :error="error" :publish-requested="publishRequested">
+  
 
-    <section v-show="showSubmitted ">
-      <div class="text-center">
-        <h1>Thank you! Your action has been submitted and is pending review.</h1>
-      </div>
-    </section>
 
-    <section v-if="actorType==='party' && !$me.isGov">
-      <div class="alert alert-info">
-        <p><strong>In order to submit an Action as a party to the Convention on Biological Diversity, you must be:</strong></p>
-        <p class='party-auth'>
-          <ol>
-            <li>Be logged in with with you SCBD account from <a :href="`${$accountsBaseUrl}/signin?returnUrl=${location()}`" >accounts.cbd.int</a>, and;</li>
-            <li>Be the <a href="https://www.cbd.int/information/nfp.shtml" target="_blank">National Focal Point</a> with the CHM Publishing Authority role given to your account or;</li>  
-            <li>Have been granted the CHM National Authorized user role directly by your <a href="https://www.cbd.int/information/nfp.shtml" target="_blank">National Focal Point</a> within the <a href="https://chm.cbd.int" target="_blank">chm.cbd.int</a></li>    
-          </ol>
-        </p>
-      </div>
-    </section>
 
-    <section v-show="!showSubmitted" >
-      <div class="alert alert-danger" v-if="error">
-        <p>{{error.statusCode}} {{error.code}}</p>
-        <div class="card" v-for="(e,key,index) in error.errors" v-bind:key="index">
-          &nbsp;{{e.message}}
-        </div>
-      </div>
+
+
+    <section  >
+
 
 
       <b-form v-if="(actorType!=='party') || (actorType==='party' && $me.isGov)" @submit="onSubmit"  novalidate>
@@ -94,37 +75,31 @@
         
 
       <section v-if="actionComplete">
-        <!-- <div  v-if="actionComplete" class=" mb-3">
-          <hr/>
-            <h3>Optional Information - <a href="#ss" class="title-link">Skip and SUBMIT</a></h3>
-          <hr/>
-        </div> -->
-      <legend>Optional Information - <a href="#ss" class="title-link">Skip and SUBMIT</a></legend>
-      <div class="card" v-if="actionComplete">
-        <div class="card-body"> 
-        <ActionDetails class="mb-3" v-if="actionComplete" v-model="form.actionDetails" :options="{label:'Action Details', subjects:config.subjects, operationalAreas:config.operationalAreas}"/>
-
-        <!-- <ActorSelect class="mb-3" v-if="config.partners && actionComplete"  multi label="Partner(s)" v-model="form.partners" :type="['person', 'organization', 'public', 'party']"/> -->
-        <Partners v-model="form.partners" label="Partners"/>
+        <legend>Optional Information - <a href="#ss" class="title-link">Skip and SUBMIT</a></legend>
+        <div class="card" v-if="actionComplete">
+          <div class="card-body"> 
+            <ActionDetails class="mb-3" v-if="actionComplete" v-model="form.actionDetails" :options="{label:'Action Details', subjects:config.subjects, operationalAreas:config.operationalAreas}"/>
+            <Partners v-model="form.partners" label="Partners"/>
+          </div>
         </div>
-      </div>
       </section>
 
         <div id="ss" class="text-right">
           <BButton type="submit" variant="primary">Submit</BButton>&nbsp;
         </div>
       </b-form>
-       <div class="alert alert-danger" v-if="error">
+
+       <!-- <div class="alert alert-danger" v-if="error">
         <p>{{error.statusCode}} {{error.code}}</p>
         <div class="card" v-for="(e,key,index) in error.errors" v-bind:key="index">
           &nbsp;{{e.message}}
         </div>
-      </div>
-      <!-- <pre>{{form}}</pre>
-      <pre>{{$me}}</pre> -->
+      </div> -->
+      <!-- <pre>{{form}}</pre> -->
+      <!-- <pre>{{$me}}</pre> -->
     </section>
-  </div>
-  
+
+  </FormFeedback>
 </template>
 
 <script>
@@ -154,6 +129,7 @@ import Contact       from './Contact'
 import Action        from './Action'
 import ActionDetails from './ActionDetails'
 import Partners      from './controls/Partners'
+import FormFeedback  from './controls/FormFeedback/index'
 
   const configMap = {
     'person':{
@@ -196,9 +172,9 @@ export default {
   name: 'AAForm',
   mixins    : [ AAFormMixin ],
   props     : {  actorType: { type: String, required: false }  },
-  components: { bForm, ActorSelect, Action, ActionDetails, Contact, Partners },
+  components: { FormFeedback, bForm, ActorSelect, Action, ActionDetails, Contact, Partners },
   data,
-  methods:  { save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup, location, updateContacts },
+  methods:  {  save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup, location, updateContacts },
   computed: { config, actionComplete },
   async mounted(){
     this.toggleSubscription()
@@ -235,7 +211,7 @@ async function save() {
         options = await this.getRecaptchaToken(options)
         data    = await axios.post(`${this.$apiBaseUrl}/v2019/actions`,form, options)
 
-        this.showSubmitted=true
+        this.publishRequested=true
 
         return data
     } catch (err) {
@@ -265,7 +241,7 @@ function validateComponent(vm) {
 function data () {
     return {
       grecaptchaReady: false,
-      showSubmitted  : false,
+      publishRequested  : false,
       error          : '',
       helpTexts      : [],
       options: { },
@@ -276,7 +252,7 @@ function data () {
         actor         : {},
         action        : {},
         actionDetails : {},
-        partners      : [],
+        partners      : [ { name: { en: "" } } ],
         contacts      : [{}],
         subscription  : {},
         accountSignup: new Date()
@@ -289,7 +265,7 @@ function data () {
     evt.preventDefault()
     this.$validator.validate()
     this.$children.forEach(validateComponent)
-    if(this.$me.isAuthenticated) delete(this.form.accountSignup)
+    if(this.$me.isAuthenticated) this.form.accountSignup = false
     this.save()
   }
   function toggleSubscription() {

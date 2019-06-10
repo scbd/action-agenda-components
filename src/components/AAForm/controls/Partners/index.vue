@@ -12,7 +12,7 @@
               <BFormInput :id="`form.name.en ${index}`" 
                 type="text" 
                 :ref="`partner${index}`"
-                v-model="partner.en" 
+                v-model="form[index].name.en" 
                 @input="update" 
                 :name="`name of partner ${index}`" />
 
@@ -20,7 +20,7 @@
             </BFormGroup>
           </div>
            <div class="col-1">
-             <button v-if="partner.en" v-on:click="remove(index)" type="button" class="btn btn-outline-dark btn-sm">Delete</button>
+             <button v-if="partner.name.en" v-on:click="remove(index)" type="button" class="btn btn-outline-dark btn-sm">Delete</button>
           </div>
         </div>
       </div>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-
+import clone from 'lodash.clone'
 import AAFormMixin   from '../../../../modules/AAFormMixin'
 
 export default {
@@ -41,15 +41,8 @@ export default {
   },
   data() {
     return {
-      values: this.value,
       index: 0,
-      form: [
-        {
-          name: {
-            en: ""
-          }
-        }
-      ]
+      form: this.value || [ { name: { en: "" } } ]
     };
   },
   methods: { update, add, remove }
@@ -69,8 +62,15 @@ async function add() {
 }
 
 function update() {
-  if(this.form[this.index].en) this.add()
-  return this.$emit("input", this.values)
+  if(this.form[this.index].name.en) this.add()
+  this.$forceUpdate()
+  return this.$emit('input', sendToParent(this.form))
+}
+
+function sendToParent(form) {
+  let cloneForm = clone(form)
+  cloneForm.splice(form.length-1, 1)
+  return cloneForm
 }
 </script>
 
