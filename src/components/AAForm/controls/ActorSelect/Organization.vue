@@ -1,121 +1,114 @@
+<i18n src="./locales/index.json"></i18n>
 <template>
   <div>
     <div class="row">
       <div class="col-12">
-        <BFormGroup id="orgNameGroup" >
-          <label  for="form-organization-name">Name of actor </label>
-          <BFormInput
-            @input="update"
-            id="form-organization-name"
-            type="text"
-            v-model.trim="form.organization.name.en"
-            v-validate="'required|max:140'"
-            :state="validateState('Name of actor',form.organization.name)"
-            name="Name of actor"/>
+        <div class="form-group" :id="`group.${actor.actorType}.name`" >
+          <label  :for="`${actor.actorType}.name`"> {{ $t(`${actor.actorType}.name`) }} </label>
+          <input class="form-control" 
+            @input      ="update"
+            :id         ="`${actor.actorType}.name`"
+            type        ="text"
+            v-model.trim="actor.name.en"
+            v-validate  ="'required|max:140'"
+            :state      ="validateState($t(`${actor.actorType}.name`),actor.name)"
+            :name       ="$t(`${actor.actorType}.name`)"
+            />
 
-          <field-error-message :error="errors.collect('Name of actor')"/>
-        </BFormGroup>
+          <field-error-message :error="errors.collect($t(`${actor.actorType}.name`))"/>
+        </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-6">
-        <BFormGroup id="hqcGroup">
 
-          <label  for="form.organization.country">Country of actor</label>
+      <div class="col-lg-6">
+        <div class="form-group" :id="`group.${actor.actorType}.country`">
+          <label  :for="`${actor.actorType}.country`">{{ $t(`${actor.actorType}.country`) }} </label>
           <SCBDSelect
             @input="update"
             type="Countries"
-            id="form.organization.country"
-            v-model="form.organization.country"
+            :id="`${actor.actorType}.country`"
+            v-model="actor.country"
             tag-view
             v-validate="'required'"
-            :state="validateState('Country of actor')"
-            name="Country of actor"
+            :state="validateState($t(`${actor.actorType}.country`))"
+            :name="$t(`${actor.actorType}.country`)"
           />
 
           <field-error-message
-            :error="errors.collect('Country of actor')"
-            :state="validateState('Country of actor')"
+            :error="errors.collect($t(`${actor.actorType}.country`))"
+            :state="validateState($t(`${actor.actorType}.country`))"
           />
-        </BFormGroup>
+        </div>
       </div>
-      <div class="col-lg-6">
-        <BFormGroup id="orgWebsiteGroup" label="Website of actor" label-for="form-organization-website">
-          <BFormInput
-            @input="update"
-            id="form-organization-website"
-            type="url"
-            v-model.trim="form.organization.url"
-            v-validate="'url'"
-            :state="validateState('website of actor',form.organization.url)"
-            name="website of actor"/>
 
-          <field-error-message :error="errors.collect('website of actor')"/>
-        </BFormGroup>
+      <div class="col-lg-6">
+        <div class="form-group" :id="`group.${actor.actorType}.url`" >
+          <label  :for="`${actor.actorType}.url`">{{ $t(`${actor.actorType}.url`) }} </label>
+          <input class="form-control" 
+            @input="update"
+            :id="`${actor.actorType}.url`"
+            type="url"
+            v-model.trim="actor.url"
+            v-validate="'url'"
+            :state="validateState($t(`${actor.actorType}.url`),actor.url)"
+            :name="$t(`${actor.actorType}.url`)"/>
+
+          <field-error-message :error="errors.collect($t(`${actor.actorType}.url`))"/>
+        </div>
       </div>
 
 
     </div>
     <div class="row">
       <div class="col-lg-6">
-        <BFormGroup id="orgTypeGroup">
-          <label  for="form.organization.type">Type of actor  </label>
+        <div class="form-group" :id="`group.${actor.actorType}.types`" >
+          <label  :for="`${actor.actorType}.types`">{{ $t(`${actor.actorType}.types`) }}  </label>
           <SCBDSelect
             @input="update"
             type="OrganizationType"
-            id="form.organization.type"
-            v-model="form.organization.types"
+            :id="`${actor.actorType}.types`"
+            v-model="actor.types"
             multi
             tag-view
-            name="type of actor"
+            :name="$t(`${actor.actorType}.types`)"
           />
 
           <field-error-message
-            :error="errors.collect('type of actor')"
-            :state="validateState('type of actor',form.organization.types.length)"
+            :error="errors.collect($t(`${actor.actorType}.types`))"
+            :state="validateState($t(`${actor.actorType}.types`),actor.types.length)"
           />
-        </BFormGroup>
+        </div>
       </div>
       <div class="col-6" v-if="isOther">
-        <BFormGroup id="orgNameGroup" >
-          <label  for="form-typeOther-name">Other Type </label>
-          <BFormInput
+        <div class="form-group" :id="`group.${actor.actorType}.typeOther`" >
+          <label  :for="`${actor.actorType}.typeOther`">{{ $t(`${actor.actorType}.typeOther`) }} </label>
+          <input class="form-control" 
             @input="update"
-            id="form-typeOther-name"
+            :id="`${actor.actorType}.typeOther`"
             type="text"
-            v-model.trim="form.organization.typeOther.en"
+            v-model.trim="actor.typeOther.en"
             v-validate="'required|max:140'"
-            :state="validateState('organization type other',form.organization.typeOther)"
-            name="other Type"/>
+            :state="validateState($t(`${actor.actorType}.typeOther`),actor.typeOther)"
+            :name="$t(`${actor.actorType}.typeOther`)"/>
 
-          <field-error-message :error="errors.collect('other Type')"/>
-        </BFormGroup>
+          <field-error-message :error="errors.collect($t(`${actor.actorType}.typeOther`))"/>
+        </div>
       </div>
       <div class="col-lg-12">
 
-              <BFormGroup id="logoGroup" label="Logo of actor" label-for="form-organization-logo">
-        
-                 <Links 
-                  id="form-organization-logo"
-                  v-model="form.organization.image"
-                  :type="['files','links']"
-                  :multi='false'
-                  name="logo"/>
+        <div class="form-group" :id="`group.${actor.actorType}.image`" l>
+          <label :for="`${actor.actorType}.image`"> {{$t(`${actor.actorType}.image`)}} </label>
+            <Links 
+            :id="`${actor.actorType}.image`"
+            v-model="actor.image"
+            :type="['files','links']"
+            :multi='false'
+            :name="$t(`${actor.actorType}.image`)"/>
 
-              </BFormGroup>
-        <BContainer v-if="orgLogo && validateState('logo',true)">
-          <div class="row">
-            <div class="col-11">
-              <img :src="orgLogo" class="logo">
-            </div>
-            <div class="col-11">
-              <button v-on:click="deleteLogo" type="button" class="close" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-          </div>
-        </BContainer>
+        </div>
+
       </div>
     </div>
   </div>
@@ -123,9 +116,9 @@
 
 <script>
 
-  import AAFormMixin from '../../../../modules/AAFormMixin'
-  import SCBDSelect  from '../../controls/SCBDSelect'
-  import Links       from '../../controls/Links'
+  import AAFormMixin from '@modules/AAFormMixin'
+  import SCBDSelect  from '@controls/SCBDSelect'
+  import Links       from '@controls/Links'
 
   export default {
     name: 'AAOrganizationForm',
@@ -143,8 +136,7 @@
     },
     data() {
       return {
-        form: {
-          organization: {
+        actor: {
             name: {en:''},
             url: '',
             image: {},
@@ -152,7 +144,6 @@
             country: '',
             typeOther:{en:''},
             actorType:'organization'
-          }
         },
         orgLogo: '', //temp holder for uploaded image
         index: null //index of editable org in array model
@@ -166,23 +157,24 @@
     computed:{isOther}
   }
 
-function isOther(){
-  if (!this.form.organization.types || !this.form.organization.types.length) return false
+  function isOther(){
+    if (!this.actor.types || !this.actor.types.length) return false
 
-  for (let i = 0; i < this.form.organization.types.length; i++) 
-    if(this.form.organization.types[i].identifier === 'ORG-TYPE-OTHER') 
-      return true
-    
-  return false
-}
+    for (let i = 0; i < this.actor.types.length; i++) 
+      if(this.actor.types[i].identifier === 'ORG-TYPE-OTHER') 
+        return true
+      
+    return false
+  }
+
   function update() {
-    let org = this.cleanForm(this.form.organization)
+    let org = this.cleanForm(this.actor.organization)
     return this.$emit('input', org ) 
   }
 
   function deleteLogo() {
     this.orgLogo = '' 
-    this.form.organization.image = '' 
+    this.actor.organization.image = '' 
     this.$refs.logo.reset() 
   }
 

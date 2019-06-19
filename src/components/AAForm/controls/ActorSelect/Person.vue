@@ -1,10 +1,12 @@
+<i18n src="./locales/index.json"></i18n>
+
 <template>
   <section>
 
-    <div class="row">
+    <div class="row" v-if="$me.isAuthenticated">
       <div class="col-lg-12">
-        <BFormRow v-if="$me.isAuthenticated">
-          <BCol>
+
+        <div  class="form-group" :id="`group.${actor.actorType}.name`" >
             <div class="form-check-inline">
               <input
                 v-model="input.useAccount"
@@ -15,75 +17,77 @@
                 class="form-check-input"
                 v-on:change="useAccountToggle()"
               >
-              <label class="form-check-label align-text-bottom" for="`RadioInline`" >Use your SCBD account profile data?</label>
+              <label class="form-check-label align-text-bottom" for="`RadioInline`" >{{$t('person.useAccount')}}</label>
             </div>
-          </BCol>
           <hr>
-        </BFormRow>
+        </div>
+        
       </div>
     </div>
 
     <div class="row">
       <div class="col-lg-9">
-        <BFormGroup id="fullNameGroup">
-          <label  for="form.person.fullName">Name of actor</label>
-          <BFormInput
-            id="form.person.fullName"
-            type="text"
-            v-model.trim="form.person.fullName.en"
-            @input="update"
-            v-validate="'required|max:140'"
-            :state="validateState('name of actor',form.person.fullName.en)"
-            name="name of actor"
-          />
+            
+        <div class="form-group" :id="`group.${actor.actorType}.name`" >
+          <label  :for="`${actor.actorType}.name`"> {{ $t(`${actor.actorType}.name`) }} </label>
+          <input class="form-control" 
+            @input      ="update"
+            :id         ="`${actor.actorType}.name`"
+            type        ="text"
+            v-model.trim="actor.name.en"
+            v-validate  ="'required|max:140'"
+            :state      ="validateState($t(`${actor.actorType}.name`),actor.name)"
+            :name       ="$t(`${actor.actorType}.name`)"
+            />
+          <field-error-message :error="errors.collect($t(`${actor.actorType}.name`))"/>
+        </div>
 
-          <field-error-message :error="errors.collect('name of actor')"/>
-        </BFormGroup>
       </div>
 
       <div class="col-lg-3">
-        <BFormGroup id="countryGroup">
-          <label  for="form.person.country">Country of actor</label>
 
+        <div class="form-group" :id="`group.${actor.actorType}.country`">
+          <label  :for="`${actor.actorType}.country`">{{ $t(`${actor.actorType}.country`) }} </label>
           <SCBDSelect
             @input="update"
             type="Countries"
-            id="form.person.country"
-            v-model="form.person.country"
+            :id="`${actor.actorType}.country`"
+            v-model="actor.country"
+            tag-view
             v-validate="'required'"
-            :state="validateState('country of actor',form.person.country.identifier)"
-            name="country of actor"
+            :state="validateState($t(`${actor.actorType}.country`))"
+            :name="$t(`${actor.actorType}.country`)"
           />
+          <field-error-message :error="errors.collect($t(`${actor.actorType}.country`))" :state="validateState($t(`${actor.actorType}.country`))" />
+        </div>
 
-          <field-error-message :error="errors.collect('country of actor',form.person.country.identifier)" />
-        </BFormGroup>
       </div>
-    </div>
 
-    <div class="row">
       <div class="col-lg-12">
-        <BFormGroup id="emailGroup">
-          <label  for="form.person.email">Email of actor</label>
-          <BFormInput
-            id="form.person.email"
-            type="email"
-            v-model.trim="form.person.email"
-            @input="update"
-            v-validate="'email|required'"
-            :state="validateState('email of actor',form.person.email)"
-            name="email of actor"
-          />
 
-          <field-error-message :error="errors.collect('email of actor')"/>
-        </BFormGroup>
+        <div class="form-group" :id="`group.${actor.actorType}.email`" >
+          <label  :for="`${actor.actorType}.email`"> {{ $t(`${actor.actorType}.email`) }} </label>
+          <input class="form-control" 
+            @input      ="update"
+            :id         ="`${actor.actorType}.email`"
+            type        ="text"
+            v-model.trim="actor.email"
+            v-validate="'email|required'"
+            :state      ="validateState($t(`${actor.actorType}.email`),actor.email)"
+            :name       ="$t(`${actor.actorType}.email`)"
+            />
+          <field-error-message :error="errors.collect($t(`${actor.actorType}.email`))"/>
+        </div>
+
       </div>
     </div>
+
   </section>
 </template>
 
 <script>
-import AAFormMixin from '../../../../modules/AAFormMixin'         
-import SCBDSelect  from '../../controls/SCBDSelect'             
+import AAFormMixin from '@modules/AAFormMixin'         
+import SCBDSelect  from '@controls/SCBDSelect'             
 import HumanParser from 'humanparser'              
 export default {
   name: 'Person',
@@ -93,29 +97,35 @@ export default {
     value: { type: [Array, Object], required: true },
     multi: { type: Boolean, default: false }
   },
-  data() {
-    return {
+  data,
+  methods: { parseName, update, useAccount, notUseAccount, useAccountToggle, },
+  beforeUpdate,
+  mounted
+}
+
+function data(){
+      return {
       input: {
         useAccountInit: false,
         useAccount: false
       },
-      form: {
-        person: {
+      actor: {
           salutation : {},
           firstName  : {},
           middleName : {},
           lastName   : {},
           suffix     : {},
-          fullName   : {},
+          name   : {},
           country    : '',
           email      : '',
           actorType  : 'person'
-        }
+
       }
     }
-  },
-  methods: { parseName, update, useAccount, notUseAccount, useAccountToggle,  },
-  beforeUpdate
+}
+
+function mounted(){
+  this.update()
 }
 
 function beforeUpdate() {
@@ -123,11 +133,9 @@ function beforeUpdate() {
 }
 
 function useAccount() {
-  // this.input.useAccount = true
-
-  this.$set(this.form.person, 'fullName', { en: this.$me.name })
-  this.$set(this.form.person, 'email', this.$me.email)
-  this.$set(this.form.person, 'country', {identifier:this.$me.country})
+  this.$set(this.actor, 'name', { en: this.$me.name })
+  this.$set(this.actor, 'email', this.$me.email)
+  this.$set(this.actor, 'country', {identifier:this.$me.country})
 
   this.input.useAccountInit = true
   this.update()
@@ -147,25 +155,34 @@ function useAccountToggle(value){
 }
 
 function notUseAccount() {
-  this.$set(this.form.person, 'lastName', { en: '' })
-  this.$set(this.form.person, 'email', '')
-  this.$set(this.form.person, 'country', '')
+  let person = this.actor
+
+  person.country        = ''
+  person.email          = ''
+  person.salutation .en = ''
+  person.firstName  .en = ''
+  person.middleName .en = ''
+  person.lastName   .en = ''
+  person.suffix     .en = ''
+  person.name       .en = ''
   this.update()
 }
 
 function parseName() {
 
-  let person = this.form.person
-  let parsedName = HumanParser.parseName(person.fullName.en)
+  let person = this.actor
+  if(!person.name || !person.name.en) return
 
-  person.salutation.en    = parsedName.salutation
-  person.firstName.en = parsedName.firstName
+  let parsedName = HumanParser.parseName(person.name.en)
+
+  person.salutation.en = parsedName.salutation
+  person.firstName .en = parsedName.firstName
   person.middleName.en = parsedName.middleName
-  person.lastName.en  = parsedName.lastName
-  person.suffix.en  = parsedName.suffix
+  person.lastName  .en = parsedName.lastName
+  person.suffix    .en = parsedName.suffix
 }
 function update() {
-  let person = this.cleanForm(this.form.person)
+  let person = this.cleanForm(this.actor)
   this.parseName()
   this.$emit('input', person)
 }

@@ -207,11 +207,13 @@
 </style>
 
 <script>
-import { clone } from '../../../modules/helpers'
-import AAFormMixin from '../../../modules/AAFormMixin'
-import FileUpload from 'vue-upload-component'
-import axios from 'axios'
-import Icons from '../../Icons'
+import clone       from 'lodash.clone'
+import FileUpload  from 'vue-upload-component'
+import axios       from 'axios'
+
+import AAFormMixin from '@modules/AAFormMixin'
+import Icons       from '@components/Icons'
+
 export default {
   name: 'Links',
   mixins: [AAFormMixin],

@@ -1,147 +1,139 @@
+<i18n src="./locales/index.json"></i18n>
 <template>
   <section>
-    <!-- <legend>{{options.label}}</legend> -->
-        <!-- <div class="card">
-          <div class="card-body"> -->
-            
+    <div class="row" >
+      <div class="col-lg-6" v-if="options.operationalAreas">
 
-          <div class="row" >
-            <div class="col-lg-6" v-if="options.operationalAreas">
-              <BFormGroup>
+        <div class="form-group" :id="`group.actionDetails.operationalAreas`">
+          <label :for="`actionDetails.operationalAreas`"> {{ $t(`actionDetails.operationalAreas.label`) }} </label>
+          <SCBDSelect
+            type="GeoLocations"
+            id="actionDetails.operationalAreas"
+            v-model="actionDetails.operationalAreas"
+            multi
+            tag-view
+            :state="validateState($t(`actionDetails.operationalAreas.label`),actionDetails.operationalAreas)"
+            :name="$t(`actionDetails.operationalAreas.label`)"
+          />
+          <small v-if="$t(`actionDetails.operationalAreas.help`)" id="actionDetails.operationalAreas.help" class="form-text text-muted"> {{$t(`actionDetails.operationalAreas.help`)}}</small>
+          <field-error-message :error="errors.collect($t(`actionDetails.operationalAreas.label`))"/>
+        </div>
+      </div>
 
-                <label  for="form.actionDetails.target">Operational Area(s) </label>
-                <SCBDSelect
-                  type="GeoLocations"
-                  id="form.actionDetails.target"
-                  v-model="form.actionDetails.operationalAreas"
-                  multi
-                  tag-view
-                  :state="validateState('operational area(s)',form.actionDetails.operationalAreas)"
-                  name="operational area(s)"
-                />
+      <div class="col-lg-6" v-if="options.thematicAreas">
 
-                <field-error-message :error="errors.collect('operational area(s)')"/>
-              </BFormGroup>
-            </div>
-            <div class="col-lg-6" v-if="options.subjects">
-              <BFormGroup  id="subjectGroup">
-                <label  for="form.actionDetails.subjects">Thematic Areas(s) </label>
-                <SCBDSelect
-                  type="Subject"
-                  id="form.actionDetails.subjects"
-                  v-model="form.actionDetails.subjects"
-                  multi
-                  tag-view
-                  :state="validateState('action Thematic Areas',form.actionDetails.subjects.length)"
-                  name="action Thematic Areas"/>
+        <div class="form-group" :id="`group.actionDetails.thematicAreas`">
+          <label :for="`actionDetails.thematicAreas`"> {{ $t(`actionDetails.thematicAreas.label`) }} </label>
+          <SCBDSelect
+            type="Subject"
+            id="form.actionDetails.subjects"
+            v-model="actionDetails.thematicAreas"
+            multi
+            tag-view
+            :state="validateState($t(`actionDetails.thematicAreas.label`),actionDetails.thematicAreas)"
+            :name="$t(`actionDetails.thematicAreas.label`)"
+            />
+          <small v-if="$t(`actionDetails.thematicAreas.help`)" id="actionDetails.thematicAreas.help" class="form-text text-muted"> {{$t(`actionDetails.thematicAreas.help`)}}</small>
+          <field-error-message :error="errors.collect($t(`actionDetails.thematicAreas.label`))"/>
+        </div>
 
-                <field-error-message :error="errors.collect('action Thematic Areas')"/>
-              </BFormGroup>
-            </div>
-          </div>
+      </div>
+    </div>
 
+    <div class="row">
+      <div class="col-lg-6">
 
+        <div class="form-group" :id="`group.actionDetails.aichiTargets`">
+          <label :for="`actionDetails.aichiTargets`"> {{ $t(`actionDetails.aichiTargets.label`) }} </label>
+          <SCBDSelect
+              @input="update"
+            type="Aichi"
+            id="actionDetails.aichiTargets"
+            v-model="actionDetails.aichiTargets"
+            multi
+            tag-view
+            :state="validateState($t(`actionDetails.aichiTargets.label`),actionDetails.aichiTargets)"
+            :name="$t(`actionDetails.aichiTargets.label`)"
+            :placeholder="$t(`actionDetails.aichiTargets.placeholder`)"
+          />
+          <small v-if="$t(`actionDetails.aichiTargets.help`)" id="actionDetails.aichiTargets.help" class="form-text text-muted"> {{$t(`actionDetails.aichiTargets.help`)}}</small>
+          <field-error-message :error="errors.collect($t(`actionDetails.aichiTargets.label`))"/>
+        </div>
 
+      </div>
+      <div class="col-lg-6">
 
-            <div class="row">
-              <div class="col-lg-6">
-                <BFormGroup
-                  id="aichiGroup"
-                  label="Linkages to Aichi Biodiversity Targets "
-                  label-for="form.actionDetails.aichi">
+        <div class="form-group" :id="`group.actionDetails.sdgs`">
+          <label :for="`actionDetails.sdgs`"> {{ $t(`actionDetails.sdgs.label`) }} </label>
+          <SCBDSelect
+            @input="update"
+              type="SDGs"
+              id="actionDetails.sdgs"
+              v-model="actionDetails.sdgs"
+              multi
+              tag-view
+              :state="validateState($t(`actionDetails.sdgs.label`),actionDetails.sdgs)"
+              :name="$t(`actionDetails.sdgs.label`)"
+              :placeholder="$t(`actionDetails.sdgs.placeholder`)"
+          />
+          <small v-if="$t(`actionDetails.sdgs.help`)" id="actionDetails.sdgs.help" class="form-text text-muted"> {{$t(`actionDetails.sdgs.help`)}}</small>
+          <field-error-message :error="errors.collect($t(`actionDetails.sdgs.label`))"/>
+        </div>
 
-                  <SCBDSelect
-                     @input="update"
-                    type="Aichi"
-                    id="form.actionDetails.aichi"
-                    v-model="form.actionDetails.aichiTargets"
-                    multi
-                    tag-view
-                    name="action aichi biodiversity target"
-                  />
-                </BFormGroup>
-              </div>
-              <div class="col-lg-6">
-                <BFormGroup
-                  id="SDGsGroup"
-                  label="Linkages to Sustainable Development Goals "
-                  label-for="SDGs">
+      </div>
+    </div>
 
-                  <SCBDSelect
-                   @input="update"
-                    type="SDGs"
-                    id="DGs"
-                    v-model="form.actionDetails.sdgs"
-                    multi
-                    tag-view
-                    name="SDGs"
-                  />
-                </BFormGroup>
-              </div>
-            </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group" :id="`group.progressMeasured.progressMeasured`">
+          <label :for="`actionDetails.progressMeasured`"> {{ $t(`actionDetails.progressMeasured.label`) }} </label>
+          <b-form-textarea
+            @input="update"
+            id="actionDetails.progressMeasured"
+            v-model="actionDetails.progressMeasured.en"
+            v-validate="'max:1000'"
+            :state="validateState($t(`actionDetails.progressMeasured.label`),actionDetails.progressMeasured.en)"
+            :rows="3"
+            :name="$t(`actionDetails.progressMeasured.label`)"
+            :placeholder="$t(`actionDetails.progressMeasured.placeholder`)"
+          />
+          <small v-if="$t(`actionDetails.progressMeasured.help`)" id="actionDetails.progressMeasured.help" class="form-text text-muted"> {{$t(`actionDetails.progressMeasured.help`)}}</small>
+          <field-error-message :error="errors.collect($t(`actionDetails.progressMeasured.label`))"/>
+        </div>
+      </div>
+    </div>
 
-            <div class="row">
-              <div class="col">
-                <BFormGroup
-                  ref="actionProgressMeasured"
-                  id="actionProgressMeasured"
-                  label="Progress tracking"
-                  label-for="form.actionDetails.progressMeasured"
-                >
-                  <b-form-textarea
-                   @input="update"
-                    id="form.actionDetails.progressMeasured"
-                    v-model="form.actionDetails.progressMeasured.en"
-                    v-validate="'max:1000'"
-                    :state="validateState('progress measured',form.actionDetails.progressMeasured.en)"
-                    :rows="3"
-                    name="progress measured"
-                  />
-                  <small id="actionprogressMeasured" class="form-text text-muted">
-                    Describe how your Action measures progress. Provide a link if relevant.
-                  </small>
-                  <field-error-message :error="errors.collect('progress measured')"/>
-                </BFormGroup>
-              </div>
-            </div>
-          <!-- </div>
-        </div> -->
   </section>
 </template>
 
 <script>
+  import AAFormMixin   from '@modules/AAFormMixin'
+  import SCBDSelect    from '@controls/SCBDSelect'
+  import bFormTextarea from 'bootstrap-vue/es/components/form-textarea/form-textarea'
 
-import AAFormMixin   from '../../modules/AAFormMixin'
-import SCBDSelect    from './controls/SCBDSelect'
-import bFormTextarea from 'bootstrap-vue/es/components/form-textarea/form-textarea'
+  export default {
+    name      : 'ActionDetails',
+    mixins    : [AAFormMixin],
+    components: { SCBDSelect, bFormTextarea },
+    props     : { options: { type:Object } },
+    methods   : { update },
+    data      
+  }
 
-export default {
-  name: 'ActionDetails',
-  mixins: [AAFormMixin],
-  components: { SCBDSelect, bFormTextarea },
-  props: {
-    options: {
-      type:Object
-    }
-  },
-  data() {
+  function data() {
     return {
-      form: {
-        actionDetails: {
-          aichiTargets       : [],
-          sdgs               : [],
-          progressMeasured   : { en:'' },
-          subjects:[],
-          operationalAreas:[]
-        }
+          actionDetails: {
+            aichiTargets     : [],
+            sdgs             : [],
+            progressMeasured : { en:'' },
+            thematicAreas    : [],
+            operationalAreas : []
+          }
       }
-    }
-  },
-  methods: { update }
-}
+  }
 
-function update() {
-  let actionDetails = this.cleanForm(this.form.actionDetails)
-  this.$emit('input', actionDetails)
-}
+  function update() {
+    let actionDetails = this.cleanForm(this.actionDetails)
+    this.$emit('input', actionDetails)
+  }
 </script>

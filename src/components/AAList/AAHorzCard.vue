@@ -44,7 +44,7 @@ import AAEntityView     from '../AAView/AAEntityView'
 import AAState          from './AAState'
 import AAListMixin      from '../../modules/AAListMixin'
 import axios            from 'axios'
-import {dateFormat}     from '../../modules/helpers'
+
 export default {
   name: "AAHorzCard",
   mixins: [AAListMixin],
@@ -93,7 +93,10 @@ export default {
 
 
 
-
+function dateFormat (date) {
+    let d = new Date(date)
+    return `${d.getUTCDate()} ${getMonth(d.getUTCMonth())} ${d.getUTCFullYear()}`
+  }
 
 function status(){
   return this.meta.status

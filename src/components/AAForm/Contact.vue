@@ -1,159 +1,169 @@
+<i18n src="./locales/index.json"></i18n>
+
 <template>
   <section>
-    <legend>{{label }}  </legend>
+    <legend>{{ $t('contact.sectionName') }}  </legend>
     <div class="card">
       <div class="card-body">
-    <div class="row">
-      <div class="col-lg-12">
-        <BFormRow v-if="$me.isAuthenticated">
-          <BCol>
-            <div class="form-check-inline">
-              <input
-                v-model="input.useAccount"
-                :value="true"
-                type="checkbox"
-                id="`RadioInline`"
-                name="RadioInline`"
-                class="form-check-input"
-                v-on:change="useAccountToggle()"
-              >
-              <label class="form-check-label align-text-bottom" for="`RadioInline`" >Use your SCBD account profile data?</label>
+
+        <div class="row" v-if="$me.isAuthenticated">
+          <div class="col-lg-12">
+
+            <div  class="form-group" :id="`group.contact.useAccount`" >
+                <div class="form-check-inline">
+                  <label class="form-check-label align-text-bottom" for="contact.useAccount" >{{$t('contact.useAccount')}}</label>
+                  <input
+                    v-model="input.useAccount"
+                    :value="true"
+                    type="checkbox"
+                    id="contact.useAccount"
+                    :name="$t('contact.useAccount')"
+                    class="form-check-input"
+                    v-on:change="useAccountToggle()"
+                  >
+                </div>
+              <hr>
             </div>
-          </BCol>
-          <hr>
-        </BFormRow>
+            
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6">
+            
+            <div class="form-group" id="group.contact.name" >
+              <label  :for="`contact.name`"> {{ $t(`contact.name.label`) }} </label>
+              <input class="form-control" 
+                @input      ="update"
+                id          ="contact.name"
+                type        ="text"
+                v-model.trim="contact.name.en"
+                v-validate  ="'required|max:140'"
+                :state      ="validateState($t(`contact.name.label`),contact.name)"
+                :name       ="$t(`contact.name.label`)"
+                :placeholder="$t(`contact.name.placeholder`)" 
+                />
+              <small v-if="$t(`contact.name.help`)" class="form-text text-muted">{{$t(`contact.name.help`)}}</small>
+              <field-error-message :error="errors.collect($t(`contact.name.label`))" />
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="form-group" id="group.email.name" >
+              <label  for="contact.email">{{ $t(`contact.email.label`) }}</label>
+              <input class="form-control"
+                id="contact.email"
+                type="email"
+                v-model.trim="contact.email"
+                @input="update"
+                v-validate="'email|required'"
+                :state="validateState($t(`contact.email.label`),contact.email)"
+                :name       ="$t(`contact.email.label`)"
+                :placeholder="$t(`contact.email.placeholder`)" 
+              />
+              <small v-if="$t(`contact.email.help`)" class="form-text text-muted">{{$t(`contact.email.help`)}}</small>
+              <field-error-message :error="errors.collect($t(`contact.email.label`))" />
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-lg-6">
-        <BFormGroup id="fullNameGroup">
-          <label  for="form.person.fullName">Name</label>
-          <BFormInput
-            id="form.person.fullName"
-            type="text"
-            v-model.trim="form.person.fullName.en"
-            @input="update"
-            v-validate="'required|max:140'"
-            :state="validateState('name',form.person.fullName.en)"
-            name="name"
-          />
-
-          <field-error-message :error="errors.collect('name')"/>
-        </BFormGroup>
-      </div>
-
-      <div class="col-lg-6">
-        <BFormGroup id="emailGroup">
-          <label  for="form.person.email">Email</label>
-          <BFormInput
-            id="form.person.email"
-            type="email"
-            v-model.trim="form.person.email"
-            @input="update"
-            v-validate="'email|required'"
-            :state="validateState('contact email',form.person.email)"
-            name="contact email"
-          />
-
-          <field-error-message :error="errors.collect('contact email')"/>
-        </BFormGroup>
-      </div>
-    </div>
-
-
-   </div>
-  </div>
   </section>
 </template>
 
 <script>
-import AAFormMixin from '../../modules/AAFormMixin'         
-// import SCBDSelect  from './controls/SCBDSelect'             
-import HumanParser from 'humanparser'              
-export default {
-  name: 'Person',
-  mixins: [ AAFormMixin ],
-  // components: { SCBDSelect },
-  props: {
-    value: { type: [Array, Object], required: true },
-    multi: { type: Boolean, default: false },
-    label: { type: String, default: 'Contact' }
-  },
-  data() {
+  import AAFormMixin from '@modules/AAFormMixin'                
+  import HumanParser from 'humanparser'              
+  export default {
+    name: 'Person',
+    mixins: [ AAFormMixin ],
+    props: {
+      value: { type: Object, required: true },
+    },
+    methods: { parseName, update, useAccount, notUseAccount, useAccountToggle },
+    beforeUpdate,
+    data
+  }
+
+  function data() {
     return {
-      input: {
-        useAccountInit: false,
-        useAccount: false
-      },
-      form: {
-        person: {
+        input: {
+          useAccountInit: false,
+          useAccount: false
+        },
+        contact: {
           salutation : {},
           firstName  : {},
           middleName : {},
           lastName   : {},
           suffix     : {},
-          fullName   : {},
+          name   : {},
           country    : '',
           email      : '',
           actorType  : 'person'
         }
       }
-    }
-  },
-  methods: { parseName, update, useAccount, notUseAccount, useAccountToggle,  },
-  beforeUpdate
-}
+  }
 
-function beforeUpdate() {
-  if (!this.input.useAccountInit && this.$me.isAuthenticated) this.useAccountToggle(true)
-}
 
-function useAccount() {
-  // this.input.useAccount = true
+  function useAccount() {
+    this.$set(this.contact, 'name', { en: this.$me.name })
+    this.$set(this.contact, 'email', this.$me.email)
+    this.$set(this.contact, 'country', {identifier:this.$me.country})
 
-  this.$set(this.form.person, 'fullName', { en: this.$me.name })
-  this.$set(this.form.person, 'email', this.$me.email)
-  this.$set(this.form.person, 'country', {identifier:this.$me.country})
-
-  this.input.useAccountInit = true
-  this.update()
-}
-
-function useAccountToggle(value){
-
-  if(value != undefined) this.input.useAccount = value
-
-    if(!this.input.useAccount)
-      this.notUseAccount()
-    else
-      this.useAccount()
-
+    this.input.useAccountInit = true
     this.update()
-    
-}
+  }
+  
+  function beforeUpdate() {
+    if (!this.input.useAccountInit && this.$me.isAuthenticated) this.useAccountToggle(true)
+  }
 
-function notUseAccount() {
-  this.$set(this.form.person, 'lastName', { en: '' })
-  this.$set(this.form.person, 'email', '')
-  this.$set(this.form.person, 'country', '')
-  this.update()
-}
+  function useAccountToggle(value){
 
-function parseName() {
+    if(value != undefined) this.input.useAccount = value
 
-  let person = this.form.person
-  let parsedName = HumanParser.parseName(person.fullName.en)
+      if(!this.input.useAccount)
+        this.notUseAccount()
+      else
+        this.useAccount()
 
-  person.salutation.en    = parsedName.salutation
-  person.firstName.en = parsedName.firstName
-  person.middleName.en = parsedName.middleName
-  person.lastName.en  = parsedName.lastName
-  person.suffix.en  = parsedName.suffix
-}
-function update() {
-  let person = this.cleanForm(this.form.person)
-  this.parseName()
-  this.$emit('input', person)
-}
+      this.update()
+      
+  }
+
+  function notUseAccount() {
+    let person = this.contact
+
+    person.country        = ''
+    person.email          = ''
+    person.salutation .en = ''
+    person.firstName  .en = ''
+    person.middleName .en = ''
+    person.lastName   .en = ''
+    person.suffix     .en = ''
+    person.name       .en = ''
+    this.update()
+  }
+
+
+  function parseName() {
+    let person = this.contact
+    if(!person.name || !person.name.en) return
+
+    let parsedName = HumanParser.parseName(person.name.en)
+
+    person.salutation.en = parsedName.salutation
+    person.firstName .en = parsedName.firstName
+    person.middleName.en = parsedName.middleName
+    person.lastName  .en = parsedName.lastName
+    person.suffix    .en = parsedName.suffix
+  }
+
+  function update() {
+    let person = this.cleanForm(this.contact)
+    this.parseName()
+    this.$emit('input', person)
+  }
 </script>

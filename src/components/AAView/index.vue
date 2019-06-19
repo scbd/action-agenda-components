@@ -84,17 +84,19 @@
 </template>
 
 <script>
-import Vue from "vue";
-import axios from "axios";
-import Auth from "../../modules/AuthPlugin"
-Vue.use(Auth, { env: process.env.NODE_ENV })
-import {lStringFilter} from '../../modules/helpers'
+import Vue   from 'vue'
+import axios from 'axios'
+
+import Auth         from '@modules/AuthPlugin'
+import LookUp       from '@modules/ScbdCachedApisLookUp'
 import AAEntityList from './AAEntityList'
 import AAEntityView from './AAEntityView'
-import LookUp from "../../modules/ScbdCachedApisLookUp"
+
+Vue.use(Auth, { env: process.env.NODE_ENV })
+
 export default {
-  name: "AAView",
-  props: ["env"],
+  name: 'AAView',
+  props: ['env'],
   components:{AAEntityView,AAEntityList},
   data() {
     return {
@@ -106,27 +108,30 @@ export default {
     }
   },
   computed:{hasDetails},
-  methods: {
-    getActionIdFromQuery,
-    getBaseApi,
-    getAction,
-    getOptions,
-    lString:lStringFilter
-  },
+  methods: { getActionIdFromQuery, getBaseApi, getAction, getOptions, lString:lStringFilter },
   filters:{lStringFilter},
   async mounted() {
-    let id = this.getActionIdFromQuery();
-    if (!id) return false;
-    await this.getAction(id);
+    let id = this.getActionIdFromQuery()
+    if (!id) return false
+    await this.getAction(id)
     if (this.$isAuthLoaded && (await this.$isAuthLoaded()))
        await this.getAction(id)
 
-    this.getSubjects = await LookUp.getSubjects(this.action.subjects)
+    this.getSubjects         = await LookUp.getSubjects    (this.action.subjects        )
     this.getOperationalAreas = await LookUp.getGeoLocations(this.action.operationalAreas)
-    this.getSdgs = await LookUp.getSDGs(this.action.sdgs)
-    this.getAichiTargets = await LookUp.getAichis(this.action.aichiTargets)
+    this.getSdgs             = await LookUp.getSDGs        (this.action.sdgs            )
+    this.getAichiTargets     = await LookUp.getAichis      (this.action.aichiTargets    )
   }
 };
+
+function lStringFilter() {
+    let locale = 'en'
+    if(!value) return ''
+
+    if(value[locale]) return value[locale]
+
+    return ''
+  }
 
 function hasDetails(){
   let action = this.action
@@ -141,7 +146,7 @@ function getActionIdFromQuery() {
 
   let urlParams = new URLSearchParams(location.search);
 
-  return urlParams.get("action-id");
+  return urlParams.get('action-id');
 }
 
 async function getAction(id) {
@@ -163,15 +168,15 @@ function getOptions() {
   return this.$baseReqOpts || {};
 }
 function getBaseApi() {
-  if (this.env === "dev") return "https://api.cbddev.xyz/api";
+  if (this.env === 'dev') return 'https://api.cbddev.xyz/api';
 
-  if (this.env === "stg") return "https://api.staging.cbd.int/api";
+  if (this.env === 'stg') return 'https://api.staging.cbd.int/api';
 
-  return "https://api.cbd.int/api"
+  return 'https://api.cbd.int/api'
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- Add 'scoped' attribute to limit CSS to this component only -->
 <style scoped>
 .card{
   margin-bottom:2em;

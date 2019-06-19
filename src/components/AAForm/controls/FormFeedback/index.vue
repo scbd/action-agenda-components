@@ -1,7 +1,8 @@
 <template >
   <div class="container-fluid" >
     <PublishRequest v-if="publishRequested"/>
-    <NotPartyOrNotAuthorizedParty/>
+
+    <NotPartyOrNotAuthorizedParty v-if="actorType==='party'"/>
     <!-- actorType==='party' &&  -->
     <Validate  v-if="error.statusCode" :error="error"/>
     <slot v-if="!publishRequested"></slot>
@@ -16,7 +17,7 @@
 
   export default {
     name: 'FormFeedback',
-    props:['error', 'publishRequested'],
+    props:['error', 'actorType', 'publishRequested'],
     components: { Validate, PublishRequest, NotPartyOrNotAuthorizedParty },
   }
 </script>

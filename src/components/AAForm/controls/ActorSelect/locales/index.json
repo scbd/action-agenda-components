@@ -1,0 +1,24 @@
+{
+    "en": {
+        "personLabel": "Individual",
+        "organizationLabel": "Organization / Business",
+        "publicLabel": "Public Sector",
+        "partyLabel": "Party",
+        "organization": {
+            "name": "Name",
+            "country": "Country",
+            "types": "Type",
+            "typeOther": "Other type",
+            "image": "Logo",
+            "url": "Website"
+        },
+        "person": {
+            "useAccount":"Use your SCBD account profile data?",
+            "name": "Name",
+            "country": "Country",
+            "types": "Type",
+            "email": "Email",
+            "typeOther": "Other Type"
+        }
+    }
+}

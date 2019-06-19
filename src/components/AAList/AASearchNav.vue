@@ -52,30 +52,26 @@
 
 <script>
   import FiltersApplied from './AAFiltersApplied'
-  import {clone} from '../../modules/helpers'
+  import clone          from 'lodash.clone'
 
   export default {
-    name: "AAparamsNav",
-    components:{FiltersApplied},
-    props: {
-        params:{
-            type:Object
-        }           
-    },
-    data(){
-        return {
-            text:'',
-            filters:[],
-            textFilter:{text:''}
-        }
-    },
-    computed: {pageStart,pageEnd},
-    methods : {hasPages,textSearch,typeFiler,deleteFilter,updateSearchQuery,functionLoadFilters,deleteText},
-    mounted(){
-        this.functionLoadFilters()
-    }
+    name: 'AAparamsNav',
+    components: { FiltersApplied },
+    props: { params: { type: Object } },
+    computed: { pageStart,pageEnd },
+    methods : { hasPages,textSearch,typeFiler,deleteFilter,updateSearchQuery,functionLoadFilters,deleteText },
   }
-
+  
+function mounted (){
+    this.functionLoadFilters()
+}
+function  data(){
+    return {
+        text:'',
+        filters:[],
+        textFilter:{text:''}
+    }
+}
 function deleteFilter(index){
     this.filters.splice(index,1)
     this.filters = clone(this.filters)
