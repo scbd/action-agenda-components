@@ -5,7 +5,7 @@
     <AASearchNav :params="search" @filter="filter"/>
     <AAHorzList :data="data"  />
 
-    <section v-if="DEBUG">
+    <!-- <section v-if="DEBUG">
       <br/><br/><br/>
       <legend>DEBUG:</legend>
       <div class="card debug">
@@ -32,7 +32,7 @@
 
         </div>
       </div>
-    </section>
+    </section> -->
   </div>
 </template>
 

@@ -1,9 +1,9 @@
 <template>
+  <div class="container-fluid">
     <div class="row no-gutters">
       <BCardImg v-if="(coverImage||{}).url" class="action-img" :src="(coverImage||{}).url" :alt="`${name.en} cover image`" bottom />
       <div :class="{'col-sm-11':(image||{}).url,'col-sm-12':!(image||{}).url}" >
         <div class="card-body">
-          sdkjfhagskdfhjk
           <h5 class="card-title">{{name.en}}</h5>
           <p class="card-text desc">
             {{description.en}}
@@ -14,6 +14,7 @@
         <img :src="(image||{}).url" class="card-img rounded-0" :alt="`${name.en} icon`">
       </div>
     </div>
+  </div>
 </template>
 
 <script>

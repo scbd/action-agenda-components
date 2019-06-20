@@ -7,11 +7,11 @@ export default {
 function defaultQuery () {
   let def = {}
 
-  def.q={}
-  def.sk=0
-  def.l=10
-  def.s={'meta.modifiedOn':1}
-  def.f={'meta':1,'organizer':1,'name':1,'description':1}
+  def.q = {}
+  def.sk= 0
+  def.l = 500
+  def.s ={ 'meta.modifiedOn':1}
+  def.f = {'meta':1,'organizer':1,'name':1,'description':1}
   return def
 } 
 
@@ -19,7 +19,7 @@ function defaultCountQuery () {
   let def = {}
   
   def.q={}
-  def.c=500
+  def.c=1
   def.f={'_id':1}
   return def
 } 

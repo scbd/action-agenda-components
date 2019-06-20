@@ -58,13 +58,18 @@
     },
     computed: { status },
     methods : { changeTab, isActiveTab, getMainEntityObject, getActionObject, getStatusUrl, changeStatus, go },
-    filters : { dateFormat }
+    filters : { dateFormat },
+    data,
+    mounted
   }
 
   function  data() {
     return { activeTab:1 }
   }
 
+function mounted(){
+  this.activeTab = 1
+}
   function dateFormat (date) {
       let d = new Date(date)
       return `${d.getUTCDate()} ${d.getMonth(d.getUTCMonth())} ${d.getUTCFullYear()}`

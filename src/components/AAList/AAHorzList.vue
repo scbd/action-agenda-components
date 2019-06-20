@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <HorzCard v-bind="action" v-for="(action,index) in data"  v-bind:key="index" v-on:status-change="statusUpdate"/>
     <!-- pagination -->
   </div>

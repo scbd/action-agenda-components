@@ -11,11 +11,11 @@
 # aws s3 sync . s3://scbd-components/action-agenda/action-form/   --exclude ".*" --cache-control "86400" --content-encoding "gzip" --acl "public-read"
 
 
-# yarn bl
-# cd ../aalist
-# gzip -9 *
-# for i in *.gz; do mv -i $i `basename $i .gz`; done
-# aws s3 sync . s3://scbd-components/action-agenda/action-list/  --exclude "css" --exclude ".*" --content-encoding "gzip" --acl "public-read"
+#yarn bl
+cd ../dist/aalist
+gzip -9 *
+for i in *.gz; do mv -i $i `basename $i .gz`; done
+aws s3 sync . s3://scbd-components/action-agenda/action-list/  --exclude "css" --exclude ".*" --content-encoding "gzip" --acl "public-read"
 
 # yarn bv
 # cd ../aaview
@@ -48,10 +48,11 @@
 
 # echo $(pwd)
 # aws s3 sync . s3://scbd-components/p2020/demo   --exclude ".*" --cache-control "86400" --content-encoding "gzip" --acl "public-read"
-cd ..
-cd $PWD/dist/
-echo $(pwd)
-gzip -9 *
-for i in *.gz; do mv -i $i `basename $i .gz`; done
-echo $(pwd)
-aws s3 sync . s3://scbd-components/action-agenda/demo   --exclude ".*" --cache-control "86400" --content-encoding "gzip" --acl "public-read"
+
+# cd ..
+# cd $PWD/dist/
+# echo $(pwd)
+# gzip -9 *
+# for i in *.gz; do mv -i $i `basename $i .gz`; done
+# echo $(pwd)
+# aws s3 sync . s3://scbd-components/action-agenda/demo   --exclude ".*" --cache-control "86400" --content-encoding "gzip" --acl "public-read"
