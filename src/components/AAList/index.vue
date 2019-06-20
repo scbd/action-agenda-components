@@ -11,17 +11,22 @@
       <div class="card debug">
         <div class="card-body">
           <div class="row">
-            <div class="col col-lg-4">
+            <div class="col col-lg-2">
                <legend>q:</legend>
                <pre>{{q}}</pre>
             </div>
-            <div class="col col-lg-4">
+            <div class="col col-lg-2">
                <legend>search:</legend>
                <pre>{{search}}</pre>
             </div>
+
             <div class="col col-lg-4">
                <legend>data:</legend>
                <pre>{{data}}</pre>
+            </div>
+                        <div class="col col-lg-4">
+               <legend>me:</legend>
+               <pre>{{$me}}</pre>
             </div>
           </div>
 
@@ -64,7 +69,7 @@
 
   async function mounted(){
 
-    this.list(this.q)
+   this.list(this.q)
 
     if(this.$isAuthLoaded && (await this.$isAuthLoaded())){
       this.list(this.q)
