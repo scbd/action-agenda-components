@@ -4,7 +4,6 @@
     <legend>{{ $t('partners.sectionName') }}</legend>
     <div class="card">
       <div class="card-body">
-        <label for="partner.en" v-if="!index">Name</label>
         <div class="row" v-for="(partner,index) in partners" v-bind:key="index">
           
           <div class="col-8 col-md-10 col-lg-11">

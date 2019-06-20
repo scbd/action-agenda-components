@@ -15,7 +15,7 @@
     <template slot="option" slot-scope="props" v-if="type==='SDGs' || type==='Aichi' ">
       <div class="row">
         <div class="col-1">
-          <img class="option-image" :src="props.option.img" alt="No Man’s Sky">
+          <img class="option-image" :src="props.option.img" :alt="props.option.name">
         </div>
         <div class="col-11">
           <span>{{ props.option.name }}.</span>
@@ -23,105 +23,93 @@
         </div>
       </div>
     </template>
-  
   </multiselect>
 </template>
 
 <script>
-import ScbdCachedApis from '../../../modules/ScbdCachedApis'
-import Multiselect from 'vue-multiselect'
-import LookUp from '../../../modules/ScbdCachedApisLookUp'
-import 'vue-multiselect/dist/vue-multiselect.min.css'
+  import ScbdCachedApis from '@modules/ScbdCachedApis'
+  import Multiselect    from 'vue-multiselect'
+  import LookUp         from '@modules/ScbdCachedApisLookUp'
 
-export default {
-  name: 'SCBDSelect',
-  components: { Multiselect },
-  props: {
-    name: {},
-    value: {
-      type: [Array, Object, String],
-      required: true
+  import 'vue-multiselect/dist/vue-multiselect.min.css'
+
+  export default {
+    name: 'SCBDSelect',
+    components: { Multiselect },
+    props: {
+      name        : {},
+      value       : { type: [Array, Object, String], required: true },
+      type        : { type: String, required: true },
+      multi       : { type: Boolean, default: false },
+      tagView     : { type: Boolean, default: false },
+      state       : { type: Boolean, default: true },
+      placeholder : { type: String, default: ' ' }
     },
-    type: {
-      type: String,
-      required: true
-    },
-    multi: {
-      type: Boolean,
-      default: false
-    },
-    tagView: {
-      type: Boolean,
-      default: false
-    },
-    state: {
-      type: Boolean,
-      default: true
-    },
-    placeholder: {
-      type: String,
-      default: ' '
-    }
-  },
-  data() {
+    methods: { update, load, loadModelWatch },
+    data,
+    created
+  }
+
+  function   data() {
     return {
-      values: this.value  ,
-      options: [],
+      values   : this.value,
+      options  : [],
       isLoading: false,
       killWatch: false
     }
-  },
-  created: async function() {
-    this.options = await this.load()
-   // this.values = this.value
-    this.killWatch = this.$watch('value',loadModelWatch)
-  },
-  methods: { update, load, loadModelWatch }
-}
-
-async function loadModelWatch(newValue,oldValue,){
-  if(!oldValue && newValue){
-     this.values=newValue
-     this.killWatch()
-     this.values = await LookUp[`get${this.type}`](newValue, true)
   }
-}
-function update() {
-  // .map(clean)
-  let returnValues 
-  if(!this.multi)
-    returnValues = clean(this.values)
-  else 
-    returnValues = this.values.map(clean)
 
-  this.$emit('input',returnValues )
-}
-function clean(item) {
-  if(item.code)
-    return { code: item.code}
-  return { identifier: item.identifier }
-}
-function load() {
-  return ScbdCachedApis[`get${this.type}`]()
-}
+  async function  created() {
+    this.options = await this.load()
+    this.killWatch = this.$watch('value',loadModelWatch)
+  }
+
+  async function loadModelWatch(newValue,oldValue){
+    if(!oldValue && newValue){
+      this.values=newValue
+      this.killWatch()
+      this.values = await LookUp[`get${this.type}`](newValue, true)
+    }
+  }
+
+  function update() {
+
+    let returnValues 
+    if(!this.multi)
+      returnValues = clean(this.values)
+    else 
+      returnValues = this.values.map(clean)
+
+    this.$emit('input',returnValues )
+  }
+
+  function clean(item) {
+    if(item.code)
+      return { code: item.code}
+    return { identifier: item.identifier }
+  }
+
+  function load() {
+    return ScbdCachedApis[`get${this.type}`]()
+  }
+
 </script>
 
 <style  scoped>
-.fix {
-  padding: 0 0 0 0;
-  background-color: #ddd;
-  border-radius: 5px;
-  border-color: transparent;
-}
-/* .multiselect__tags .multiselect__tags-wrap input */
-.fix.is-invalid {
-  border-color: #dc3545;
-border-width: 1px;
-border-style: solid;
-}
+  .fix {
+    padding: 0 0 0 0;
+    background-color: #ddd;
+    border-radius: 5px;
+    border-color: transparent;
+  }
 
-.option-image {
-  max-height: 30px;
-}
+  .fix.is-invalid {
+    border-color: #dc3545;
+  border-width: 1px;
+  border-style: solid;
+  }
 
+  .option-image {
+    max-height: 30px;
+  }
 </style>

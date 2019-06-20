@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --mode stg",
+    "stg": "vue-cli-service serve --mode stg",
+    "prod": "vue-cli-service serve --mode production",
     "p2020": "vue-cli-service build  --target lib --formats umd-min --name p2020 --dest dist/p2020 src/components/Post2020Graph/index.vue",
     "p2020Demo": "vue-cli-service build  --target lib --formats umd-min --name p2020Demo --dest dist/p2020Demo src/main.js",
     "bv": "vue-cli-service build  --target lib --formats umd-min --name actionView --dest dist/aaview src/components/AAView/index.vue",

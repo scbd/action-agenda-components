@@ -3,6 +3,7 @@
       <BCardImg v-if="(coverImage||{}).url" class="action-img" :src="(coverImage||{}).url" :alt="`${name.en} cover image`" bottom />
       <div :class="{'col-sm-11':(image||{}).url,'col-sm-12':!(image||{}).url}" >
         <div class="card-body">
+          sdkjfhagskdfhjk
           <h5 class="card-title">{{name.en}}</h5>
           <p class="card-text desc">
             {{description.en}}
@@ -16,31 +17,21 @@
 </template>
 
 <script>
-import BCardImg from 'bootstrap-vue/es/components/card/card-img'
-export default {
-  name: "AAHorzCardAction",
-  components:{BCardImg},
-  props: {
-    name: {
-      type:Object,
-      required: true
-    },
-    description: {
-      type:Object,
-      required: true
-    },
-    coverImage: {
-      type:Object
-    },
-    image: {
-      type:Object
-    }    
-  }
-};
+  import BCardImg from 'bootstrap-vue/es/components/card/card-img'
 
+  export default {
+    name: "HorzCardAction",
+    components:{BCardImg},
+    props: {
+      name       : { type:Object, required: true },
+      description: { type:Object, required: true },
+      coverImage : { type:Object },
+      image      : { type:Object }    
+    }
+  }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
   .action-img{
     max-height: 250px;

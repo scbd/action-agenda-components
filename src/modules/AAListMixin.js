@@ -19,7 +19,7 @@ function defaultCountQuery () {
   let def = {}
   
   def.q={}
-  def.c=1
+  def.c=500
   def.f={'_id':1}
   return def
 } 
@@ -49,7 +49,7 @@ async function count(params={}) {
 
     let options = this.getOptions()
     options.params = Object.assign(defaultCountQuery(),params)
-  
+ console.log(options) 
     let data =  (await axios.get(`${this.getBaseApi()}/v2019/actions`,options)).data
 
     

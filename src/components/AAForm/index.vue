@@ -5,11 +5,11 @@
   
       <b-form v-if="(actorType!=='party') || (actorType==='party' && $me.isGov)" @submit="onSubmit"  novalidate>
 
-        <legend>{{ $t(`title.${actorType}`) }}  </legend>
+        <legend>{{ $t(`title.${actorType}`) }}</legend>
         <div class="card">
           <div class="card-body"> 
 
-            <ActorSelect class="mb-3"  v-model="form.actor" :type="actorType" @input="updateContacts"/>
+            <ActorSelect v-if="actorType" class="mb-3"  v-model="form.actor" :type="actorType" @input="updateContacts"/>
 
             <div class="card">
               <div class="card-body">
@@ -60,7 +60,7 @@
                         v-on:change="toggleAccountSignup()"
                       >
                       <label class="form-check-label align-text-bottom" for="`RadioInline`" >
-                        Create an account to access your action for edits or updates<br>
+                        Create an account to access your action for edits or updates.<br>
                       </label>
                     </div>
                   </BCol>
@@ -185,97 +185,21 @@ import Partners      from './Partners'
 export default {
   name      : 'AAForm',
   mixins    : [ AAFormMixin ],
-  props     : {  actorType: { type: String, required: false }  },
+//  props     : {  actorType: { type: String, required: false }  },
   components: { FormFeedback, bForm, ActorSelect, Action, ActionDetails, Contact, Partners },
-  data,
-  methods:  {  save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup, location, updateContacts, validate },
+  methods:  {  save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup,  updateContacts, validate },
   computed: { config, actionComplete },
-  async mounted(){
-    this.toggleSubscription()
-  }
-}
-
-function updateContacts(){
-  if(this.actorType === 'person')
-    this.form.contacts[0] = this.form.actor
-}
-
-function location(){
-  return window.location.href
-}
-
-function actionComplete(){
-  let name =  this.form.action.name && this.form.action.name.en
-  let description =  this.form.action.description && this.form.action.description.en
-
-  return name && description
-}
-
-function config(){
-  return configMap[this.actorType]
-}
-async function validate() {
-      let data 
-
-      try {
-        let form    = this.cleanForm(this.form)
-
-        data    = await axios.post(`${this.$apiBaseUrl}/v2019/actions/validate`,form, {})
-
-        // this.feedback.publishRequested=true
-
-        return data
-    } catch (err) {
-
-     if(err && err.response)
-          this.feedback.error=err.response.data
+  data,
+  mounted
  
-        console.error(err);
-    }
-}
-async function save() {
-      let data 
-
-      try {
-        console.log('====================', await this.validate())
-        let form    = this.cleanForm(this.form)
-        let options = this.$baseReqOpts || {}
-
-        options = await this.getRecaptchaToken(options)
-        data    = await axios.post(`${this.$apiBaseUrl}/v2019/actions`,form, options)
-
-        this.feedback.publishRequested=true
-
-        return data
-    } catch (err) {
-
-     if(err && err.response)
-          this.feedback.error=err.response.data
- 
-        console.error(err);
-    }
-}
-async function getRecaptchaToken(options) {
- 
-  let token = await this.$recaptcha('action')
-  if(token) {
-    if(!options.headers) options.headers = {}
-    options.headers['X-Captcha-Token'] = token 
-  }
-
-  return options
-}
-
-function validateComponent(vm) {
-  if (vm.$validator) vm.$validator.validateAll()
-  if (vm.$children ) vm.$children.forEach(validateComponent)
 }
 
 function data () {
     return {
+      actorType:this.$route.params.type ,
       DEBUG:process.env.VUE_APP_DEBUG,
       feedback:{
-        actorType:this.actorType,
+        actorType:this.$route.params.type,
         publishRequested:false,
         error:''
       },
@@ -294,6 +218,89 @@ function data () {
       }
     }
   }
+
+  async function mounted(){
+    this.toggleSubscription()
+  }
+
+  function actionComplete(){
+    let name =  this.form.action.name && this.form.action.name.en
+    let description =  this.form.action.description && this.form.action.description.en
+
+    return name && description
+  }
+
+  function updateContacts(){
+    if(this.actorType === 'person')
+      this.form.contacts[0] = this.form.actor
+  }
+
+
+  function config(){
+    if(!configMap[this.actorType]) return {}
+    return configMap[this.actorType]
+  }
+
+  async function validate() {
+        let data 
+
+        try {
+          let form    = this.cleanForm(this.form)
+
+          data    = await axios.post(`${this.$apiBaseUrl}/v2019/actions/validate`,form, {})
+
+          // this.feedback.publishRequested=true
+
+          return data
+      } catch (err) {
+
+      if(err && err.response)
+            this.feedback.error=err.response.data
+  
+          console.error(err);
+      }
+  }
+
+  async function save() {
+        let data 
+
+        try {
+          console.log('====================', await this.validate())
+          let form    = this.cleanForm(this.form)
+          let options = this.$baseReqOpts || {}
+
+          options = await this.getRecaptchaToken(options)
+          data    = await axios.post(`${this.$apiBaseUrl}/v2019/actions`,form, options)
+
+          this.feedback.publishRequested=true
+
+          return data
+      } catch (err) {
+
+      if(err && err.response)
+            this.feedback.error=err.response.data
+  
+          console.error(err);
+      }
+  }
+
+  async function getRecaptchaToken(options) {
+  
+    let token = await this.$recaptcha('action')
+    if(token) {
+      if(!options.headers) options.headers = {}
+      options.headers['X-Captcha-Token'] = token 
+    }
+
+    return options
+  }
+
+  function validateComponent(vm) {
+    if (vm.$validator) vm.$validator.validateAll()
+    if (vm.$children ) vm.$children.forEach(validateComponent)
+  }
+
+
   function onSubmit(evt) {
  
     evt.preventDefault()
@@ -302,11 +309,13 @@ function data () {
     if(this.$me.isAuthenticated) this.form.accountSignup = false
     this.save()
   }
+
   function toggleSubscription() {
  
-    if(this.form.subscription) this.form.subscription = {list:this.config.mailingList.list, tags:this.config.mailingList.tags, requested:new Date()}
+    if(this.form.subscription && this.actorType && this.config.mailingList) this.form.subscription = {list:this.config.mailingList.list, tags:this.config.mailingList.tags, requested:new Date()}
     
   }
+
   function toggleAccountSignup() {
 
     if(this.form.accountSignup) this.form.accountSignup = new Date()

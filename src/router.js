@@ -11,13 +11,13 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      redirect: '/aaform/individual',
+      redirect: '/list',
       // name: 'home',
       // component: Home,
-      component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
-      props:{
-        actorType:'person'
-      }
+      // component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
+      // props:{
+      //   actorType:'person'
+      // }
     },
     // {
     //   path: '/p2020',
@@ -26,62 +26,63 @@ export default new VueRouter({
     //   component: () => import(/* webpackChunkName: "Post2020Graph" */ './components/Post2020Graph/index.vue'),
 
     // },
-    {
-      path: '/aaform/individual',
-      name: 'individual',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
-      props:{
-        actorType:'person'
-      }
-    },
-    {
-      path: '/aaform/organization',
-      name: 'Organization/Business',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
-      props:{
-        actorType:'organization'
-      }
-    },
-    {
-      path: '/aaform/public',
-      name: 'Public',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
-      props:{
-        actorType:'public'
-      }
-    },
-    {
-      path: '/aaform/party',
-      name: 'Party',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
-      props:{
-        actorType:'party'
-      }
-    },
     // {
-    //   path: '/aalistview',
-    //   name: 'aalistview',
+    //   path: '/aaform/:type',
+    //   name: 'individual',
     //   // route level code-splitting
     //   // this generates a separate chunk (about.[hash].js) for this route
     //   // which is lazy-loaded when the route is visited.
-    //   component: () => import(/* webpackChunkName: "AAList" */ './components/AAList/index.vue'),
+    //   component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
     //   props:{
-    //     env:process.env.NODE_ENV,
-    //     dataFn:queryActions
+    //     actorType:'person'
     //   }
     // },
+    // {
+    //   path: '/aaform/:type',
+    //   name: 'Organization/Business',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
+    //   props:{
+    //     actorType:'organization'
+    //   }
+    // },
+    // {
+    //   path: '/aaform/:type',
+    //   name: 'Public',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
+    //   force: true,
+    //   props:{
+    //     actorType:'public'
+    //   }
+    // },
+    // {
+    //   path: '/aaform/:type',
+    //   name: 'Party',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
+    //   props:{
+    //     actorType:'party'
+    //   }
+    // },
+    {
+      path: '/list',
+      name: 'aalistview',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "AAList" */ './components/AAList/index.vue'),
+      props:{
+        env:process.env.NODE_ENV,
+        dataFn:queryActions
+      }
+    },
     // {
     //   path: '/aaview',
     //   name: 'aaview',

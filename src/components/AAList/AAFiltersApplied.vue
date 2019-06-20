@@ -53,15 +53,15 @@ function filterDisplay(value) {
 </script>
 
 <style scoped>
-.close-badge {
-  cursor: pointer;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
-    -webkit-box-shadow 0.15s ease-in-out;
-}
-.close-badge:hover {
-  color: #fff;
-  background-color: #343a40;
-  border-color: #343a40;
-}
+  .close-badge {
+    cursor: pointer;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+      -webkit-box-shadow 0.15s ease-in-out;
+  }
+  .close-badge:hover {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+  }
 </style>

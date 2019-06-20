@@ -51,136 +51,141 @@
 </template>
 
 <script>
-  import FiltersApplied from './AAFiltersApplied'
-  import clone          from 'lodash.clone'
+    import clone          from 'lodash.clone'
+    import FiltersApplied from './AAFiltersApplied'
 
-  export default {
-    name: 'AAparamsNav',
-    components: { FiltersApplied },
-    props: { params: { type: Object } },
-    computed: { pageStart,pageEnd },
-    methods : { hasPages,textSearch,typeFiler,deleteFilter,updateSearchQuery,functionLoadFilters,deleteText },
-  }
-  
-function mounted (){
-    this.functionLoadFilters()
-}
-function  data(){
-    return {
-        text:'',
-        filters:[],
-        textFilter:{text:''}
+    export default {
+        name      : 'SearchNav',
+        components: { FiltersApplied },
+        props     : { params: { type: Object } },
+        computed  : { pageStart,pageEnd },
+        methods   : { hasPages,textSearch,typeFiler,deleteFilter,updateSearchQuery,functionLoadFilters,deleteText },
+        data,
+        mounted
     }
-}
-function deleteFilter(index){
-    this.filters.splice(index,1)
-    this.filters = clone(this.filters)
-    this.$emit('filter',{filters:this.filters, text:this.textFilter.text})
-    this.updateSearchQuery()
-}
-function deleteText(){
+  
+    function mounted (){
+        this.functionLoadFilters()
+    }
 
-    this.textFilter={text:''}
-    this.filters = clone(this.filters)
-    this.$emit('filter',{filters:this.filters, text:this.textFilter.text})
-    this.updateSearchQuery()
-}
-function textSearch(text){
+    function  data(){
+        return {
+            text      : '',
+            filters   : [],
+            textFilter: {text:''}
+        }
+    }
 
-    if(!this.textSearch) return 
+    function deleteFilter(index){
+        this.filters.splice(index,1)
+        this.filters = clone(this.filters)
+        this.$emit('filter',{filters:this.filters, text:this.textFilter.text})
+        this.updateSearchQuery()
+    }
 
-    this.textFilter.text = text
+    function deleteText(){
 
+        this.textFilter={text:''}
+        this.filters = clone(this.filters)
+        this.$emit('filter',{filters:this.filters, text:this.textFilter.text})
+        this.updateSearchQuery()
+    }
 
-    this.$emit('filter',{filters:this.filters, text:this.textFilter.text})
-    this.text = ''
-    this.updateSearchQuery()
-}
+    function textSearch(text){
 
-function typeFiler(status){
+        if(!this.textSearch) return 
 
-    let filter = {'meta.status':status}//{ 'meta':{status:status} }
-    this.filters.push(filter)
-    this.$emit('filter',{filters:this.filters, text:this.textFilter.text})
-    this.updateSearchQuery()
-}
+        this.textFilter.text = text
 
-function updateSearchQuery(){
+        this.$emit('filter',{filters:this.filters, text:this.textFilter.text})
+        this.text = ''
+        this.updateSearchQuery()
+    }
 
-    resetSearchParams()
-    this.filters.forEach(filter => {
-        let filterArray = Object.entries(filter)
-        let key         = filterArray[0][0]
-        let value       = filterArray[0][1]
-        
-        addParam(key,value)
-    })
+    function typeFiler(status){
 
-    if(this.textFilter.text)
-        addParam('$text',this.textFilter.text)
-}
-
-function resetSearchParams(){
-    let protocol = window.location.protocol,
-        host = '//' + window.location.host,
-        path = window.location.pathname,
-        query = window.location.search;
-
-    let newUrl = protocol + host + path 
-
-    window.history.pushState({path:newUrl}, '' , newUrl)
-
-}
-
-function addParam(key,value){
-    let protocol = window.location.protocol,
-        host = '//' + window.location.host,
-        path = window.location.pathname,
-        query = window.location.search;
-
-    let newUrl = protocol + host + path + query + (query ? '&' : '?') + `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
-
-    window.history.pushState({path:newUrl}, '' , newUrl)
-}
-
-function functionLoadFilters(){
-    let query = window.location.search.substring(1);
-    if(!query) return
-    let stringPairs = query.split('&')
-
-    stringPairs.forEach(pair => {
-        
-        let filterArr = pair.split('=')
-        let key = decodeURIComponent(filterArr[0])
-        let value = decodeURIComponent(filterArr[1])
-        if(key==='$text') 
-            return this.textFilter.text = value
-        let filter = {[`${key}`]:value}
+        let filter = {'meta.status':status}//{ 'meta':{status:status} }
         this.filters.push(filter)
-        
-    })
+        this.$emit('filter',{filters:this.filters, text:this.textFilter.text})
+        this.updateSearchQuery()
+    }
+
+    function updateSearchQuery(){
+
+        resetSearchParams()
+        this.filters.forEach(filter => {
+            let filterArray = Object.entries(filter)
+            let key         = filterArray[0][0]
+            let value       = filterArray[0][1]
+            
+            addParam(key,value)
+        })
+
+        if(this.textFilter.text)
+            addParam('$text',this.textFilter.text)
+    }
+
+    function resetSearchParams(){
+        let protocol = window.location.protocol,
+            host = '//' + window.location.host,
+            path = window.location.pathname,
+            query = window.location.search;
+
+        let newUrl = protocol + host + path 
+
+        window.history.pushState({path:newUrl}, '' , newUrl)
+
+    }
+
+    function addParam(key,value){
+        let protocol = window.location.protocol,
+            host = '//' + window.location.host,
+            path = window.location.pathname,
+            query = window.location.search;
+
+        let newUrl = protocol + host + path + query + (query ? '&' : '?') + `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+
+        window.history.pushState({path:newUrl}, '' , newUrl)
+    }
+
+    function functionLoadFilters(){
+        let query = window.location.search.substring(1);
+        if(!query) return
+        let stringPairs = query.split('&')
+
+        stringPairs.forEach(pair => {
+            
+            let filterArr = pair.split('=')
+            let key = decodeURIComponent(filterArr[0])
+            let value = decodeURIComponent(filterArr[1])
+            if(key==='$text') 
+                return this.textFilter.text = value
+            let filter = {[`${key}`]:value}
+            this.filters.push(filter)
+            
+        })
 
 
-    this.$emit('filter',{filters:this.filters, text:this.textFilter.text})
-}
+        this.$emit('filter',{filters:this.filters, text:this.textFilter.text})
+    }
 
-function pageEnd(){
-    let total = this.params.total
-    let end   = this.params.page*this.params.numPerPage
+    function pageEnd(){
+        let total = this.params.total
+        let end   = this.params.page*this.params.numPerPage
 
-    if(end>total)
-        end=total
+        if(end>total)
+            end=total
 
-    return end
-}
+        return end
+    }
 
-function pageStart(){
-    return this.params.page*this.params.numPerPage-(this.params.numPerPage-1)
-}
-function hasPages(){
-    let {total, pageLength} = this.params
-    return total > pageLength
-}
+    function pageStart(){
+        return this.params.page*this.params.numPerPage-(this.params.numPerPage-1)
+    }
+    function hasPages(){
+        let {total, pageLength} = this.params
+        return total > pageLength
+    }
 
 </script>
 

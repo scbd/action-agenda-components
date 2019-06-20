@@ -45,7 +45,7 @@
             },
             "progressMeasured":{
                 "label":"Progress tracking",
-                "placeholder":"Describe how you measure progress. Provide a link if relevant",
+                "placeholder":"Describe how you measure progress. Provide a link if relevant.",
                 "help":" "
             }
         },

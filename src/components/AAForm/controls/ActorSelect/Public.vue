@@ -67,7 +67,7 @@
           <label  :for="`${actor.actorType}.types`">{{ $t(`${actor.actorType}.types`) }}  </label>
           <SCBDSelect
             @input="update"
-            type="OrganizationType"
+            type="GovernmentType"
             :id="`${actor.actorType}.types`"
             v-model="actor.types"
             multi

@@ -2,15 +2,18 @@
   <div id="app">
     <link rel="stylesheet" href="https://s3.amazonaws.com/phoenix.www.cbd.int/themes/custom/bootstrap_sass/css/style.css" />
     <Icons/>
-    <div id="nav">
-      Views:      
-
-      <router-link to="/aaform/individual">Individual</router-link> |
+    <!-- <div id="nav">
+      Forms:      
+      <router-link to="/aaform/person">Individual</router-link> |
       <router-link to="/aaform/organization">Org</router-link> |
       <router-link to="/aaform/public">Public</router-link> |
-      <router-link to="/aaform/party">Party</router-link> |      
-      <!-- <router-link to="/aalistview">AAListView</router-link> |
-      <router-link to="/aaview">AAView</router-link> | -->
+      <router-link to="/aaform/party">Party</router-link> 
+      <hr><br>
+    </div> -->
+    <div id="nav">
+      List:      
+      <router-link to="/list">List</router-link> |
+      <hr><br>
     </div>
       <!-- <div id="nav">
       Child Components: 
@@ -21,8 +24,8 @@
       <router-link to="/component/AAOrganization">AAOrganization</router-link> |
     </div> -->
   
-    <hr><br>
-    <router-view/>
+    
+    <router-view :key="$route.fullPath" />
   </div>
 </template>
 <script>
