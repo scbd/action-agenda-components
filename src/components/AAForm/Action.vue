@@ -3,15 +3,22 @@
 <template>
   <div class="row">
       <div class="col-12">
+        
+        <div class="form-group" id="group.action.name">
+          <label  for="action.name"> {{ $t(`action.name.label`) }} </label>
+          <input class="form-control" 
+            @input      ="update"
+            id          ="action.name"
+            type        ="text"
+            v-model.trim="action.name.en"
+            v-validate  ="'required|max:140'"
+            :class      ="[ getValidationClass($t(`action.name.label`)) ]" 
+            :name       ="$t(`action.name.label`)"
+            :placeholder="$t(`action.name.placeholder`)" 
+            />
 
-        <div class="form-group" :id="`group.action.name`">
-          <label :for="`action.name`"> {{ $t(`action.name.label`) }} </label>
-          <input class="form-control" @input="update" :id="`action.name`" type="text"
-              v-model.trim="action.name.en" v-validate="'required|max:140'"
-              :state="validateState($t(`action.name.label`),action.name)" :name="$t(`action.name.label`)"
-              :placeholder="$t(`action.name.placeholder`)" />
           <small v-if="$t(`action.name.help`)" class="form-text text-muted">{{$t(`action.name.help`)}}</small>
-          <field-error-message :error="errors.collect($t(`action.name.label`))" />
+          <field-error-message :error="errors.collect($t(`action.name.label`))"/>
         </div>
 
       </div>

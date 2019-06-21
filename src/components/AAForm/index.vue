@@ -295,17 +295,14 @@ function data () {
     return options
   }
 
-  function validateComponent(vm) {
-    if (vm.$validator) vm.$validator.validateAll()
-    if (vm.$children ) vm.$children.forEach(validateComponent)
-  }
+
 
 
   function onSubmit(evt) {
  
     evt.preventDefault()
     this.$validator.validate()
-    this.$children.forEach(validateComponent)
+    this.$children.forEach(this.validateComponent)
     if(this.$me.isAuthenticated) this.form.accountSignup = false
     this.save()
   }

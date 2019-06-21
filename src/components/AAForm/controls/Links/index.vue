@@ -1,3 +1,4 @@
+<i18n src="./locales/index.json"></i18n>
 <template>
   <section>
     <Icons/>
@@ -6,8 +7,8 @@
       <div class="card-body">
 
         <div class="links" v-if="(!multi && !values[0] || multi) ">
-          <button v-on:click="show('link')" type="button" class="btn btn-secondary btn-sm">Add Link</button>
-          <button v-on:click="show('file')" type="button" class="btn btn-secondary btn-sm">Add File</button>
+          <button v-on:click="show('link')" type="button" class="btn btn-secondary btn-sm">{{$t('addLink')}}</button>
+          <button v-on:click="show('file')" type="button" class="btn btn-secondary btn-sm">{{$t('addFile')}}</button>
         </div>
 
         <div class="card" v-if="showFlags.link">
@@ -21,47 +22,50 @@
           <div class="card-body">
 
             <div class="form-group">
-              <label for="url">URL</label>
+              <label for="url">{{$t('url.label')}}</label>
               
               <input
-                :id="`${name}.input.url`"
+                id="links.url"
+                ref="links.url"
                 type="text"
                 class="form-control"
                 aria-label="URL"
                 v-validate="{url: {require_protocol: true }, required:true, max:2083}"
-                :state="validateState(`${name} url`,input.url)"
                 v-model.trim="input.url"
-                :name="`${name} url`"
-                :class="{'is-invalid':validateState(`${name} url`,input.url)===false}">
+                :name="$t('url.label')"
+                :class ="[ getValidationClass($t(`url.label`)) ]" 
+                />
 
-              <field-error-message :error="errors.collect(`${name} url`)"/>
+              <small v-if="$t(`url.help`)" class="form-text text-muted">{{$t(`url.help`)}}</small>        
+              <field-error-message :error="errors.collect($t(`url.label`))" :state="validateState($t(`url.label`))" />
             </div>
 
-            <div class="form-group">
-              <label for="url">Name</label>
-              
-              <input
-                :id="`${name}.input.name`"
-                type="text"
-                class="form-control"
-                aria-label="file name"
-                v-validate="'max:60'"
-                :state="validateState(`${name} file name`,input.title)"
-                v-model.trim="input.title"
-                :name="`${name} file name`"
-                :class="{'is-invalid':validateState(`${name} file name`,input.title)===false}">
+            <div class="form-group" :id="`links.group.name`" >
+              <label  for="links.name"> {{ $t(`name.label`) }} </label>
+              <input class="form-control" 
+                @input      ="update"
+                id          ="links.name"
+                ref          ="links.name"
+                type        ="text"
+                v-model.trim="input.name.en"
+                v-validate  ="'required|max:140'"
+                :class      ="[ getValidationClass($t(`name.label`)) ]"
+                :name       ="$t(`name.label`)"
+                :placeholder="$t(`name.placeholder`)" 
+                />
 
-              <field-error-message :error="errors.collect(`${name} file name`)"/>
+              <small v-if="$t(`name.help`)" class="form-text text-muted">{{$t(`name.help`)}}</small>
+              <field-error-message :error="errors.collect($t(`name.label`))"/>
             </div>
 
             <div class="text-right" v-if="showFlags.link || showFlags.file ">
               <div class="btn-group">
-                <button v-on:click="add()" type="button" class="btn btn-primary btn-sm">Add</button>
+                <button v-on:click="add()" type="button" class="btn btn-primary btn-sm">{{$t(`add`)}}</button>
                 <button
                   v-on:click="resetForm(input)"
                   type="button"
                   class="btn btn-outline-dark btn-sm">
-                  Clear
+                  {{$t(`clear`)}}
                 </button>
                 <hr>
               </div>
@@ -72,7 +76,7 @@
 
 
         <div class="card" v-if="showFlags.file">
-          <div class="card-body point">
+          <div class="card-body point text-center">
          
             <FileUpload
               class="alert alert-info mt-2 mb-0 file-uploads-drop"
@@ -92,13 +96,13 @@
                 <br/>
 
                 <span v-if="!multi">
-                  <strong>Choose a file</strong> by clicking here
-                  <span v-if="!noDrop">or drag it here</span>
+                  <strong>{{$t('chooseFile')}}</strong> {{$t('byClickingHere')}}
+                  <span v-if="!noDrop">{{$t('orDragItHere')}}</span>
                 </span>
 
                 <span v-if="multi">
-                  <strong>Choose files</strong> by clicking here
-                  <span v-if="!noDrop">or draging them here</span>
+                  <strong>{{$t('chooseFiles')}}</strong> {{$t('byClickingHere')}}
+                  <span v-if="!noDrop">{{$t('orDragThenHere')}}</span>
                 </span>
               </legend>
 
@@ -234,7 +238,7 @@ export default {
       values: [],
       input: {
         url: '',
-        title: '',
+        name: {en:''},
         files: []
       },
       showFlags: {
@@ -267,7 +271,7 @@ async function getPreSignedPost(file, comp) {
     file.data['Content-Type'] = file.file.type // for the head so signature matches
     file.putAction = putUrl
     await comp.uploadPut(file)
-    this.values.push({ title:name, url })
+    this.values.push({ name:{en:name}, url })
     this.update()
     this.show('file')
   } catch (error) {
@@ -309,11 +313,13 @@ function update() {
 }
 
 async function add() {
-  if ((await this.isValid())===true) {
-    let link = clone({ url: this.input.url, title: this.input.title })
+  let isValidFlag = false
+  await this.$validator.validate()
+  isValidFlag = !this.$validator.errors.count()
+
+  if (isValidFlag) {
+    let link = clone({ url: this.input.url, name: this.input.name })
     this.values.push(link)
-    this.resetForm(this.input)
-    this.resetValidation()
     this.show('link')
   }
 }
@@ -325,5 +331,15 @@ function show(type) {
 
   if(type==='file' && this.showFlags.file) 
     this.showFlags.link =  false
+
+  if(this.showFlags.link){
+       this.input.url =''
+       this.input.name.en=''
+  }
+    if(this.showFlags.file){
+      this.input.files = []
+       this.input.url =''
+       this.input.name.en=''
+  }
 }
 </script>

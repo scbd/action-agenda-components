@@ -29,17 +29,20 @@
       <div class="col-lg-9">
             
         <div class="form-group" :id="`group.${actor.actorType}.name`" >
-          <label  :for="`${actor.actorType}.name`"> {{ $t(`${actor.actorType}.name`) }} </label>
+          <label  :for="`${actor.actorType}.name`"> {{ $t(`${actor.actorType}.name.label`) }} </label>
           <input class="form-control" 
             @input      ="update"
             :id         ="`${actor.actorType}.name`"
             type        ="text"
             v-model.trim="actor.name.en"
             v-validate  ="'required|max:140'"
-            :state      ="validateState($t(`${actor.actorType}.name`),actor.name)"
-            :name       ="$t(`${actor.actorType}.name`)"
+            :class      ="[ getValidationClass($t(`${actor.actorType}.name.label`)) ]" 
+            :name       ="$t(`${actor.actorType}.name.label`)"
+            :placeholder="$t(`${actor.actorType}.name.placeholder`)" 
             />
-          <field-error-message :error="errors.collect($t(`${actor.actorType}.name`))"/>
+
+          <small v-if="$t(`${actor.actorType}.name.help`)" class="form-text text-muted">{{$t(`${actor.actorType}.name.help`)}}</small>
+          <field-error-message :error="errors.collect($t(`${actor.actorType}.name.label`))"/>
         </div>
 
       </div>
@@ -47,7 +50,7 @@
       <div class="col-lg-3">
 
         <div class="form-group" :id="`group.${actor.actorType}.country`">
-          <label  :for="`${actor.actorType}.country`">{{ $t(`${actor.actorType}.country`) }} </label>
+          <label  :for="`${actor.actorType}.country`">{{ $t(`${actor.actorType}.country.label`) }} </label>
           <SCBDSelect
             @input="update"
             type="Countries"
@@ -55,10 +58,12 @@
             v-model="actor.country"
             tag-view
             v-validate="'required'"
-            :state="validateState($t(`${actor.actorType}.country`))"
-            :name="$t(`${actor.actorType}.country`)"
+            :state   ="[ getValidationClass($t(`${actor.actorType}.country.label`)) ]" 
+            :name="$t(`${actor.actorType}.country.label`)"
+            :placeholder="$t(`${actor.actorType}.country.placeholder`)" 
           />
-          <field-error-message :error="errors.collect($t(`${actor.actorType}.country`))" :state="validateState($t(`${actor.actorType}.country`))" />
+          <small v-if="$t(`${actor.actorType}.country.help`)" class="form-text text-muted">{{$t(`${actor.actorType}.country.help`)}}</small>        
+          <field-error-message :error="errors.collect($t(`${actor.actorType}.country.label`))" :state="validateState($t(`${actor.actorType}.country.label`))" />
         </div>
 
       </div>
@@ -66,17 +71,19 @@
       <div class="col-lg-12">
 
         <div class="form-group" :id="`group.${actor.actorType}.email`" >
-          <label  :for="`${actor.actorType}.email`"> {{ $t(`${actor.actorType}.email`) }} </label>
+          <label  :for="`${actor.actorType}.email`"> {{ $t(`${actor.actorType}.email.label`) }} </label>
           <input class="form-control" 
             @input      ="update"
             :id         ="`${actor.actorType}.email`"
             type        ="text"
             v-model.trim="actor.email"
             v-validate="'email|required'"
-            :state      ="validateState($t(`${actor.actorType}.email`),actor.email)"
-            :name       ="$t(`${actor.actorType}.email`)"
+            :class   ="[ getValidationClass($t(`${actor.actorType}.email.label`)) ]" 
+            :name       ="$t(`${actor.actorType}.email.label`)"
+             :placeholder="$t(`${actor.actorType}.email.placeholder`)" 
             />
-          <field-error-message :error="errors.collect($t(`${actor.actorType}.email`))"/>
+          <small v-if="$t(`${actor.actorType}.email.help`)" class="form-text text-muted">{{$t(`${actor.actorType}.email.help`)}}</small>        
+          <field-error-message :error="errors.collect($t(`${actor.actorType}.email.label`))"/>
         </div>
 
       </div>
@@ -138,6 +145,7 @@ function useAccount() {
   this.$set(this.actor, 'country', {identifier:this.$me.country})
 
   this.input.useAccountInit = true
+  
   this.update()
 }
 
@@ -165,7 +173,8 @@ function notUseAccount() {
   person.lastName   .en = ''
   person.suffix     .en = ''
   person.name       .en = ''
-  this.update()
+
+  this.$children.forEach(this.validateComponent)
 }
 
 function parseName() {

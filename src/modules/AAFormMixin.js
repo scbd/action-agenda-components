@@ -17,7 +17,7 @@ Vue.use(VeeValidate, {fieldsBagName: 'veeFields',fastExit: false})
 
 export default {
     components: { BFormGroup, BContainer, BCol, BFormRow, BFormInput, FieldErrorMessage, BButton },
-    methods   : { validateState, resetForm, isValid, resetValidation, cleanForm }
+    methods   : { validateState, resetForm, isValid, resetValidation, cleanForm, getValidationClass, validateComponent }
 }
 
 async function resetForm (root)  {
@@ -48,7 +48,7 @@ function cleanForm(value) {
     if(Array.isArray(form[key])){
      
       form[key].forEach(element => {
-        console.log('element',element)
+
         if (typeof element === 'object'  ) 
           element= cleanForm(element)
       })
@@ -66,8 +66,10 @@ async function isValid() {
 
   for (let i = 0; i < this.$children.length; i++) {
     let vm = this.$children[i];
-    if (vm.$validator) await vm.$validator.validateAll();
+    if (vm.$validator) {
+      await vm.$validator.validateAll();
     isValidFlag = !vm.$validator.errors.count();      
+    }
   }
 
   return isValidFlag
@@ -87,4 +89,21 @@ function validateState(ref,value) {
       return (!this.errors.has(ref) && !value) ? null : !this.errors.has(ref) 
     
     return null
+}
+
+function getValidationClass(ref) {
+
+  if(!this.veeFields[ref]) return ''
+
+  if (!(this.veeFields[ref].dirty || this.veeFields[ref].validated)) 
+    return ''
+
+  if (!this.errors.has(ref)) return 'is-valid'
+  
+  return 'is-invalid'
+}
+
+function validateComponent(vm) {
+  if (vm.$validator) vm.$validator.validateAll()
+  if (vm.$children ) vm.$children.forEach(validateComponent)
 }

@@ -1,4 +1,5 @@
 <template >
+
   <multiselect
     v-model="values"
     :placeholder="placeholder"
@@ -10,7 +11,7 @@
     @input="update"
     hideSelected
     class="fix"
-    :class="{'is-invalid':state===false}">
+    :class="state">
 
     <template slot="option" slot-scope="props" v-if="type==='SDGs' || type==='Aichi' ">
       <div class="row">
@@ -24,6 +25,7 @@
       </div>
     </template>
   </multiselect>
+
 </template>
 
 <script>
@@ -42,7 +44,7 @@
       type        : { type: String, required: true },
       multi       : { type: Boolean, default: false },
       tagView     : { type: Boolean, default: false },
-      state       : { type: Boolean, default: true },
+      state       : { type: Array},
       placeholder : { type: String, default: ' ' }
     },
     methods: { update, load, loadModelWatch },
@@ -105,8 +107,14 @@
 
   .fix.is-invalid {
     border-color: #dc3545;
-  border-width: 1px;
-  border-style: solid;
+    border-width: 1px;
+    border-style: solid;
+  }
+
+  .fix.is-valid {
+    border-color: #28a745;
+    border-width: 1px;
+    border-style: solid;
   }
 
   .option-image {

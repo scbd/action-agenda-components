@@ -5,20 +5,64 @@
         "publicLabel": "Public Sector",
         "partyLabel": "Party",
         "organization": {
-            "name": "Name",
-            "country": "Country",
-            "types": "Type",
-            "typeOther": "Other type",
-            "image": "Logo",
-            "url": "Website"
+            "name": {
+                "label": "Name",
+                "placeholder": " ",
+                "help": " "
+            },
+            "country": {
+                "label": "Country",
+                "placeholder": " ",
+                "help": " "
+            },
+            "types": {
+                "label": "Type",
+                "placeholder": " ",
+                "help": " "
+            },
+            "typeOther": {
+                "label": "Other Type",
+                "placeholder": " ",
+                "help": " "
+            },
+            "image": {
+                "label": "Logo",
+                "placeholder": " ",
+                "help": " "
+            },
+            "url": {
+                "label": "Website",
+                "placeholder": " ",
+                "help": " "
+            }
         },
         "person": {
-            "useAccount":"Use your SCBD account profile data?",
-            "name": "Name",
-            "country": "Country",
-            "types": "Type",
-            "email": "Email",
-            "typeOther": "Other Type"
+            "useAccount": "Use your SCBD account profile data?",
+            "name": {
+                "label": "Name",
+                "placeholder": " ",
+                "help": " "
+            },
+            "country": {
+                "label": "Country",
+                "placeholder": " ",
+                "help": " "
+            },
+            "types": {
+                "label": "Type",
+                "placeholder": " ",
+                "help": " "
+            },
+            "email":{
+                "label": "Email",
+                "placeholder": " ",
+                "help": " "
+            },
+            "typeOther": {
+                "label": "Other Type",
+                "placeholder": " ",
+                "help": " "
+            }
         }
     }
 }
