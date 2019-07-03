@@ -1,6 +1,7 @@
 const path = require('path')
 
 module.exports = {
+  transpileDependencies:['humanparser'],
     devServer: {
       allowedHosts: [
         'http://localhost.cbd.int',

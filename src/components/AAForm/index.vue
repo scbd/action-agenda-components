@@ -108,6 +108,7 @@
 </template>
 
 <script>
+import '@babel/polyfill'
   import   Vue            from 'vue'
   import   axios          from 'axios'
   import   Auth           from '@modules/AuthPlugin'
