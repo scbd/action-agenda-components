@@ -12,10 +12,10 @@
 
 
 #yarn bl
-cd ../dist/aalist
-gzip -9 *
-for i in *.gz; do mv -i $i `basename $i .gz`; done
-aws s3 sync . s3://scbd-components/action-agenda/action-list/  --exclude "css" --exclude ".*" --content-encoding "gzip" --acl "public-read"
+# cd ../dist/aalist
+# gzip -9 *
+# for i in *.gz; do mv -i $i `basename $i .gz`; done
+# aws s3 sync . s3://scbd-components/action-agenda/action-list/  --exclude "css" --exclude ".*" --content-encoding "gzip" --acl "public-read"
 
 # yarn bv
 # cd ../aaview

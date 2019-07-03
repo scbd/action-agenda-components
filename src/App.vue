@@ -4,10 +4,10 @@
     <Icons/>
     <div id="nav">
       Forms:      
-      <router-link to="/aaform/person">Individual</router-link> |
-      <router-link to="/aaform/organization">Org</router-link> |
-      <router-link to="/aaform/public">Public</router-link> |
-      <router-link to="/aaform/party">Party</router-link> 
+      <router-link to="/aaform/person/hack">Individual</router-link> |
+      <router-link to="/aaform/organization/hack">Org</router-link> |
+      <router-link to="/aaform/public/hack">Public</router-link> |
+      <router-link to="/aaform/party/hack">Party</router-link> 
       <hr><br>
     </div>
     <!-- <div id="nav">

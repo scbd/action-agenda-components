@@ -2,7 +2,7 @@ import Vue        from 'vue'
 import axios      from 'axios'
 import AuthIFrame from './components/AuthIFrame'
 
-console.log(process.env)
+
 //reactive holder for me
 const vm = new Vue({
   data: {
@@ -20,7 +20,7 @@ export default {
 
     install(Vue, options={}){
 
-      vm.env = options.env || 'dev'
+      vm.env = process.env.NODE_ENV || options.env || 'dev'
 
       // add iframe to first available component
       Vue.mixin({
@@ -32,10 +32,10 @@ export default {
           '$isAdmin':isAdmin
         },
         methods:{
-          $isAuthLoaded:loaded
+          $isAuthLoaded:loaded,
+          $isUserLoaded:()=> new Promise(returnUser)
         },
         mounted: function () {
-
 
           if(!Vue.$AuthIFrame && this.$options.name!=='AuthIFrame' && this.$options.name){
             const AuthIFrameClass    = Vue.extend(AuthIFrame)
@@ -43,11 +43,7 @@ export default {
 
             AuthIFrameInstance.$mount()
 
-            // let appEl = this.$root.$children[0].$el
-            // console.log(appEl)
-            // let firstEl = this.$root.$children[0].$children[0].$el
-            // console.log(appEl)         
-            // appEl.insertBefore(AuthIFrameInstance.$el,firstEl)
+
             this.$el.appendChild(AuthIFrameInstance.$el)
             Vue.$AuthIFrame = AuthIFrameInstance.$el
 
@@ -77,7 +73,7 @@ function loadingInterval(resolve, reject){
                             },3000)
   timer = setInterval(()=>{
 
-                            if(vm.token) {
+                            if(vm.token ) {
                               clearInterval(timer)
                               clearTimeout(timeout)
                               return resolve(vm.token)
@@ -98,6 +94,24 @@ function receivePostMessage(event)
 
   vm.token = message.authenticationToken
   return vm.token
+}
+
+function returnUser(resolve, reject){
+  let timeout,timer =null
+  timeout = setTimeout(()=>{
+                              clearInterval(timer)
+                              if(vm.me.userID)
+                                resolve(vm.me)
+                              else
+                                reject('Error loading user')
+                            },3000)
+  timer = setInterval(()=>{
+                            if(vm.token && vm.me.userID) {
+                              clearInterval(timer)
+                              clearTimeout(timeout)
+                              return resolve(vm.me)
+                            }
+                          }, 100)
 }
 
 async function loadUser(){

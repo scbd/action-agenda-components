@@ -26,13 +26,15 @@
 
         <div class="form-group" :id="`group.action.description`">
           <label :for="`action.description`"> {{ $t(`action.description.label`) }} </label>
-          <b-form-textarea 
+          <textarea 
+             class="form-control" 
               id="action.description" 
               @input="update" 
               v-model="action.description.en" 
               :rows="3"
               v-validate="'required|max:1000'"
-              :state="validateState($t(`action.description.label`),action.description.en)"
+              :class      ="[ getValidationClass($t(`action.description.label`)) ]" 
+
               :name="$t(`action.description.label`)" 
               :placeholder="$t(`action.description.placeholder`)" 
           />
@@ -57,12 +59,12 @@
 
 import Links         from '@controls/Links'
 import AAFormMixin   from '@/modules/AAFormMixin'
-import bFormTextarea from 'bootstrap-vue/es/components/form-textarea/form-textarea'
+//import bFormTextarea from 'bootstrap-vue/es/components/form-textarea/form-textarea'
 
 export default {
   name      : 'Action',
   mixins    : [ AAFormMixin ],
-  components: { Links, bFormTextarea },
+  components: { Links },
   props     : { options: { type: Object } },
   methods   : { update },
   data

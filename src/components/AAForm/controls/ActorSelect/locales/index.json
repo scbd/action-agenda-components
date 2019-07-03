@@ -4,6 +4,70 @@
         "organizationLabel": "Organization / Business",
         "publicLabel": "Public Sector",
         "partyLabel": "Party",
+        "party": {
+            "name": {
+                "label": "Name",
+                "placeholder": " ",
+                "help": " "
+            },
+            "country": {
+                "label": "Country",
+                "placeholder": " ",
+                "help": " "
+            },
+            "types": {
+                "label": "Type",
+                "placeholder": " ",
+                "help": " "
+            },
+            "typeOther": {
+                "label": "Other Type",
+                "placeholder": " ",
+                "help": " "
+            },
+            "image": {
+                "label": "Logo",
+                "placeholder": " ",
+                "help": " "
+            },
+            "url": {
+                "label": "Website",
+                "placeholder": " ",
+                "help": " "
+            }
+        },
+        "public": {
+            "name": {
+                "label": "Name",
+                "placeholder": " ",
+                "help": " "
+            },
+            "country": {
+                "label": "Country",
+                "placeholder": " ",
+                "help": " "
+            },
+            "types": {
+                "label": "Type",
+                "placeholder": " ",
+                "help": " "
+            },
+            "typeOther": {
+                "label": "Other Type",
+                "placeholder": " ",
+                "help": " "
+            },
+            "image": {
+                "label": "Logo",
+                "placeholder": " ",
+                "help": " "
+            },
+            "url": {
+                "label": "Website",
+                "placeholder": " ",
+                "help": " "
+            }
+        },
         "organization": {
             "name": {
                 "label": "Name",

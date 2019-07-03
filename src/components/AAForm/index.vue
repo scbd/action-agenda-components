@@ -1,11 +1,12 @@
 <i18n src="./locales/index.json"></i18n>
 
 <template>
+<section>
   <FormFeedback v-bind="feedback" >
   
-      <b-form v-if="(actorType!=='party') || (actorType==='party' && $me.isGov)" @submit="onSubmit"  novalidate>
+      <form v-if="(actorType!=='party') || (actorType==='party' && $me.isGov)" @submit="onSubmit"  novalidate>
 
-        <legend>{{ $t(`title.${actorType}`) }}</legend>
+        <legend v-if="config.label">{{ $t(`title.${actorType}`) }}</legend>
         <div class="card">
           <div class="card-body"> 
 
@@ -21,52 +22,36 @@
 
             <div  class="row" v-if="config.mailingList">
               <div class="col-lg-12">
-                <BFormRow >
-                  <BCol>
                     <div class="form-check-inline">
                       <input
                         v-model="input.subscription"
                         :value="false"
                         type="checkbox"
-                        id="`RadioInline`"
-                        name="RadioInline`"
+                        id="action.mailingList"
+                        name="mailingList"
                         class="form-check-input"
-                        v-on:change="toggleSubscription()">
-                      <label
-                        class="form-check-label align-text-bottom"
-                        for="`RadioInline`"
-                      >{{config.mailingList.msg}}</label>
+                        v-on:change="toggleSubscription()"
+                      />
+                      <label class="form-check-label align-text-bottom" for="action.mailingList" >{{$t('mailingList')}}</label>
                     </div>
-                  </BCol>
-                  
-                </BFormRow>
                 <hr/>
               </div>
             </div>
 
             <div  v-if="!$me.isAuthenticated && config.accountSignup" class="row" >
               <div class="col-lg-12">
-              
-                <BFormRow >
-                  <BCol>
                     <div class="form-check-inline">
                       <input
                         v-model="form.accountSignup"
                         :value="false"
                         type="checkbox"
-                        id="`RadioInline`"
-                        name="RadioInline`"
+                        id="action.accountSignup"
+                        name="action.accountSignup"
                         class="form-check-input"
                         v-on:change="toggleAccountSignup()"
-                      >
-                      <label class="form-check-label align-text-bottom" for="`RadioInline`" >
-                        Create an account to access your action for edits or updates.<br>
-                      </label>
+                      />
+                      <label class="form-check-label align-text-bottom" for="action.accountSignup" > {{$t('accountSignup')}} </label>
                     </div>
-                  </BCol>
-            
-                </BFormRow>
-                <!-- <small class="form-text text-muted account"> A reset password email will be sent to you.  You can do it manually after submition here: <a href="https://accounts.cbd.int/password/reset">accounts.cbd.int/password/reset</a>.</small> -->
                   <hr/>
               </div>
             </div>
@@ -75,11 +60,11 @@
         </div>
 
         <section v-if="actionComplete">
-          <legend>Optional Information - <a href="#ss" class="title-link">Skip and <BButton type="submit" variant="primary">Submit</BButton></a></legend>
+          <legend>Optional Information - <a href="#ss" class="title-link">Skip and <button class="btn btn-primary" type="submit" variant="primary">Submit</button></a></legend>
           <div class="card" v-if="actionComplete">
             <div class="card-body"> 
 
-              <ActionDetails class="mb-3" v-if="actionComplete" v-model="form.actionDetails" :options="{label:'Action Details', subjects:config.thematicAreas, operationalAreas:config.operationalAreas}"/>
+              <ActionDetails class="mb-3" v-if="actionComplete" v-model="form.actionDetails" :options="config.actionDetails"/>
               <Partners v-if="config.partners" v-model="form.partners" label="Partners"/>
 
             </div>
@@ -87,11 +72,11 @@
         </section>
 
         <div id="ss" class="text-right">
-          <BButton type="submit" variant="primary">Submit</BButton> &nbsp;
+          <button type="submit" class="btn btn-primary" :disabled="!this.userLoaded">Submit</button> &nbsp;
         </div>
 
-      </b-form>
-
+      </form>
+  </FormFeedback>
     <section v-if="DEBUG">
       <br/><br/><br/>
       <legend>DEBUG:</legend>
@@ -107,99 +92,75 @@
               <legend>$me:</legend>
               <pre>{{$me}}</pre>
             </div>
+
+            <div class="col col-lg-4">
+              <legend>$accountsBaseUrl: {{$accountsBaseUrl}}</legend>
+              <legend>$apiBaseUrl: {{$apiBaseUrl}}</legend>
+              <legend>$me.isAuthenticated: {{$me.isAuthenticated}}</legend>
+              
+            </div>
           </div>
 
         </div>
       </div>
     </section>
-  </FormFeedback>
+</section>
 </template>
 
 <script>
-import   Vue            from 'vue'
-import   Auth           from '@modules/AuthPlugin'
-import { VueReCaptcha } from 'vue-recaptcha-v3'
+  import   Vue            from 'vue'
+  import   axios          from 'axios'
+  import   Auth           from '@modules/AuthPlugin'
 
-Vue.use(Auth,{env:process.env.NODE_ENV})
-Vue.use(VueReCaptcha, {
-  siteKey: '6Lfj3pQUAAAAAKszUI1k4i9AceoyRNUd2G7tw74Y',
-  loaderOptions: {
-    useRecaptchaNet: true
-  }
-})
+  Vue.use(Auth,{env:process.env.NODE_ENV})
 
-//AAForm mixin
-import axios       from 'axios'
-import AAFormMixin from '@modules/AAFormMixin'
+  //import { VueReCaptcha } from 'vue-recaptcha-v3'
 
-//bootstrap vue
-import bForm         from 'bootstrap-vue/es/components/form/form'
-
-
-//scbd controls
-import ActorSelect   from '@controls/ActorSelect/index'
-import FormFeedback  from '@controls/FormFeedback/index'
-import Contact       from './Contact'
-import Action        from './Action'
-import ActionDetails from './ActionDetails'
-import Partners      from './Partners'
-
-
-  const configMap = {
-    'person':{
-      contacts:false,
-      partners:false,
-      anonymous:true, 
-      accountSignup:true, 
-      mailingList:{list:'action-agenda', tags:['person'], msg:'Join our mailing list and receive updates on the Action Agenda.'}, 
-    },
-    'organization':{
-      operationalAreas:true,
-      thematicAreas:true,
-      contacts:true,
-      partners:true,
-      anonymous:true, 
-      accountSignup:true, 
-      mailingList:{list:'action-agenda', tags:['organization'], msg:'Join our mailing list and receive updates on the Action Agenda.'}, 
-    },
-    'public':{
-      operationalAreas:true,
-      thematicAreas:true,
-      contacts:true,
-      partners:true,
-      anonymous:true, 
-      accountSignup:true, 
-      mailingList:{list:'action-agenda', tags:['public'], msg:'Join our mailing list and receive updates on the Action Agenda.'}, 
-    },
-    'party':{
-      operationalAreas:true,
-      thematicAreas:true,
-      contacts:true,
-      partners:true,
-      anonymous:false, 
-      accountSignup:true, 
-      mailingList:{list:'action-agenda', tags:['party'], msg:'Join our mailing list and receive updates on the Action Agenda.'}, 
-    }
-  }
-
-export default {
-  name      : 'AAForm',
-  mixins    : [ AAFormMixin ],
-//  props     : {  actorType: { type: String, required: false }  },
-  components: { FormFeedback, bForm, ActorSelect, Action, ActionDetails, Contact, Partners },
-  methods:  {  save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup,  updateContacts, validate },
-  computed: { config, actionComplete },
-  data,
-  mounted
  
-}
+  //AAForm mixin
 
-function data () {
+  import AAFormMixin from '@modules/AAFormMixin'
+
+  //bootstrap vue
+  // import bForm         from 'bootstrap-vue/es/components/form/form'
+
+  //scbd controls
+  import ActorSelect   from '@controls/ActorSelect/index'
+  import FormFeedback  from '@controls/FormFeedback/index'
+  import Contact       from './Contact'
+  import Action        from './Action'
+  import ActionDetails from './ActionDetails'
+  import Partners      from './Partners'
+
+  //TODO MAKE EXTERNAL
+    
+  export default {
+    name      : 'AAForm',
+    mixins    : [ AAFormMixin ],
+    props     : {  formType: { type: String, required: false }, 
+                  options: { type: Object, required: true}
+    },
+    components: { FormFeedback, ActorSelect, Action, ActionDetails, Contact, Partners },
+    methods:  {  save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup,  updateContacts, validate },
+    computed: { config, actionComplete },
+    data,
+    mounted
+  
+  }
+
+  function data () {
+    let formType
+    if(this.$route && this.$route.params && this.$route.params.type && this.$route.params.type!='hack')
+      formType = this.$route.params.type
+    else if (this.formType)
+      formType = this.formType
+
     return {
-      actorType:this.$route.params.type ,
+      actorType: formType ,
       DEBUG:process.env.VUE_APP_DEBUG,
+      userLoaded:false,
       feedback:{
-        actorType:this.$route.params.type,
+        actorType:formType,
         publishRequested:false,
         error:''
       },
@@ -221,6 +182,16 @@ function data () {
 
   async function mounted(){
     this.toggleSubscription()
+    this.userLoaded = ((await this.$isUserLoaded())  )
+    if(this.config.anonymous && this.userLoaded && !this.$me.isAuthenticated ){
+        let { VueReCaptcha } = await import('vue-recaptcha-v3')
+        Vue.use(VueReCaptcha, {
+          siteKey: '6Lfj3pQUAAAAAKszUI1k4i9AceoyRNUd2G7tw74Y',
+          loaderOptions: {
+            useRecaptchaNet: true
+          }
+        })
+    }
   }
 
   function actionComplete(){
@@ -235,10 +206,8 @@ function data () {
       this.form.contacts[0] = this.form.actor
   }
 
-
   function config(){
-    if(!configMap[this.actorType]) return {}
-    return configMap[this.actorType]
+   return  this.options[this.actorType] || this.options
   }
 
   async function validate() {
@@ -249,15 +218,13 @@ function data () {
 
           data    = await axios.post(`${this.$apiBaseUrl}/v2019/actions/validate`,form, {})
 
-          // this.feedback.publishRequested=true
-
           return data
       } catch (err) {
 
-      if(err && err.response)
-            this.feedback.error=err.response.data
+        if(err && err.response)
+          this.feedback.error=err.response.data
   
-          console.error(err);
+        console.error(err);
       }
   }
 
@@ -265,7 +232,7 @@ function data () {
         let data 
 
         try {
-          console.log('====================', await this.validate())
+
           let form    = this.cleanForm(this.form)
           let options = this.$baseReqOpts || {}
 
@@ -285,18 +252,17 @@ function data () {
   }
 
   async function getRecaptchaToken(options) {
-  
+    if(!options.headers) options.headers = {}
+
+    if(this.$me.isAuthenticated) return options
+
     let token = await this.$recaptcha('action')
-    if(token) {
-      if(!options.headers) options.headers = {}
+    if(token) 
       options.headers['X-Captcha-Token'] = token 
-    }
-
+    
     return options
+    
   }
-
-
-
 
   function onSubmit(evt) {
  
@@ -329,16 +295,16 @@ function data () {
 </style>
 
 <style scoped>
-.title-link{
-  color: black;
-  font-weight: 500;
-}
-.party-auth{
-  padding: 0 2em 0 2em;
-}
-.alert{
-  position:relative;
-}
+  .title-link{
+    color: black;
+    font-weight: 500;
+  }
+  .party-auth{
+    padding: 0 2em 0 2em;
+  }
+  .alert{
+    position:relative;
+  }
   input[type="file"]:focus {
     outline-width: 0;
     outline: none;
@@ -359,7 +325,6 @@ function data () {
     margin-bottom: 1.5em;
     /* background-color: #ddd; */
   }
-
   label::after {
       content: attr(data-req) ;
       color: red ;

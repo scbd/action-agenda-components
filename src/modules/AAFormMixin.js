@@ -2,21 +2,21 @@ import Vue from 'vue';
 import VeeValidate from 'vee-validate'
 import { isNil, omitBy, isEmpty, clone } from 'lodash'
 
-import   BFormGroup   from 'bootstrap-vue/es/components/form-group/form-group'
-import   BContainer   from 'bootstrap-vue/es/components/layout/container'
-import   BCol         from 'bootstrap-vue/es/components/layout/col'
-import   BFormInput   from 'bootstrap-vue/es/components/form-input/form-input'
-import   BButton      from 'bootstrap-vue/es/components/button/button'
-import { BFormRow }   from 'bootstrap-vue/es/components'
+// import   BFormGroup   from 'bootstrap-vue/es/components/form-group/form-group'
+// import   BContainer   from 'bootstrap-vue/es/components/layout/container'
+// import   BCol         from 'bootstrap-vue/es/components/layout/col'
+// import   BFormInput   from 'bootstrap-vue/es/components/form-input/form-input'
+// import   BButton      from 'bootstrap-vue/es/components/button/button'
+// import { BFormRow }   from 'bootstrap-vue/es/components'
 
 import  FieldErrorMessage  from '@components/AAForm/controls/FieldErrorMessage'
 
-import  'bootstrap-vue/dist/bootstrap-vue.css'
+// import  'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(VeeValidate, {fieldsBagName: 'veeFields',fastExit: false})
-
+// BFormGroup, BContainer, BCol, BFormRow, BFormInput,, BButton 
 export default {
-    components: { BFormGroup, BContainer, BCol, BFormRow, BFormInput, FieldErrorMessage, BButton },
+    components: { FieldErrorMessage},
     methods   : { validateState, resetForm, isValid, resetValidation, cleanForm, getValidationClass, validateComponent }
 }
 

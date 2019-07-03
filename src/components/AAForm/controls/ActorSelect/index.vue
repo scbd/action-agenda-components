@@ -1,6 +1,6 @@
 <template >
   <section>
-
+    
     <Organization @input="update" v-model="input.organization" v-if="isSelectedType('organization')"/>
 
     <Party @input="update" v-model="input.party" v-if="isSelectedType('party')"/>
@@ -48,7 +48,7 @@ function data (){
 }
 
 function update() {
-  return this.$emit("input", this.input[this.input.type])
+  return this.$emit('input', this.input[this.input.type])
 }
 
 function updateType() {

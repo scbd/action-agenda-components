@@ -26,6 +26,5 @@ module.exports = {
 
       config.resolve.alias
           .set('@controls', path.resolve(__dirname, 'src/components/AAForm/controls'))
-          
    }
   }

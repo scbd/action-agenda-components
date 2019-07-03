@@ -132,12 +132,8 @@
     components: {  SCBDSelect, Links },
     props: {
       value: {
-        type: [Array, Object],
+        type:  Object,
         required: true
-      },
-      multi: {
-        type: Boolean,
-        default: false
       }
     },
     data() {
@@ -174,7 +170,7 @@
   }
 
   function update() {
-    let org = this.cleanForm(this.actor.organization)
+    let org = this.cleanForm(this.actor)
     return this.$emit('input', org ) 
   }
 

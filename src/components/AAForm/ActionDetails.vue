@@ -1,11 +1,12 @@
 <i18n src="./locales/index.json"></i18n>
 <template>
   <section>
-    <div class="row" >
-      <div class="col-lg-6" v-if="options.operationalAreas">
 
-        <div class="form-group" :id="`group.actionDetails.operationalAreas`">
-          <label :for="`actionDetails.operationalAreas`"> {{ $t(`actionDetails.operationalAreas.label`) }} </label>
+    <div class="row" v-if="options.operationalAreas || options.thematicAreas">
+      <div class="col-lg-6" v-if="options.operationalAreas" >
+
+        <div class="form-group" id="group.actionDetails.operationalAreas">
+          <label for="actionDetails.operationalAreas"> {{ $t(`actionDetails.operationalAreas.label`) }} </label>
           <SCBDSelect
             type="GeoLocations"
             id="actionDetails.operationalAreas"
@@ -22,8 +23,8 @@
 
       <div class="col-lg-6" v-if="options.thematicAreas">
 
-        <div class="form-group" :id="`group.actionDetails.thematicAreas`">
-          <label :for="`actionDetails.thematicAreas`"> {{ $t(`actionDetails.thematicAreas.label`) }} </label>
+        <div class="form-group" id="group.actionDetails.thematicAreas">
+          <label for="actionDetails.thematicAreas"> {{ $t(`actionDetails.thematicAreas.label`) }} </label>
           <SCBDSelect
             type="Subject"
             id="form.actionDetails.subjects"
@@ -40,13 +41,13 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-lg-6">
+    <div class="row" v-if="options.aichiTargets || options.sdgs">
+      <div class="col-lg-6" v-if="options.aichiTargets">
 
-        <div class="form-group" :id="`group.actionDetails.aichiTargets`">
-          <label :for="`actionDetails.aichiTargets`"> {{ $t(`actionDetails.aichiTargets.label`) }} </label>
+        <div class="form-group" id="group.actionDetails.aichiTargets">
+          <label for="actionDetails.aichiTargets"> {{ $t(`actionDetails.aichiTargets.label`) }} </label>
           <SCBDSelect
-              @input="update"
+            @input="update"
             type="Aichi"
             id="actionDetails.aichiTargets"
             v-model="actionDetails.aichiTargets"
@@ -61,10 +62,10 @@
         </div>
 
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-6" v-if="options.sdgs">
 
-        <div class="form-group" :id="`group.actionDetails.sdgs`">
-          <label :for="`actionDetails.sdgs`"> {{ $t(`actionDetails.sdgs.label`) }} </label>
+        <div class="form-group" id="group.actionDetails.sdgs">
+          <label for="actionDetails.sdgs"> {{ $t(`actionDetails.sdgs.label`) }} </label>
           <SCBDSelect
             @input="update"
               type="SDGs"
@@ -83,16 +84,17 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" v-if="options.progressMeasured">
       <div class="col">
-        <div class="form-group" :id="`group.progressMeasured.progressMeasured`">
-          <label :for="`actionDetails.progressMeasured`"> {{ $t(`actionDetails.progressMeasured.label`) }} </label>
-          <b-form-textarea
+        <div class="form-group" id="group.progressMeasured.progressMeasured">
+          <label for="actionDetails.progressMeasured"> {{ $t(`actionDetails.progressMeasured.label`) }} </label>
+          <textarea
             @input="update"
             id="actionDetails.progressMeasured"
             v-model="actionDetails.progressMeasured.en"
             v-validate="'max:1000'"
-            :state="validateState($t(`actionDetails.progressMeasured.label`),actionDetails.progressMeasured.en)"
+            class="form-control" 
+            :class      ="[ getValidationClass($t(`action.progressMeasured.label`)) ]" 
             :rows="3"
             :name="$t(`actionDetails.progressMeasured.label`)"
             :placeholder="$t(`actionDetails.progressMeasured.placeholder`)"
@@ -109,12 +111,12 @@
 <script>
   import AAFormMixin   from '@modules/AAFormMixin'
   import SCBDSelect    from '@controls/SCBDSelect'
-  import bFormTextarea from 'bootstrap-vue/es/components/form-textarea/form-textarea'
+
 
   export default {
     name      : 'ActionDetails',
     mixins    : [AAFormMixin],
-    components: { SCBDSelect, bFormTextarea },
+    components: { SCBDSelect},
     props     : { options: { type:Object } },
     methods   : { update },
     data      

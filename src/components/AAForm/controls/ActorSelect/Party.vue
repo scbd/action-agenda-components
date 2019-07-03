@@ -149,7 +149,7 @@
             types: [],
             country: '',
             typeOther:{en:''},
-            actorType:'organization'
+            actorType:'party'
         },
         orgLogo: '', //temp holder for uploaded image
         index: null //index of editable org in array model
@@ -174,7 +174,7 @@
   }
 
   function update() {
-    let org = this.cleanForm(this.actor.organization)
+    let org = this.cleanForm(this.actor)
     return this.$emit('input', org ) 
   }
 

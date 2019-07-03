@@ -9,9 +9,9 @@
         <div class="row" v-if="$me.isAuthenticated">
           <div class="col-lg-12">
 
+
             <div  class="form-group" :id="`group.contact.useAccount`" >
                 <div class="form-check-inline">
-                  <label class="form-check-label align-text-bottom" for="contact.useAccount" >{{$t('contact.useAccount')}}</label>
                   <input
                     v-model="input.useAccount"
                     :value="true"
@@ -21,6 +21,7 @@
                     class="form-check-input"
                     v-on:change="useAccountToggle()"
                   >
+                  <label class="form-check-label align-text-bottom" for="contact.useAccount" >{{$t('contact.useAccount')}}</label>
                 </div>
               <hr>
             </div>
@@ -31,39 +32,43 @@
         <div class="row">
           <div class="col-lg-6">
             
-            <div class="form-group" id="group.contact.name" >
-              <label  :for="`contact.name`"> {{ $t(`contact.name.label`) }} </label>
+            <div class="form-group" id="group.contact.name">
+              <label  for="contact.name"> {{ $t(`contact.name.label`) }} </label>
               <input class="form-control" 
                 @input      ="update"
                 id          ="contact.name"
                 type        ="text"
                 v-model.trim="contact.name.en"
                 v-validate  ="'required|max:140'"
-                :state      ="validateState($t(`contact.name.label`),contact.name)"
+                :class      ="[ getValidationClass($t(`contact.name.label`)) ]" 
                 :name       ="$t(`contact.name.label`)"
                 :placeholder="$t(`contact.name.placeholder`)" 
                 />
+
               <small v-if="$t(`contact.name.help`)" class="form-text text-muted">{{$t(`contact.name.help`)}}</small>
-              <field-error-message :error="errors.collect($t(`contact.name.label`))" />
+              <field-error-message :error="errors.collect($t(`contact.name.label`))"/>
             </div>
+
           </div>
 
           <div class="col-lg-6">
-            <div class="form-group" id="group.email.name" >
-              <label  for="contact.email">{{ $t(`contact.email.label`) }}</label>
-              <input class="form-control"
-                id="contact.email"
-                type="email"
+
+            <div class="form-group" id="group.contact.email" >
+              <label  for="contact.email"> {{ $t(`contact.email.label`) }} </label>
+              <input class="form-control" 
+                @input      ="update"
+                id          ="contact.email"
+                type        ="text"
                 v-model.trim="contact.email"
-                @input="update"
-                v-validate="'email|required'"
-                :state="validateState($t(`contact.email.label`),contact.email)"
+                v-validate  ="'email|required'"
+                :class      ="[ getValidationClass($t(`contact.email.label`)) ]" 
                 :name       ="$t(`contact.email.label`)"
                 :placeholder="$t(`contact.email.placeholder`)" 
               />
-              <small v-if="$t(`contact.email.help`)" class="form-text text-muted">{{$t(`contact.email.help`)}}</small>
-              <field-error-message :error="errors.collect($t(`contact.email.label`))" />
+              <small v-if="$t(`contact.email.help`)" class="form-text text-muted">{{$t(`contact.email.help`)}}</small>        
+              <field-error-message :error="errors.collect($t(`contact.email.label`))"/>
             </div>
+
           </div>
         </div>
 

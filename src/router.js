@@ -3,6 +3,68 @@ import VueRouter from 'vue-router'
 import Home from './components/AAForm/index.vue'
 import data from '../tests/stubs/actions.js'
 
+const configMap = {
+  'person':{
+    label:false,
+    actionDetails:{      
+      operationalAreas:false,
+      thematicAreas:false, 
+      aichiTargets:true, 
+      sdgs:true,
+      progressMeasured:true
+    },
+    contacts:false,
+    partners:false,
+    anonymous:true, 
+    accountSignup:true, 
+    mailingList:{list:'action-agenda', tags:['person'], msg:''}, 
+  },
+  'organization':{
+    label:false,
+    actionDetails:{      
+      operationalAreas:true,
+      thematicAreas:true, 
+      aichiTargets:true, 
+      sdgs:true,
+      progressMeasured:true
+    },
+    contacts:true,
+    partners:true,
+    anonymous:true, 
+    accountSignup:true, 
+    mailingList:{list:'action-agenda', tags:['organization'], msg:'Join our mailing list and receive updates on the Action Agenda.'}, 
+  },
+  'public':{
+    label:false,
+    actionDetails:{      
+      operationalAreas:true,
+      thematicAreas:true, 
+      aichiTargets:true, 
+      sdgs:true,
+      progressMeasured:true
+    },
+    contacts:true,
+    partners:true,
+    anonymous:true, 
+    accountSignup:true, 
+    mailingList:{list:'action-agenda', tags:['public'], msg:'Join our mailing list and receive updates on the Action Agenda.'}, 
+  },
+  'party':{
+    label:false,
+    actionDetails:{      
+      operationalAreas:true,
+      thematicAreas:true, 
+      aichiTargets:true, 
+      sdgs:true,
+      progressMeasured:true
+    },
+    contacts:true,
+    partners:true,
+    anonymous:false, 
+    accountSignup:true, 
+    mailingList:{list:'action-agenda', tags:['party'], msg:'Join our mailing list and receive updates on the Action Agenda.'}, 
+  }
+}
 
 
  Vue.use(VueRouter)
@@ -11,7 +73,7 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      redirect: '/aaform/person',
+      redirect: '/aaform/person/hack',
       // name: 'home',
       // component: Home,
       // component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
@@ -27,29 +89,31 @@ export default new VueRouter({
 
     // },
     {
-      path: '/aaform/:type',
+      path: '/aaform/person/:type',
       name: 'individual',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
       props:{
-        actorType:'person'
+        formType:'person',
+        options:configMap.person
       }
     },
     {
-      path: '/aaform/:type',
+      path: '/aaform/organization/:type',
       name: 'Organization/Business',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
       props:{
-        actorType:'organization'
+        formType:'organization',
+        options:configMap.organization
       }
     },
     {
-      path: '/aaform/:type',
+      path: '/aaform/public/:type',
       name: 'Public',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
@@ -57,18 +121,20 @@ export default new VueRouter({
       component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
       force: true,
       props:{
-        actorType:'public'
+        formType:'public',
+        options:configMap.public
       }
     },
     {
-      path: '/aaform/:type',
+      path: '/aaform/party/:type',
       name: 'Party',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "AAForm" */ './components/AAForm/index.vue'),
       props:{
-        actorType:'party'
+        formType:'party',
+        options:configMap.party
       }
     },
     // {

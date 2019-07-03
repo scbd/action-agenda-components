@@ -71,6 +71,8 @@
                 "placeholder":" ",
                 "help":" "
             }
-        }
+        },
+        "mailingList":"Join our mailing list and receive updates on the Action Agenda.",
+        "accountSignup":"Create an SCBD account to access your action for edits or updates."
     }
 }

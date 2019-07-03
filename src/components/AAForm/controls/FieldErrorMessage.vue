@@ -1,18 +1,15 @@
 <template>
-  <b-form-invalid-feedback>
+  <div class="invalid-feedback">
       <ul class="indent">
         <li v-for="(error,key,index) in error" v-bind:key="index">{{ error }}</li>
       </ul>
-  </b-form-invalid-feedback>
+  </div>
 </template>
 
 <script>
-  import bFormInvalidFeedback from 'bootstrap-vue/es/components/form/form-invalid-feedback'
 
-// import bFormValidFeedback from 'bootstrap-vue/es/components/form/form-valid-feedback'
   export default {
     name: "FieldErrorMessage",
-    components:{bFormInvalidFeedback},
     props:['error']
   }
 </script>
