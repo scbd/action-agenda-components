@@ -1,79 +1,86 @@
 import Vue        from 'vue'
 import axios      from 'axios'
+import winston    from '@modules/config' 
 import AuthIFrame from './components/AuthIFrame'
-
 
 //reactive holder for me
 const vm = new Vue({
-  data: {
-    me: {},
-    token:'',
-    env: process.env.NODE_ENV
-  },
-  methods:{
-    getUser,
-    loadUser
+                      data: {
+                        me   : {},
+                        token: '',
+                        env  : process.env.NODE_ENV,
+                        loaded: false
+                      },
+                      methods:{ getUser, loadUser }
+                    })
+
+export default { install }
+
+//install vue plugin
+function install (Vue, options={}) {
+
+  vm.env = process.env.NODE_ENV || options.env || 'dev'
+
+  // mixins added to every component instance
+  Vue.mixin ({
+              computed:{
+                '$me'             : ()=>vm.me,
+                '$accountsBaseUrl': accountsBaseUrl,
+                '$baseReqOpts'    : baseReqOpts,
+                '$isAdmin'        : isAdmin
+              },
+              methods:{
+                $isAuthLoaded: loaded,
+                $isUserLoaded: ()=> new Promise(returnUser),
+                $setLoaded: setLoaded
+              },
+              mounted
+            })
+}
+
+function mounted () {
+  // add iframe to first available component
+  if(!Vue.$AuthIFrame && this.$options.name!=='AuthIFrame' && this.$options.name){
+    const AuthIFrameClass    = Vue.extend(AuthIFrame)
+    const AuthIFrameInstance = new AuthIFrameClass({methods:{receivePostMessage}})
+
+    AuthIFrameInstance.$mount()
+
+    this.$el.appendChild(AuthIFrameInstance.$el)
+    Vue.$AuthIFrame = AuthIFrameInstance.$el
+
+    loaded()
+      .then( loadUser )
+      .then(  ()=> this.$forceUpdate())
+      .catch( ()=> { vm.me = anonymous() })
   }
-})
-
-export default {
-
-    install(Vue, options={}){
-
-      vm.env = process.env.NODE_ENV || options.env || 'dev'
-
-      // add iframe to first available component
-      Vue.mixin({
-        computed:{
-          '$me':()=>vm.me,
-          '$apiBaseUrl':apiBaseUrl,
-          '$accountsBaseUrl':accountsBaseUrl,
-          '$baseReqOpts':baseReqOpts,
-          '$isAdmin':isAdmin
-        },
-        methods:{
-          $isAuthLoaded:loaded,
-          $isUserLoaded:()=> new Promise(returnUser)
-        },
-        mounted: function () {
-
-          if(!Vue.$AuthIFrame && this.$options.name!=='AuthIFrame' && this.$options.name){
-            const AuthIFrameClass    = Vue.extend(AuthIFrame)
-            const AuthIFrameInstance = new AuthIFrameClass({methods:{receivePostMessage}})
-
-            AuthIFrameInstance.$mount()
-
-
-            this.$el.appendChild(AuthIFrameInstance.$el)
-            Vue.$AuthIFrame = AuthIFrameInstance.$el
-
-            loaded()
-              .then(loadUser)
-              .then(()=>this.$forceUpdate())
-              .catch(()=>{ vm.me =anonymous() })
-          }
-        }
-      })
-
-    }
 }
 
-function loaded(){
-  return new Promise(loadingInterval)
+function setLoaded (val){
+  vm.loaded = val
 }
+function loaded () { return new Promise(loadingInterval) }
+
+function isProd () { return ( vm.env==='prod' || vm.env==='production' )  }
+
+function isStg  () { return vm.env==='stg' }
 
 function loadingInterval(resolve, reject){
-  let timeout,timer =null
+  let timeout = null
+  let timer   = null
   timeout = setTimeout(()=>{
                               clearInterval(timer)
-                              if(vm.me.userID)
-                                resolve(true)
-                              else
-                                reject('Error loading SCBD auth vue plugin')
+                              console.log('vm.loaded',vm.loaded)
+                              if(vm.loaded) resolve(true)
+                              else{
+                                let e = new Error('Error loading SCBD auth vue plugin')
+                                winston.error('VueAuth.loadingInterval: ', e)
+                                reject(e)
+                              }
                             },3000)
   timer = setInterval(()=>{
 
-                            if(vm.token ) {
+                            if(vm.token) {
                               clearInterval(timer)
                               clearTimeout(timeout)
                               return resolve(vm.token)
@@ -83,29 +90,36 @@ function loadingInterval(resolve, reject){
 
 function receivePostMessage(event)
 {
+  let { origin, data } = event
 
-  if(event.origin!=accountsBaseUrl())
-    return null
+  if(origin != accountsBaseUrl()) return null
 
-  let message = JSON.parse(event.data)
+  let { type, authenticationToken } = JSON.parse(data)
 
-  if(message.type!=='authenticationToken') 
-    throw new Error ('unsupported authentication message type')
+  if(type!=='authenticationToken'){
+    let e = new Error('Unsupported authentication message type')
+    winston.error('VueAuth.receivePostMessage:', e)
+    throw e
+  }
 
-  vm.token = message.authenticationToken
+  vm.token = authenticationToken
   return vm.token
 }
 
-function returnUser(resolve, reject){
-  let timeout,timer =null
-  timeout = setTimeout(()=>{
+function returnUser(resolve, reject) {
+  let timeout = null
+  let timer   = null
+
+  timeout = setTimeout (()=>{
                               clearInterval(timer)
-                              if(vm.me.userID)
-                                resolve(vm.me)
-                              else
-                                reject('Error loading user')
+                              if(!vm.token) resolve(anonymous())
+                              else{
+                                let e = new Error('Error loading user')
+                                winston.error('VueAuth.returnUser: ', e)
+                                reject(e)
+                              }
                             },3000)
-  timer = setInterval(()=>{
+  timer = setInterval (()=>{
                             if(vm.token && vm.me.userID) {
                               clearInterval(timer)
                               clearTimeout(timeout)
@@ -115,49 +129,56 @@ function returnUser(resolve, reject){
 }
 
 async function loadUser(){
-  let me = await getUser()
+  let me      = await getUser()
   let profile = await getProfile(me.userID)
 
   me.firstName = profile.FirstName
-  me.lastName = profile.LastName
-  me.country = profile.Country 
+  me.lastName  = profile.LastName
+  me.country   = profile.Country 
 
-  Vue.nextTick(()=>{
-    vm.me = me
-  })
-  Vue.nextTick(()=>{
+  Vue.nextTick(()=> { vm.me = me })
+  Vue.nextTick(()=> { 
+                      me.isAdmin = isAdmin()
+                      me.isStaff = isStaff() 
+                      me.isGov   = isGov()
+                      me.hasRole = hasRole 
+                      vm.me      = me 
+                    })
 
-    me.isAdmin = isAdmin()
-    me.isStaff = isStaff() 
-    me.isGov = isGov() 
-    vm.me = me 
-
-  })
   return vm.token
 }
 
 function hasRole (role){
-  if(!vm.me || !vm.me.roles) return false
+  let { roles } = vm.me
 
-  return vm.me.roles.includes(role)
+  if(!roles) return false
+
+  return roles.includes(role)
 }
 
 function isAdmin (){
-  if(!vm.me || !vm.me.roles) return false
 
-  return vm.me.roles.includes('Administrator') || vm.me.roles.includes('ActionAdmin')
+  let { roles } = vm.me
+
+  if(!roles) return false
+
+  return roles.includes('Administrator') || roles.includes('ActionAdmin')
 }
 
-function isStaff (){
-  if(!vm.me || !vm.me.userGroups) return false
+function isStaff () {
+  let { userGroups } = vm.me
 
-  return vm.me.userGroups.includes('SCBD')
+  if(!userGroups) return false
+
+  return userGroups.includes('SCBD')
 }
 
 function isGov (){
-  if(!vm.me || !vm.me.government || !vm.me.roles) return false
+  let { roles, government } = vm.me
 
-  return vm.me.roles.includes('NFP-CBD') || vm.me.roles.includes('ChmNrNationalFocalPoint') || vm.me.roles.includes('ChmNrNationalAuthorizedUser')
+  if(!government || !roles) return false
+
+  return roles.includes('NFP-CBD') || roles.includes('ChmNrNationalFocalPoint') || roles.includes('ChmNrNationalAuthorizedUser')
 }
 
 function anonymous() {
@@ -173,53 +194,41 @@ function anonymous() {
 }
 
 function getUser() {
-  if(vm.me && vm.me.name)
-    return vm.me
+  let { me, token }       = vm
+  let { isAuthenticated } = me
 
-  if(!vm.token)
-    return anonymous()
+  if(!token)            return anonymous()
+  if(isAuthenticated)   return me
 
   return axios.get(`${accountsBaseUrl()}/api/v2013/authentication/user`, baseReqOpts() )
-         .then((r) => {return r.data})
+         .then(  (r) => r.data)
+         .catch( (e) => winston.error('VueAuth.getUser: ',e))         
 }
+
 function getProfile(id) {
 
   return axios.get(`${accountsBaseUrl()}/api/v2013/users/${id}`, baseReqOpts() )
-         .then((r) => {return r.data})
+         .then(  (r) => {return r.data})
+         .catch( (e) => winston.error('VueAuth.getProfile: ',e))
 }
 
-function accountsBaseUrl(){
+function accountsBaseUrl() {
  
   if(process.env.VUE_APP_ACCOUNTS_URL) return process.env.VUE_APP_ACCOUNTS_URL
-  if(vm.env==='dev')
-    return 'https://accounts.cbddev.xyz'
 
-  if(vm.env==='stg')
-    return 'https://accounts.staging.cbd.int'
+  if( isStg() )  return 'https://accounts.staging.cbd.int'
 
-  if(vm.env==='production' || vm.env==='prod')
-    return 'https://accounts.cbd.int'
+  if( isProd() ) return 'https://accounts.cbd.int'
 
   return 'https://accounts.cbddev.xyz'
 }
 
-function apiBaseUrl (){
+function baseReqOpts() {
+  let { token } = vm
 
-  if(process.env.VUE_APP_API) return process.env.VUE_APP_API
-  if(vm.env==='dev')
-    return 'https://api.cbddev.xyz/api'
-
-  if(vm.env==='stg')
-    return 'https://api.staging.cbd.int/api'
-
-  if(vm.env==='prod' ||vm.env==='production')
-    return 'https://api.cbd.int/api'           
-}
-
-
-function baseReqOpts(){
-
-  if(vm.token) return { headers : { 'Authorization' : `Ticket ${vm.token}` } }
+  if(!token) return {}
   
-  return {}
+  return { headers : { 'Authorization' : `Ticket ${token}` } }
 }
+
+

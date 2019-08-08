@@ -1,4 +1,4 @@
-yarn demo:$NODE_ENV
+yarn demo
 cd $PWD/dist/
 gzip -9 *
 for i in *.gz; do mv -i $i `basename $i .gz`; done

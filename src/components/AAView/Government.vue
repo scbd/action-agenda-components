@@ -1,3 +1,4 @@
+<i18n src="./locales/index.json"></i18n>
 <template>
     <div class="row no-gutters">
       <!-- :class="{'col-sm-11':(image||{}).url,'col-sm-12':!(image||{}).url}" -->

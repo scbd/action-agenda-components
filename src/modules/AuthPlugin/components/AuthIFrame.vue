@@ -15,7 +15,8 @@
       if(!this.$refs || !this.$refs.authFrame) return false
 
       this.$refs.authFrame.onload = () => {
-        this.$refs.authFrame.contentWindow.postMessage(JSON.stringify({ type : 'getAuthenticationToken' }), this.$accountsBaseUrl);
+        this.$refs.authFrame.contentWindow.postMessage(JSON.stringify({ type : 'getAuthenticationToken' }), this.$accountsBaseUrl)
+        this.$setLoaded(true)
       }
     }
   }

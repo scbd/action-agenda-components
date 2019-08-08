@@ -66,13 +66,13 @@ function loadApp (){
 }
 
 function mounted(){
-    const i18n                      = getI18n()
-    const ActionFormClass           = window['Vue'].extend(window[EmbedComponent.opts.compName])
-    const actionFormClassInstance   = new ActionFormClass({i18n,propsData:EmbedComponent.opts.propsData})
+    const i18n                        = getI18n()
+    const ComponentVueClass           = window['Vue'].extend(window[EmbedComponent.opts.compName])
+    const componentVueClassInstance   = new ComponentVueClass({i18n,propsData:EmbedComponent.opts.propsData})
 
-    actionFormClassInstance.$mount()
+    componentVueClassInstance.$mount()
 
-    this.$el.appendChild(actionFormClassInstance.$el)
+    this.$el.appendChild(componentVueClassInstance.$el)
 }
 
 function insertElement(el){

@@ -1,67 +1,46 @@
 <template>
   <div>
     <Icons/>
-   
-    <AASearchNav :params="search" @filter="filter"/>
-    <AAHorzList :data="data"  />
-
-    <!-- <section v-if="DEBUG">
-      <br/><br/><br/>
-      <legend>DEBUG:</legend>
-      <div class="card debug">
-        <div class="card-body">
-          <div class="row">
-            <div class="col col-lg-2">
-               <legend>q:</legend>
-               <pre>{{q}}</pre>
-            </div>
-            <div class="col col-lg-2">
-               <legend>search:</legend>
-               <pre>{{search}}</pre>
-            </div>
-
-            <div class="col col-lg-4">
-               <legend>data:</legend>
-               <pre>{{data}}</pre>
-            </div>
-                        <div class="col col-lg-4">
-               <legend>me:</legend>
-               <pre>{{$me}}</pre>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section> -->
+    <SearchNav :params="search" @filter="filter"/>
+    <Feedback :error="error" :has-slot="data.length" @deleteFeedback="deleteFeedback">
+      <List :data="data"/>
+    </Feedback>
   </div>
 </template>
 
 <script>
   import Vue         from 'vue'
-
   import Auth        from '@modules/AuthPlugin'
   import Icons       from '@components/Icons'
-  import AAListMixin from '@modules/AAListMixin'
+  import Feedback    from '@components/FeedbackList' 
+  import ListMixin   from './ListMixin'
+  import List        from './List'
+  import SearchNav   from './SearchNav'  
+  import winston, { vueErrorHandler }     from '@modules/config' 
 
-  import AAHorzList  from './AAHorzList'
-  import AASearchNav from './AASearchNav'  
+  Vue.use(Auth)
 
-  Vue.use(Auth,{env:process.env.NODE_ENV})
+  // catch all uncaught errors
+  Vue.config.errorHandler = vueErrorHandler
 
   export default {
     name      : 'AAList',
-    mixins    : [ AAListMixin ],
-    props     : ['env'],
-    components: { AAHorzList, AASearchNav, Icons },
-    methods   : { filter },
+    mixins    : [ ListMixin ],
+    components: { List, SearchNav, Icons, Feedback },
+    methods   : { filter, deleteFeedback },
     data,
     mounted
   }
   
+  function deleteFeedback({ index, type }){
+    delete(this[type][index])
+    this.$forceUpdate()
+  }
+
   function data(){
     return {
-      DEBUG:process.env.VUE_APP_DEBUG,
       data:[],
+      error:{},
       search : { page: 1, numPerPage:500, total:500 },
       q:{q:{}}
     }
@@ -69,30 +48,22 @@
 
   async function mounted(){
 
-   this.list(this.q)
+    this.list(this.q)
 
-    if(this.$isAuthLoaded && (await this.$isAuthLoaded())){
+    if(this.$isAuthLoaded && (await this.$isAuthLoaded()))
       this.list(this.q)
-    }
   }
 
   function filter({filters, text}){
     let q = {q:{}}
 
-    if(text)
-      q.q.$text={$search:text}
+    if(text) q.q.$text={$search:text}
 
-    if(filters.length)
-      q.q.$or=filters
+    if(filters.length) q.q.$or=filters
+
     this.q= q
+
     this.list(q)
   }
 
-
 </script>
-
-<style scoped>
-  .debug {
-    background-color:rgba(198, 17, 17, .5);
-  }
-</style>

@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import LookUp from "../../modules/ScbdCachedApisLookUp"
+import LookUp from "@/modules/ScbdCachedApisLookUp"
 export default {
-  name: "AAContactView",
+  name: "Person",
 
   props: {
     prefix: {
@@ -50,7 +50,7 @@ export default {
     },
     country: {
       type: Object,
-      required: true,
+
       identifier: {
         type: String,
         required: true

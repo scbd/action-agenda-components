@@ -35,7 +35,7 @@
 
 <script>
   import clone       from 'lodash.clone'
-  import AAFormMixin from '@modules/AAFormMixin'
+  import AAFormMixin from '@components/AAForm/FormMixin'
 
   export default {
     name    : 'Partners',

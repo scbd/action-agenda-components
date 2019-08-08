@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from './components/AAForm/index.vue'
-import data from '../tests/stubs/actions.js'
+//import data from '../tests/stubs/actions.js'
 
 const configMap = {
   'person':{
@@ -137,29 +137,26 @@ export default new VueRouter({
         options:configMap.party
       }
     },
-    // {
-    //   path: '/list',
-    //   name: 'aalistview',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import(/* webpackChunkName: "AAList" */ './components/AAList/index.vue'),
-    //   props:{
-    //     env:process.env.NODE_ENV,
-    //     dataFn:queryActions
-    //   }
-    // },
-    // {
-    //   path: '/aaview',
-    //   name: 'aaview',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import(/* webpackChunkName: "AAList" */ './components/AAView/index.vue'),
-    //   props:{
-    //     env:process.env.NODE_ENV,
-    //   }
-    // },
+    {
+      path: '/list',
+      name: 'aalistview',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "AAList" */ './components/AAList/index.vue'),
+      // props:{
+      //   env:process.env.NODE_ENV,
+      //   dataFn:queryActions
+      // }
+    },
+    {
+      path: '/list/action',
+      name: 'aaview',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "AAList" */ './components/AAView/index.vue')
+    }
     // {
     //   path: '/component/scbdselect',
     //   name: 'scbdselect',

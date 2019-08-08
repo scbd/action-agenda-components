@@ -1,7 +1,7 @@
 const path = require('path')
-
+process.env.VUE_APP_VERSION = require('./package.json').version
 module.exports = {
-  transpileDependencies:['humanparser'],
+  transpileDependencies:['humanparser','winston', 'winston-transport','logform'],
     devServer: {
       allowedHosts: [
         'http://localhost.cbd.int',
@@ -18,6 +18,9 @@ module.exports = {
         .use("i18n")
           .loader("@kazupon/vue-i18n-loader")
           .end();
+
+      config.resolve.alias
+          .set('@locales', path.resolve(__dirname, 'src/locales'))
 
       config.resolve.alias
           .set('@modules', path.resolve(__dirname, 'src/modules'))

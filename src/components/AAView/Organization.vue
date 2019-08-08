@@ -1,3 +1,4 @@
+<i18n src="./locales/index.json"></i18n>
 <template>
     <div class="row no-gutters">
       <!-- :class="{'col-sm-11':(image||{}).url,'col-sm-12':!(image||{}).url}" -->
@@ -10,8 +11,8 @@
             <span class="badge badge-pill badge-secondary">{{getCountry.name}}</span>
           </p>
 
-          <p class="card-text">
-            <span class="badge badge-pill badge-dark mx-1" v-for="(t,index) in getOrgTypes"  v-bind:key="index"> {{t.name}} </span> &nbsp;
+          <p class="card-text" v-if="getOrgTypes.length">
+            <span class="badge badge-pill badge-dark mx-1" v-for="(t,index) in getOrgTypes"  v-bind:key="index"> {{t.name}} </span>
           </p>
         </div>
       </div>
@@ -22,10 +23,10 @@
 </template>
 
 <script>
-import LookUp           from "../../modules/ScbdCachedApisLookUp"
+import LookUp from '@modules/ScbdCachedApisLookUp'
 
 export default {
-  name: "AAOrganizationView",
+  name: 'Organization',
   props: {
     name: {
       type:Object,
@@ -48,24 +49,16 @@ export default {
      }  
   },
   data(){
-    return {getOrgTypes:[], getCountry:{}}
+    return { getOrgTypes:[], getCountry:{} }
   },
   async mounted(){
-    this.getCountry = await LookUp.getCountries(this.country, true)
-    this.getOrgTypes = await LookUp.getOrgTypes(this.types)
+    this.getCountry  = await LookUp.getCountries(this.country, true)
+    this.getOrgTypes = await LookUp.getOrgTypes (this.types)
   }
 
 }
-
-
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.entity-badge{
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-top-left-radius: 0;
-}
+  .entity-badge{ position: absolute; top: 0; left: 0; border-top-left-radius: 0; }
 </style>
