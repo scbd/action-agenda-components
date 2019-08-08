@@ -1,4 +1,5 @@
 <i18n src="./locales/index.json"></i18n>
+
 <template>
   <section>
     <Icons/>
@@ -215,49 +216,33 @@ import clone       from 'lodash.clone'
 import FileUpload  from 'vue-upload-component'
 import axios       from 'axios'
 
-import AAFormMixin from '@modules/AAFormMixin'
+import FormMixin   from '@components/AAForm/FormMixin'
 import Icons       from '@components/Icons'
 
 export default {
-  name: 'Links',
-  mixins: [AAFormMixin],
-  components: {FileUpload,Icons},
+  name      : 'Links',
+  mixins    : [ FormMixin ],
+  components: { FileUpload, Icons },
   props: {
-    value: { type: [Array, Object] },
-    label: { type: String, },
-    type: { type: [Array, String], required: true },
-    multi: { type: Boolean, required: false },
-    name: { type: String, required: true },
-    noDrop: { type: Boolean, default: false }
+    value : { type: [Array, Object] },
+    label : { type: String, },
+    multi : { type: Boolean, required: false },
+    name  : { type: String, required: true },
+    noDrop: { type: Boolean, default: false },
+    type  : { type: [Array, String], required: true }
   },
-  data() {
-    return {
-      fdat: {},
-      dropShow: true,
-      files: [],
-      values: [],
-      input: {
-        url: '',
-        name: {en:''},
-        files: []
-      },
-      showFlags: {
-        link: false,
-        file: false
-      }
-    }
-  },
-  methods: {
-    isUploading,
-    add,
-    show,
-    update,
-    remove,
-    onInput,
-    getPreSignedPost,
-    startUploading,
-    getSrc
+  methods: { isUploading, add, show, update, remove, onInput, getPreSignedPost, startUploading, getSrc },
+  data
+}
 
+function   data() {
+  return {
+    fdat     : {},
+    dropShow : true,
+    files    : [],
+    values   : [],
+    input    : { url: '', name: {en:''}, files: [] },
+    showFlags: { link: false, file: false }
   }
 }
 

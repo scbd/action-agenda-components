@@ -93,12 +93,13 @@
 </template>
 
 <script>
-import AAFormMixin from '@modules/AAFormMixin'         
+import FormMixin from '@components/AAForm/FormMixin'         
 import SCBDSelect  from '@controls/SCBDSelect'             
-import HumanParser from 'humanparser'              
+import HumanParser from 'humanparser'     
+
 export default {
-  name: 'Person',
-  mixins: [ AAFormMixin ],
+  name      : 'PersonForm',
+  mixins    : [ FormMixin ],
   components: { SCBDSelect },
   props: {
     value: { type: [Array, Object], required: true },
@@ -122,7 +123,7 @@ function data(){
           middleName : {},
           lastName   : {},
           suffix     : {},
-          name   : {},
+          name       : {},
           country    : '',
           email      : '',
           actorType  : 'person'

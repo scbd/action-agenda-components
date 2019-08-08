@@ -1,4 +1,5 @@
 <i18n src="./locales/index.json"></i18n>
+
 <template>
   <div>
     <div class="row">
@@ -102,10 +103,10 @@
           <field-error-message :error="errors.collect($t(`${actor.actorType}.typeOther.label`))" :state="validateState($t(`${actor.actorType}.typeOther.label`))" />
         </div>
       </div>
-      <!-- <div class="col-lg-12">
+      <div class="col-lg-12">
 
         <div class="form-group" :id="`group.${actor.actorType}.image`" l>
-          <label :for="`${actor.actorType}.image`"> {{$t(`${actor.actorType}.image`)}} </label>
+          <label :for="`${actor.actorType}.image`"> {{$t(`${actor.actorType}.image.label`)}} </label>
             <Links 
             :id="`${actor.actorType}.image`"
             v-model="actor.image"
@@ -115,50 +116,42 @@
 
         </div>
 
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 
-  import AAFormMixin from '@modules/AAFormMixin'
+  import FormMixin from '@components/AAForm/FormMixin'
   import SCBDSelect  from '@controls/SCBDSelect'
   import Links       from '@controls/Links'
 
   export default {
-    name: 'AAOrganizationForm',
-    mixins: [AAFormMixin],
-    components: {  SCBDSelect, Links },
-    props: {
-      value: {
-        type:  Object,
-        required: true
-      }
-    },
-    data() {
-      return {
-        actor: {
-            name: {en:''},
-            url: '',
-            image: {},
-            types: [],
-            country: '',
-            typeOther:{en:''},
-            actorType:'organization'
-        },
-        orgLogo: '', //temp holder for uploaded image
-        index: null //index of editable org in array model
-      }
-    },
-    methods: {
-      update,
-      showImage,
-      deleteLogo
-    },
-    computed:{isOther}
+    name      : 'OrganizationForm',
+    mixins    : [FormMixin],
+    components: { SCBDSelect, Links },
+    props     : { value: { type: Object, required: true } },
+    methods   : { update, showImage, deleteLogo },
+    computed  : { isOther },
+    data
   }
 
+function data() {
+  return {
+    actor: {
+        name: {en:''},
+        url: '',
+        image: {},
+        types: [],
+        country: '',
+        typeOther:{en:''},
+        actorType:'organization'
+    },
+    orgLogo: '', //temp holder for uploaded image
+    index: null //index of editable org in array model
+  }
+  }
   function isOther(){
     if (!this.actor.types || !this.actor.types.length) return false
 

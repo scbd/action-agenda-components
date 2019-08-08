@@ -57,13 +57,12 @@
 
 <script>
 
-import Links         from '@controls/Links'
-import AAFormMixin   from '@/modules/AAFormMixin'
-//import bFormTextarea from 'bootstrap-vue/es/components/form-textarea/form-textarea'
+import Links       from '@controls/Links'
+import FormMixin   from './FormMixin'
 
 export default {
   name      : 'Action',
-  mixins    : [ AAFormMixin ],
+  mixins    : [ FormMixin ],
   components: { Links },
   props     : { options: { type: Object } },
   methods   : { update },

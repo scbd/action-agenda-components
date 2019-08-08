@@ -10,6 +10,11 @@
       <router-link to="/aaform/party/hack">Party</router-link> 
       <hr><br>
     </div>
+        <div id="nav">
+      List:      
+      <router-link to="/list">LIst</router-link> 
+      <hr><br>
+    </div>
     <!-- <div id="nav">
       List:      
       <router-link to="/list">List</router-link> |

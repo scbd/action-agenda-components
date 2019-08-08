@@ -78,14 +78,13 @@
 </template>
 
 <script>
-  import AAFormMixin from '@modules/AAFormMixin'                
-  import HumanParser from 'humanparser'              
+  import FormMixin   from './FormMixin'
+  import HumanParser from 'humanparser' 
+
   export default {
-    name: 'Person',
-    mixins: [ AAFormMixin ],
-    props: {
-      value: { type: Object, required: true },
-    },
+    name:    'Person',
+    mixins:  [ FormMixin ],
+    props:   { value: { type: Object, required: true }, },
     methods: { parseName, update, useAccount, notUseAccount, useAccountToggle },
     beforeUpdate,
     data
@@ -103,7 +102,7 @@
           middleName : {},
           lastName   : {},
           suffix     : {},
-          name   : {},
+          name       : {},
           country    : '',
           email      : '',
           actorType  : 'person'

@@ -1,4 +1,5 @@
 <i18n src="./locales/index.json"></i18n>
+
 <template>
   <section>
 
@@ -109,14 +110,13 @@
 </template>
 
 <script>
-  import AAFormMixin   from '@modules/AAFormMixin'
-  import SCBDSelect    from '@controls/SCBDSelect'
-
+  import FormMixin   from './FormMixin'
+  import SCBDSelect  from '@controls/SCBDSelect'
 
   export default {
     name      : 'ActionDetails',
-    mixins    : [AAFormMixin],
-    components: { SCBDSelect},
+    mixins    : [ FormMixin ],
+    components: { SCBDSelect },
     props     : { options: { type:Object } },
     methods   : { update },
     data      

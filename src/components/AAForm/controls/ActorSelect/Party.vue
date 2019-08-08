@@ -1,4 +1,5 @@
 <i18n src="./locales/index.json"></i18n>
+
 <template>
   <div>
     <div class="row">
@@ -122,39 +123,19 @@
 
 <script>
 
-  import AAFormMixin from '@modules/AAFormMixin'
+  import FormMixin   from '@components/AAForm/FormMixin'
   import SCBDSelect  from '@controls/SCBDSelect'
   import Links       from '@controls/Links'
 
   export default {
-    name: 'AAOrganizationForm',
-    mixins: [AAFormMixin],
+    name: 'PartyForm',
+    mixins: [ FormMixin ],
     components: {  SCBDSelect, Links },
     props: {
-      value: {
-        type: [Array, Object],
-        required: true
-      },
-      multi: {
-        type: Boolean,
-        default: false
-      }
+      value: { type: [Array, Object], required: true },
+      multi: { type: Boolean, default: false }
     },
-    data() {
-      return {
-        actor: {
-            name: {en:''},
-            url: '',
-            image: {},
-            types: [],
-            country: '',
-            typeOther:{en:''},
-            actorType:'party'
-        },
-        orgLogo: '', //temp holder for uploaded image
-        index: null //index of editable org in array model
-      }
-    },
+
     methods: {
       update,
       showImage,

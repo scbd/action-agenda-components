@@ -122,25 +122,24 @@
 
 <script>
 
-  import AAFormMixin from '@modules/AAFormMixin'
+  import FormMixin from '@components/AAForm/FormMixin'
   import SCBDSelect  from '@controls/SCBDSelect'
   import Links       from '@controls/Links'
 
   export default {
-    name: 'AAOrganizationForm',
-    mixins: [AAFormMixin],
-    components: {  SCBDSelect, Links },
+    name      : 'PartyForm',
+    mixins    : [FormMixin],
+    components: { SCBDSelect, Links },
     props: {
-      value: {
-        type: [Array, Object],
-        required: true
-      },
-      multi: {
-        type: Boolean,
-        default: false
-      }
+      value: { type: [Array, Object], required: true },
+      multi: { type: Boolean, default: false }
     },
-    data() {
+    methods : { update, showImage, deleteLogo },
+    computed: { isOther },
+    data
+  }
+
+function data() {
       return {
         actor: {
             name: {en:''},
@@ -154,13 +153,6 @@
         orgLogo: '', //temp holder for uploaded image
         index: null //index of editable org in array model
       }
-    },
-    methods: {
-      update,
-      showImage,
-      deleteLogo
-    },
-    computed:{isOther}
   }
 
   function isOther(){
