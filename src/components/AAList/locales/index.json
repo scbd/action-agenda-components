@@ -1,0 +1,16 @@
+{
+    "en": {
+        "deleted": "Deleted",
+        "draft": "New",
+        "rejected": "Rejected",
+        "published": "Published",
+        "showing": "showing",
+        "to":"to",
+        "of":"of",
+        "filters":"Filters",
+        "search":"Search",
+        "action":"Action",
+        "actor":"Actor",
+        "viewAction":"View Action"
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "en": {
+        "action":"Action",
+        "actor":"Actor",
+        "submittedBy":"Submitted By",
+        "operationalAreas":"Operational Area(s)",
+        "thematicAreas":"Thematic Areas(s)",
+        "details":"Details",
+        "aichiTargets":"Linkages to Aichi Biodiversity Targets",
+        "sdgs":"Linkages to Sustainable Development Goals",
+        "progress":"Progress tracking",
+        "partners":"Partner (s)",
+        "contacts":"Contact (s)"
+    }
+}

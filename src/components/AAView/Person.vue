@@ -1,6 +1,5 @@
 <template>
   <div class="row no-gutters">
-     
     <div  :class="{'col-sm-11':image,'col-sm-12':!image}">
 
       <div class="card-body">
@@ -27,65 +26,35 @@
 </template>
 
 <script>
-import LookUp from "../../modules/ScbdCachedApisLookUp"
-export default {
-  name: "AAContactView",
+  import LookUp from '@/modules/ScbdCachedApisLookUp'
 
-  props: {
-    prefix: {
-      type: [Object],
-      default:()=>{}
-    },
-    firstName: {
-      type: [Object],
-      default:()=>{}     
-    },
-    lastName: {
-      type: Object,
-      required: true
-    },
-    department: {
-      type: [Object],
-      default:()=>{}     
-    },
-    country: {
-      type: Object,
-      required: true,
-      identifier: {
-        type: String,
-        required: true
+  export default {
+    name: 'Person',
+    props: {
+      prefix    : { type: [Object], default:()=>{} },
+      firstName : { type: [Object], default:()=>{} },
+      lastName  : { type: Object, required: true },
+      department: { type: [Object], default:()=>{} },
+      country: {
+        type      : Object,
+        identifier: { type: String, required: true },
+        name      : { type: String, required: true }
       },
-      name: {
-        type: String,
-        required: true
-      }
+      phone: { type: String },
+      email: { type: String, required: true },
+      image:{ type:String }
     },
-    phone: {
-      type: String
-    },
-    email: {
-      type: String,
-      required: true
-    },
-    image:{
-      type:String
-    }
-  },
- data(){
-    return { getCountry:{}}
-  },
-  async mounted(){
+    data,
+    mounted
+  }
+
+  function data(){ return { getCountry: {} } }
+
+  async function mounted(){
     this.getCountry = await LookUp.getCountries(this.country, true)
   }
-};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.entity-badge{
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-top-left-radius: 0;
-}
+  .entity-badge{ position: absolute; top: 0; left: 0; border-top-left-radius: 0; }
 </style>

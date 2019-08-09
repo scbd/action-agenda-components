@@ -1,0 +1,13 @@
+{
+    "en": {
+
+        "networkError":{
+            "name":"Network Error",
+            "description":"Network errors are usually caused due to poor connectivity to the internet. If you receive a network error, you can try to sync your session again by pressing \"Retry\" . If network errors continue, make sure you are in a place with good WiFi reception, or that cellular data is enabled."
+        },
+        "requestFailedWithStatusCode_500":{
+            "name":"Internal Server Error",
+            "description":"That means something has gone wrong on the api.cbd.int server, but the server could not be more specific on what that exact problem is.  We will investigate further and appreciate your patience."
+        }
+    }
+}

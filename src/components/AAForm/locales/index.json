@@ -1,0 +1,78 @@
+{
+    "en": {
+        "title": {
+            "organization": "Organization or Business",
+            "person": "Individual",
+            "public": "Public Sector"
+        },
+        "action": {
+            "name": {
+                "label":"Action",
+                "placeholder":"Name of action",
+                "help":" "
+            },
+            "description": {
+                "label":"Description",
+                "placeholder":"Short summary of the action and how it contributes to biodiversity objectives",
+                "help":" "
+            },
+            "attachments": {
+                "label":"Images and additional information",
+                "placeholder":" ",
+                "help":" "
+            }
+        },
+        "actionDetails": {
+            "operationalAreas": {
+                "label":"Geographic area(s)",
+                "placeholder":" ",
+                "help":" "
+            },
+            "thematicAreas": {
+                "label":"Thematic Areas(s)",
+                "placeholder":" ",
+                "help":" "
+            },
+            "aichiTargets":{
+                "label":"Linkages to Aichi Biodiversity Targets",
+                "placeholder":" ",
+                "help":" "
+            },
+            "sdgs":{
+                "label":"Linkages to Sustainable Development Goals",
+                "placeholder":" ",
+                "help":" "
+            },
+            "progressMeasured":{
+                "label":"Progress tracking",
+                "placeholder":"Describe how you measure progress. Provide a link if relevant.",
+                "help":" "
+            }
+        },
+        "contact":{
+            "sectionName":"Contact",
+            "useAccount":"Use your SCBD account profile data?",
+            "name": {
+                "label":"Name",
+                "placeholder":" ",
+                "help":" "
+            },
+            "email": {
+                "label":"Email",
+                "placeholder":" ",
+                "help":" "
+            } 
+        },
+        "partners": {
+            "sectionName":"Partners",
+            "delete":"Delete",
+            "name": {
+                "label":"Name",
+                "placeholder":" ",
+                "help":" "
+            }
+        },
+        "mailingList":"Join our mailing list and receive updates on the Action Agenda.",
+        "accountSignup":"Create an SCBD account to access your action for edits or updates."
+    }
+}
