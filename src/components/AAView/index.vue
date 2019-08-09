@@ -1,190 +1,197 @@
+<i18n src="./locales/index.json"></i18n>
+
 <template>
-  <div class="container-fluid">
-    <section v-if="action">
-    <h1>{{action.name |lStringFilter}}</h1>
+  <section>
+    <Icons/>
+    <div class="container-fluid" v-if="action">
 
-    <div class="card">
-      <div class="card-body p-5">
-        <div class="row">
-          <div class="col-12">
-            <p class="desc"> {{action.description |lStringFilter}}</p>
-          </div>
-          <div class="col-6">
-            <h6>Operational Area(s)</h6>
-            <p v-for="item in getOperationalAreas" v-bind:key="item.name">{{item.name}}</p>
-          </div>
-          <div class="col-6">
-            <h6>Thematic Areas(s)</h6>
-            <p v-for="item in getSubjects" v-bind:key="item.name">{{item.name}}</p>
-          </div>
+        <h1>{{action.name | lStringFilter}}</h1>
 
-        </div>
-      </div>
-    </div>
-
-    <h2>Submitted By</h2>
-    
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-12">
-            <AAEntityView :entity="action.organizer"/>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <section v-if="hasDetails">
-      <h2>Details</h2>
-
-      <div class="card">
-        <div class="card-body p-5">
-          <div class="row">
-
-              <div class="col-6 mb-4" v-if="action.aichiTargets">
-                <h6>Linkages to Aichi Biodiversity Targets</h6>
-                <div class="item" v-for="item in getAichiTargets" v-bind:key="item.name">
-                  <span >
-                    <img class="icon align-top" :src="item.img"/> {{item.name}}
-                  </span>
-                </div>
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <p class="desc"> {{action.description |lStringFilter}}</p>
               </div>
-              <div class="col-6 mb-4" v-if="action.sdgs">
-                <h6>Linkages to Sustainable Development Goals</h6>
-                <div class="item" v-for="item in getSdgs" v-bind:key="item.name">
-                  <span >
-                    <img class="icon align-top" :src="item.img"/> {{item.name}}
-                  </span>
-                </div>
+              <div class="col-12 mb-3" v-for="item in action.attachments" v-bind:key="item.url">
+                <a :href="item.url" target="_blank" rel="noopener"><svg class="icon"><use xlink:href="#icon-file"></use></svg> {{item.name|lStringFilter}} </a>
               </div>
-
-            <div class="col-12" v-if="lString(action.linkagesDescription)">
-              <h6>Linkage(s) description</h6>
-              <p class="desc">{{action.linkagesDescription |lStringFilter}}</p>
             </div>
-            <div class="col-12" v-if="lString(action.progressMeasured)">
-              <h6>Progress tracking</h6>
-              <p class="desc">{{action.progressMeasured |lStringFilter}}</p>
-              </div>
           </div>
         </div>
-      </div>
-    </section>
-    
-    <section v-if="action.partners">
-      <h2>Partners</h2>
-      <AAEntityList :list="action.partners"/>
-    </section>
 
-    <h2>Contacts</h2>
-    <AAEntityList  :list="action.contacts"/>
- </section>
-  </div>
+        <h2>{{$t('submittedBy')}}</h2>
+        
+        <div class="card">
+          <div class="card-body p-0">
+            <div class="row">
+              <div class="col-12">
+                <Entity :entity="actor"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section v-if="hasDetails">
+          <h2>{{$t('details')}}</h2>
+
+          <div class="card">
+            <div class="card-body p-5">
+              <div class="row">
+                  <div class="col-6 mb-4">
+                    <h6>{{$t('operationalAreas')}}</h6>
+                    <p v-for="item in getOperationalAreas" v-bind:key="item.name">{{item.name}}</p>
+                  </div>
+                  <div class="col-6 mb-4">
+                    <h6>{{$t('thematicAreas')}}</h6>
+                    <p v-for="item in getSubjects" v-bind:key="item.name">{{item.name}}</p>
+                  </div>
+                  <div class="col-6 mb-4" v-if="action.aichiTargets">
+                    <h6>{{$t('aichiTargets')}}</h6>
+                    <div class="item" v-for="item in getAichiTargets" v-bind:key="item.name">
+                      <span >
+                        <img class="icon align-top" :src="item.img"/> {{item.name}}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-6 mb-4" v-if="action.sdgs">
+                    <h6>{{$t('sdgs')}}</h6>
+                    <div class="item" v-for="item in getSdgs" v-bind:key="item.name">
+                      <span >
+                        <img class="icon align-top" :src="item.img"/> {{item.name}}
+                      </span>
+                    </div>
+                  </div>
+
+                <div class="col-12" v-if="lString(action.progressMeasured)">
+                  <h6>{{$t('progress')}}</h6>
+                  <p class="desc">{{action.progressMeasured |lStringFilter}}</p>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <section v-if="partners">
+          <h2>{{$t('partners')}}</h2>
+          <div class="row">
+            <div class="col-12 col-md-4 mb-3" v-for="partner,index in partners" v-bind:key="partner.name+index">
+              <div class="card partner" >
+                <div class="card-body">
+                    {{partner.name |lStringFilter}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section v-if="contacts">
+          <h2>{{$t('contacts')}}</h2>
+          <EntityList  :list="contacts"/>
+        </section>
+
+    </div>
+  </section>
 </template>
 
 <script>
-import Vue from "vue";
-import axios from "axios";
-import Auth from "../../modules/AuthPlugin"
-Vue.use(Auth, { env: process.env.NODE_ENV })
-import {lStringFilter} from '../../modules/helpers'
-import AAEntityList from './AAEntityList'
-import AAEntityView from './AAEntityView'
-import LookUp from "../../modules/ScbdCachedApisLookUp"
-export default {
-  name: "AAView",
-  props: ["env"],
-  components:{AAEntityView,AAEntityList},
-  data() {
+  import Vue          from 'vue'
+  import axios        from 'axios'
+  import Icons        from '@components/Icons'
+  import winston      from '@modules/config' 
+  import Auth         from '@modules/AuthPlugin'
+  import LookUp       from '@modules/ScbdCachedApisLookUp'
+  import EntityList   from './EntityList'
+  import Entity       from './Entity'
+
+  Vue.use(Auth)
+
+  export default {
+    name      : 'AAView',
+    components: { Icons, Entity, EntityList },
+    methods   : { getActionIdFromQuery, getAction, lString:lStringFilter },
+    filters   : { lStringFilter },
+    computed  : { hasDetails },
+    mounted,
+    data
+  }
+
+  function data() {
     return {
-      action: '',
-      getSubjects:'',
-      getOperationalAreas:'',
-      getSdgs:'',
-      getAichiTargets:''
-    }
-  },
-  computed:{hasDetails},
-  methods: {
-    getActionIdFromQuery,
-    getBaseApi,
-    getAction,
-    getOptions,
-    lString:lStringFilter
-  },
-  filters:{lStringFilter},
-  async mounted() {
-    let id = this.getActionIdFromQuery();
-    if (!id) return false;
-    await this.getAction(id);
-    if (this.$isAuthLoaded && (await this.$isAuthLoaded()))
-       await this.getAction(id)
+              action             : '',
+              actionDetails      : '',
+              actor              : '',
+              contacts           : '',
+              meta               : '',
+              partners           : '',
+              meta               : '',
+              getSubjects        : '',
+              getOperationalAreas: '',
+              getSdgs            : '',
+              getAichiTargets    : ''
+            }
+  }
 
-    this.getSubjects = await LookUp.getSubjects(this.action.subjects)
+  async function mounted() {
+
+    let id = this.getActionIdFromQuery()
+    if (!id) return false  //TODO show 404
+
+    await this.getAction(id)
+
+    if (this.$isAuthLoaded && (await this.$isAuthLoaded())) await this.getAction(id)
+
+    //TODO do this async
+    this.getSubjects         = await LookUp.getSubjects    (this.action.subjects        )
     this.getOperationalAreas = await LookUp.getGeoLocations(this.action.operationalAreas)
-    this.getSdgs = await LookUp.getSDGs(this.action.sdgs)
-    this.getAichiTargets = await LookUp.getAichis(this.action.aichiTargets)
+    this.getSdgs             = await LookUp.getSDGs        (this.action.sdgs            )
+    this.getAichiTargets     = await LookUp.getAichis      (this.action.aichiTargets    )
   }
-};
 
-function hasDetails(){
-  let action = this.action
-  return  ( action.aichiTargets         || 
-            action.sdgs                 ||
-            action.linkagesDescription  ||
-            action.progressMeasured
-          )
-}
-function getActionIdFromQuery() {
-  if (this.$isServer) return false;
+  function lStringFilter(value) {
+    //TODO load locale from browser
+    let locale = 'en'
+    if(!value) return ''
 
-  let urlParams = new URLSearchParams(location.search);
+    if(value[locale]) return value[locale]
 
-  return urlParams.get("action-id");
-}
-
-async function getAction(id) {
-  try {
-    let options = this.getOptions();
-    let data = await axios.get(
-      `${this.getBaseApi()}/v2019/actions/${id}`,
-      options
-    );
-
-    this.action = data.data;
-    return data.data;
-  } catch (e) {
-    console.error(e);
+    return ''
   }
-}
 
-function getOptions() {
-  return this.$baseReqOpts || {};
-}
-function getBaseApi() {
-  if (this.env === "dev") return "https://api.cbddev.xyz/api";
+  function hasDetails(){
+    let { aichiTargets, sdgs, linkagesDescription, progressMeasured } = this.action
+    return  ( aichiTargets || sdgs || linkagesDescription || progressMeasured )
+  }
 
-  if (this.env === "stg") return "https://api.staging.cbd.int/api";
+  function getActionIdFromQuery() {
+    if (this.$isServer) return false
 
-  return "https://api.cbd.int/api"
-}
+    let urlParams = new URLSearchParams(location.search)
+
+    return urlParams.get('action-id')
+  }
+
+  async function getAction(id) {
+    try {
+      let apiUrl = `${process.env.VUE_APP_API}/v2019/actions/${id}`
+      let data   = (await axios.get( apiUrl, this.$baseReqOpts )).data 
+      
+      for (let key in data) this[key] = data[key]
+      
+      return data
+    } 
+    catch (e) { winston.error('', e) }
+  }
+
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style scoped>
-.card{
-  margin-bottom:2em;
-}
-.icon{
-  margin-right: 1em;
-  height: 24px;
-  width: 24px;
-}
-.item {margin-left:3em;}
-.item span {margin-left:-3em;}
-.item span:first-line {margin-left:0;}
-.desc{
-  white-space: pre-wrap; 
-}
+  .card { margin-bottom:2em; }
+  .partner { background-color: rgba(0,0,0,.02); }
+  .desc { white-space: pre-wrap; }
+  .icon { margin-right: 1em; height: 24px; width: 24px; }
+  .item { margin-left:3em; }
+  .item span { margin-left:-3em; }
+  .item span:first-line { margin-left:0; }
 </style>

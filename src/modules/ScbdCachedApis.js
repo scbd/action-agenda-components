@@ -132,6 +132,7 @@ async function getGovTypes(){
                     .sort((a, b) => a['name'].localeCompare(b['name']))
                     .filter((type)=> ['1C3A4FF4-9AB7-4A34-BE06-E07F575B7A32','8830904C-8AF4-4C2F-AADB-363D98D854DA'].includes(type.identifier))
         localForage.setItem('govTypes',data)
+        data.push({identifier:'ORG-TYPE-OTHER',name:'Other'})
         return data
     } catch (error) {
         console.error(error);
@@ -143,8 +144,10 @@ async function getFromApi(apiName, orderBy='name'){
         let data = ((await axios.get(apis[apiName])).data
                     .map(sanitize))
                     .sort((a, b) => a[orderBy].localeCompare(b[orderBy]))
-        if(apiName==='orgTypes')
+        if(apiName==='orgTypes'){
             data = data.filter((type)=> !(['1C3A4FF4-9AB7-4A34-BE06-E07F575B7A32','8830904C-8AF4-4C2F-AADB-363D98D854DA','B3699A74-EF2E-467A-A82F-EF2149A2EFC5'].includes(type.identifier)))
+            data.push({identifier:'ORG-TYPE-OTHER',name:'Other'})
+        }
        
         localForage.setItem(apiName,data)
         return data
