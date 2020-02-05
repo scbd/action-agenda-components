@@ -32,6 +32,26 @@
           </div>
         </div>
 
+
+
+        <section v-if="partners.length && partners[0].name.en">
+          <h2>{{$t('partners')}}</h2>
+          <div class="row" v-if="partners.length && partners[0].name" >
+            <div class="col-12 col-md-4 mb-3" v-for="partner,index in partners" :key="partner.name+index" >
+              <div class="card partner" >
+                <div class="card-body">
+                    {{partner.name |lStringFilter}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section v-if="contacts">
+          <h2>{{$t('contacts')}}</h2>
+          <EntityList  :list="contacts"/>
+        </section>
+
         <section v-if="hasDetails">
           <h2>{{$t('details')}}</h2>
 
@@ -46,7 +66,7 @@
                     <h6>{{$t('thematicAreas')}}</h6>
                     <p v-for="item in getSubjects" v-bind:key="item.name">{{item.name}}</p>
                   </div>
-                  <div class="col-6 mb-4" v-if="action.aichiTargets">
+                  <div class="col-6 mb-4" v-if="actionDetails.aichiTargets">
                     <h6>{{$t('aichiTargets')}}</h6>
                     <div class="item" v-for="item in getAichiTargets" v-bind:key="item.name">
                       <span >
@@ -54,7 +74,7 @@
                       </span>
                     </div>
                   </div>
-                  <div class="col-6 mb-4" v-if="action.sdgs">
+                  <div class="col-6 mb-4" v-if="actionDetails.sdgs">
                     <h6>{{$t('sdgs')}}</h6>
                     <div class="item" v-for="item in getSdgs" v-bind:key="item.name">
                       <span >
@@ -70,24 +90,6 @@
               </div>
             </div>
           </div>
-        </section>
-        
-        <section v-if="partners">
-          <h2>{{$t('partners')}}</h2>
-          <div class="row">
-            <div class="col-12 col-md-4 mb-3" v-for="partner,index in partners" v-bind:key="partner.name+index">
-              <div class="card partner" >
-                <div class="card-body">
-                    {{partner.name |lStringFilter}}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section v-if="contacts">
-          <h2>{{$t('contacts')}}</h2>
-          <EntityList  :list="contacts"/>
         </section>
 
     </div>
@@ -142,10 +144,11 @@
     if (this.$isAuthLoaded && (await this.$isAuthLoaded())) await this.getAction(id)
 
     //TODO do this async
-    this.getSubjects         = await LookUp.getSubjects    (this.action.subjects        )
-    this.getOperationalAreas = await LookUp.getGeoLocations(this.action.operationalAreas)
-    this.getSdgs             = await LookUp.getSDGs        (this.action.sdgs            )
-    this.getAichiTargets     = await LookUp.getAichis      (this.action.aichiTargets    )
+    this.getSubjects         = await LookUp.getSubjects    (this.actionDetails.thematicAreas        )
+    this.getOperationalAreas = await LookUp.getGeoLocations(this.actionDetails.operationalAreas)
+    this.getSdgs             = await LookUp.getSDGs        (this.actionDetails.sdgs            )
+    this.getAichiTargets     = await LookUp.getAichis      (this.actionDetails.aichiTargets    )
+
   }
 
   function lStringFilter(value) {
@@ -159,7 +162,8 @@
   }
 
   function hasDetails(){
-    let { aichiTargets, sdgs, linkagesDescription, progressMeasured } = this.action
+
+    let { aichiTargets, sdgs, linkagesDescription, progressMeasured } = this.actionDetails
     return  ( aichiTargets || sdgs || linkagesDescription || progressMeasured )
   }
 
@@ -175,7 +179,7 @@
     try {
       let apiUrl = `${process.env.VUE_APP_API}/v2019/actions/${id}`
       let data   = (await axios.get( apiUrl, this.$baseReqOpts )).data 
-      
+ 
       for (let key in data) this[key] = data[key]
       
       return data
