@@ -76,14 +76,16 @@
   function isActiveTab(tab){ return this.activeTab===tab }
 
   function go(_id){ 
-    let { href } = window.location
-    let ext = path.extname(href)
+    const { origin, pathname } = window.location
 
-    if(ext) href = href.substring(0,href.lastIndexOf('/')) // remove file name
-
-    window.location.href = `${href}/action?action-id=${_id}` 
+    window.location.href = `${origin}${stripTrailingSlash(pathname)}/action?action-id=${_id}` 
   }
 
+  function stripTrailingSlash (str) {
+      return str.endsWith('/') ?
+          str.slice(0, -1) :
+          str;
+  }
   function getStatusUrl (id, status)  { return `${process.env.VUE_APP_API}/v2019/actions/${id}/status/${status}`}
 
   function dateFormat (date) {

@@ -17,12 +17,10 @@
   import List        from './List'
   import SearchNav   from './SearchNav'  
 
-  import winston, { vueErrorHandler } from '@modules/config' 
-
   Vue.use(Auth)
 
   // catch all uncaught errors
-  Vue.config.errorHandler = vueErrorHandler
+
 
   export default {
     name      : 'AAList',
