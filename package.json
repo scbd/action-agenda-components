@@ -5,6 +5,7 @@
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
+    "docs:deploy": "sh docs/.vuepress/deploy.sh",
     "stg": "vue-cli-service serve --mode stg",
     "prod": "vue-cli-service serve --mode production",
     "build:view:stg": "rm -rf dist && NODE_ENV=stg vue-cli-service build  --target lib --formats umd-min --name actionView --dest dist/aaview src/components/AAView/index.vue",

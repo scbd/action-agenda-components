@@ -3,6 +3,7 @@ const nav = require('./nav')
 const themeConfig = {
   nav,
   repo       : 'scbd/action-agenda-components',
+  base: '/action-agenda-components/',
   editLinks  : true,
   lastUpdated: 'Last Updated', // string | boolean
   
