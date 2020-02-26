@@ -1,7 +1,7 @@
 const themeConfig =  require('./configs/themeConfig')
 
 module.exports = {
-  base:'/',
+  base: '/action-agenda-components/',
   title: 'Action Components System',
   description: 'Is a modular system of independent software components which together form an Action platform. The Action platform can be used to acquire, filter and showcase Actions for your initiative, programme or organization\'s environmental cause.',
   themeConfig,
