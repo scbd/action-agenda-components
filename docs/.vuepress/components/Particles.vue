@@ -6,7 +6,7 @@
           <p class="description">
             Is a modular system of independent software components which together form an Action platform. The Action platform can be used to acquire, filter and showcase Actions for your initiative, programme or organization's environmental cause
           </p>
-          <p class="action"><a href="/ecosystem/guide/" class="nav-link action-button">Get Started →</a></p>
+          <p class="action"><a href="/action-agenda-components/guide/" class="nav-link action-button">Get Started →</a></p>
         </header>
         <div class="features">
           <div class="feature">
