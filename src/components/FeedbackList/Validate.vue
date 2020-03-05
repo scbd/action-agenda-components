@@ -1,11 +1,12 @@
 <i18n src="@/locales/index.json"></i18n>
 
 <template>
-  <div class="alert alert-warning">
-    <p> {{ error.code }} </p>
-    <div class="card mb-3" v-for="( e, key, index ) in error.errors" v-bind:key="index">
-      &nbsp; {{ e.message }}
-    </div>
+  <div class="alert alert-warning alert-dismissible">
+      <h5>  {{name}} </h5>
+      <div> {{description}} </div>
+          <button v-on:click="del()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true"> &times; </span>
+      </button>
   </div>  
 </template>
 
