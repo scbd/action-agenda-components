@@ -2,9 +2,9 @@
 
 <template>
 <section>
-  <FormFeedback :error="error" :has-slot="true" @deleteFeedback="deleteFeedback" >
+  <FormFeedback :error="error" :publish-requested="feedback.publishRequested" :has-slot="true" @deleteFeedback="deleteFeedback" >
   
-      <form v-if="(actorType!=='party') || (actorType==='party' && $me.isGov)" @submit="onSubmit"  novalidate>
+      <form v-if="((actorType!=='party') || (actorType==='party' && $me.isGov)) && !feedback.publishRequested" @submit="onSubmit"  novalidate>
 
         <legend v-if="config.label">{{ $t(`title.${actorType}`) }}</legend>
         <div class="card">
