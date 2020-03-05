@@ -42,7 +42,7 @@
 <script>
   import path           from 'path'
   import axios          from 'axios'
-  import winston        from '@modules/config' 
+  import winston        from 'consola' 
   import EntityView     from '@components/AAView/Entity'
   import ListMixin      from './ListMixin'
   import HorzCardAction from './CardAction'
@@ -124,7 +124,7 @@
 
           return result
     } catch (error) {
-        winston.error('AAList card.changeStatus: ',error)
+        consola.error('AAList card.changeStatus: ',error)
     }
   }
 </script>

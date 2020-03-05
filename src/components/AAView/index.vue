@@ -100,7 +100,7 @@
   import Vue          from 'vue'
   import axios        from 'axios'
   import Icons        from '@components/Icons'
-  import winston      from '@modules/config' 
+  import consola      from 'consola' 
   import Auth         from '@modules/AuthPlugin'
   import LookUp       from '@modules/ScbdCachedApisLookUp'
   import EntityList   from './EntityList'
@@ -184,7 +184,7 @@
       
       return data
     } 
-    catch (e) { winston.error('', e) }
+    catch (e) { consola.error('', e) }
   }
 
 </script>

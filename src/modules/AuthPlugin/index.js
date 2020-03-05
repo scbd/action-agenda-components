@@ -1,6 +1,6 @@
 import Vue        from 'vue'
 import axios      from 'axios'
-import winston    from '@modules/config' 
+import consola    from 'consola' 
 import AuthIFrame from './components/AuthIFrame'
 
 //reactive holder for me
@@ -69,7 +69,7 @@ function loadingInterval(resolve, reject){
                               if(vm.loaded) resolve(true)
                               else{
                                 let e = new Error('Error loading SCBD auth vue plugin')
-                                winston.error('VueAuth.loadingInterval: ', e)
+                                consola.error('VueAuth.loadingInterval: ', e)
                                 reject(e)
                               }
                             },3000)
@@ -93,7 +93,7 @@ function receivePostMessage(event)
 
   if(type!=='authenticationToken'){
     let e = new Error('Unsupported authentication message type')
-    winston.error('VueAuth.receivePostMessage:', e)
+    consola.error('VueAuth.receivePostMessage:', e)
     throw e
   }
 
@@ -110,7 +110,7 @@ function returnUser(resolve, reject) {
                               if(!vm.token) resolve(anonymous())
                               else{
                                 let e = new Error('Error loading user')
-                                winston.error('VueAuth.returnUser: ', e)
+                                consola.error('VueAuth.returnUser: ', e)
                                 reject(e)
                               }
                             },3000)
@@ -198,23 +198,23 @@ function getUser() {
 
   return axios.get(`${accountsBaseUrl()}/api/v2013/authentication/user`, baseReqOpts() )
           .then(  (r) => r.data)
-          .catch( (e) => winston.error('VueAuth.getUser: ',e))         
+          .catch( (e) => consola.error('VueAuth.getUser: ',e))         
 }
 
 function getProfile(id) {
 
   return axios.get(`${accountsBaseUrl()}/api/v2013/users/${id}`, baseReqOpts() )
          .then ( (r) => r.data )
-         .catch( (e) => winston.error('VueAuth.getProfile: ',e) )
+         .catch( (e) => consola.error('VueAuth.getProfile: ',e) )
 }
 
 function accountsBaseUrl() {
   if(process.env.VUE_APP_ACCOUNTS_URL) return process.env.VUE_APP_ACCOUNTS_URL
 
-  if(isStg())  return 'https://accounts.staging.cbd.int'
+  if(isStg())  return 'https://accounts.cbd.int'
   if(isProd()) return 'https://accounts.cbd.int'
 
-  return 'https://accounts.cbddev.xyz'
+  return 'https://accounts.cbd.int'
 }
 
 function baseReqOpts() {

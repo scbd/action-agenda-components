@@ -86,7 +86,7 @@
   import   Vue            from 'vue'
   import   axios          from 'axios'
   import   Auth           from '@modules/AuthPlugin'
-  import   winston        from '@modules/config' 
+  import   consola        from 'consola' 
   import   changeCase     from 'change-case'
 
   Vue.use(Auth,{env:process.env.NODE_ENV})
@@ -194,7 +194,7 @@
       return data
     } catch (err) {
       if(err && err.response) this.feedback.error=err.response.data
-      winston.error(err)
+      consola.error(err)
     }
   }
 
@@ -213,7 +213,7 @@
 
       return data
     } catch (err) {
-      winston.error('', err) 
+      consola.error('', err) 
       this.addError(err)
     }
   }

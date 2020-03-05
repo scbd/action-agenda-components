@@ -112,7 +112,7 @@
             v-model="actor.image"
             :type="['files','links']"
             :multi='false'
-            :name="$t(`${actor.actorType}.image`)"/>
+            :name="$t(`${actor.actorType}.image.label`)"/>
 
         </div>
 
