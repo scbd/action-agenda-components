@@ -172,7 +172,7 @@
   import clone       from 'lodash.clone'
   import FileUpload  from 'vue-upload-component'
   import axios       from 'axios'
-  import winston     from '@modules/config' 
+  import consola     from 'consola' 
 
   import FormMixin   from '@components/AAForm/FormMixin'
   import Icons       from '@components/Icons'
@@ -218,7 +218,7 @@
       this.update()
       this.show('file')
     } catch (error) {
-      winston.error(error)
+      consola.error(error)
     }
   }
 

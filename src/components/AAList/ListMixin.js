@@ -1,5 +1,5 @@
 import axios      from 'axios'
-import winston    from '@modules/config' 
+import consola    from 'consola' 
 import changeCase from 'change-case'
 
 export default {
@@ -47,7 +47,7 @@ async function list(params={}) {
     let msg = ''
     if(e.response) msg = e.response.status
 
-    winston.error(msg,e)
+    consola.error(msg,e)
     this.addError(e)
   }
 }
@@ -63,7 +63,7 @@ function count(params={}) {
     let msg = ''
     if(e.response) msg = e.response.status
 
-    winston.error(msg,e)
+    consola.error(msg,e)
     this.addError(e)
   }
 }
