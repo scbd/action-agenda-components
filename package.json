@@ -1,12 +1,12 @@
 {
   "name": "action-agenda-components",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "private": true,
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:deploy": "sh docs/.vuepress/deploy.sh",
-    "stg": "vue-cli-service serve --mode stg",
+    "stg": "vue-cli-service serve --mode stg --open",
     "prod": "vue-cli-service serve --mode production",
     "build:view:stg": "rm -rf dist && NODE_ENV=stg vue-cli-service build  --target lib --formats umd-min --name actionView --dest dist/aaview src/components/AAView/index.vue",
     "build:view:production": "rm -rf dist && NODE_ENV=production vue-cli-service build  --target lib --formats umd-min --name actionView --dest dist/aaview src/components/AAView/index.vue",
