@@ -28,7 +28,8 @@ export const trimHyperTextProtocol = (urlStr) => {
 }
 
 export const testUri = async(url) => {
-  const { data } = await axios.post('https://injo3jyxlb.execute-api.us-east-1.amazonaws.com/stg/test', { url })
+  const headers = { headers: { Authorization: `Bearer ${process.env.VUE_APP_SLS_TOKEN}` } }
+  const { data } = await axios.post('https://injo3jyxlb.execute-api.us-east-1.amazonaws.com/stg/test', { url }, headers)
 
   return data
 }
