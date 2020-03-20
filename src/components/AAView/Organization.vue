@@ -5,7 +5,7 @@
       <div  class="col-sm-12">
         <div class="card-body">
           <h5 class="card-title">{{name.en}} </h5>
-          <p class="card-text"><a :href="url" >{{url}}</a></p>
+          <p v-if="cleanUrl" class="card-text"><a :href="cleanUrl" target="_blank" rel="noopener noreferrer">{{url}}</a></p>
           <p class="card-text">
             <span class="badge badge-pill badge-secondary">{{getCountry.name}}</span>
           </p>
@@ -19,7 +19,8 @@
 </template>
 
 <script>
-  import LookUp from '@modules/ScbdCachedApisLookUp'
+  import { trimHyperTextProtocol, testUri } from '@modules/util'
+  import   LookUp                  from '@modules/ScbdCachedApisLookUp'
 
   export default {
     name : 'Organization',
@@ -30,15 +31,33 @@
               url    : { type:String, required:false },
               country: { type:Object, required:true }  
             },
+    methods: { trimHyperTextProtocol },
     data,
-    mounted
+    mounted,
+    created
   }
 
-  function data(){ return { getOrgTypes: [], getCountry: {} } }
+  function data(){ return { getOrgTypes: [], getCountry: {}, cleanUrl: '' } }
 
+  async function created(){
+    this.cleanUrl = await addProtocol(`${this.url}`)
+  }
   async function  mounted(){
     this.getCountry  = await LookUp.getCountries(this.country, true)
     this.getOrgTypes = await LookUp.getOrgTypes (this.types)
+  }
+
+  async function addProtocol(urlStr){
+
+    const url   = trimHyperTextProtocol(urlStr)
+    const https = `https://${url}`
+    const http  = `http://${url}`
+    const tests = []
+
+    if(await testUri(https)) return https
+    if(await testUri(http)) return http
+
+    return ''
   }
 </script>
 
