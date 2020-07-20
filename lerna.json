@@ -1,0 +1,19 @@
+{
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "version": "independent",
+  "command": {
+    "run": {
+      "npmClient": "yarn"
+    },
+    "bootstrap": {
+      "ignore": "@scbd/www-css"
+    },
+    "link": {
+      "ignore": "@scbd/www-css"
+    }
+  },
+  "packages": [
+    "packages/*"
+  ]
+}

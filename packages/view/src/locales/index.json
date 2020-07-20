@@ -1,0 +1,30 @@
+{
+    "en": {
+        "Action":"Action",
+        "Actor":"Actor",
+        "Submitted By":"Submitted By",
+        "Operational Area (s)":"Operational Area (s)",
+        "Thematic Areas (s)":"Thematic Areas (s)",
+        "Details":"Details",
+        "Action Agenda Themes":"Action Agenda Themes",
+        "Linkages to Aichi Biodiversity Targets":"Linkages to Aichi Biodiversity Targets",
+        "Linkages to Sustainable Development Goals":"Linkages to Sustainable Development Goals",
+        "Progress tracking":"Progress tracking",
+        "Partner (s)":"Partner (s)",
+        "Contact":"Contact",
+        "person":"Person",
+        "organization":"Organization",
+        "public":"Public Government Organization",
+        "Action Details":"Action Details",
+        "Website":"Website",
+        "Country":"Country",
+        "Actor Type":"Actor Type",
+        "Email":"Email",
+        "404 Action not found":"404 Action not found",
+        "Status":"Status",
+        "rejected":"Rejected",
+        "published":"Published",
+        "draft":"New",
+        "Created":"Created"
+    }
+}

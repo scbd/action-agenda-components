@@ -1,0 +1,82 @@
+{
+  "name": "@action-agenda/search",
+  "version": "0.0.3",
+  "readme": "https://github.com/scbd/action-agenda-components/tree/master/packages/serach#readme",
+  "license": "MIT",
+  "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
+  "homepage": "https://github.com/scbd/action-agenda-components/tree/master/packages/search#readme",
+  "main": "dist/esm/index.min.js",
+  "module": "dist/esm/index.min.js",
+  "unpkg": "dist/browser/index.min.js",
+  "umd": "dist/legacy/umd/index.umd.min.js",
+  "web": "dist/legacy/umd/index.umd.min.js",
+  "jsnext:main": "dist/esm/index.min.js",
+  "style": "dist/esm/index.css",
+  "src": "src/index.js",
+  "browser": {
+    "./umd": "dist/legacy/umd/index.umd.min.js",
+    "./browser": "dist/browser/index.min.js",
+    "./sfc": "src/index.vue",
+    "./": "dist/browser/index.min.js"
+  },
+  "exports": {
+    ".": [
+      {
+        "import": "./dist/esm/index.js",
+        "require": "./dist/legacy/cjs/index.common.cjs",
+        "default": "./dist/esm/index.js"
+      },
+      "./dist/legacy/umd/index.umd.min.js"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scbd/ecosystem.git",
+    "directory": "packages/search"
+  },
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "scripts": {
+    "serve": "NODE_ENV=production vue-cli-service serve --open",
+    "build": "DEBUG=TRUE scbd-dist-builder && DEBUG=TRUE scbd-dist-builder widget",
+    "build-widget": "scbd-dist-builder widget",
+    "build-test-widget": "DEBUG=TRUE scbd-dist-builder testWidget",
+    "serve-widget-test": "scbd-dist-builder serveTestWidget",
+    "serve-widget": "scbd-dist-builder serveWidget",
+    "test:e2e": "vue-cli-service test:e2e",
+    "lint": "vue-cli-service lint --fix",
+    "release": "yarn publish --access=public --tag latest",
+    "link": "lerna link"
+  },
+  "dependencies": {
+    "@action-agenda/icons": "^0.0.7",
+    "@scbd/cached-apis": "^0.0.22",
+    "@scbd/default-options": "^0.1.13",
+    "@scbd/load-http": "^0.0.6",
+    "@scbd/locale": "^0.0.10",
+    "@scbd/self-embedding-component": "^0.0.25",
+    "@scbd/sso-vue-plugin-scbd": "^0.2.2",
+    "vue": "^2.6.11",
+    "vue-i18n": "^8.17.3",
+    "vue-multiselect": "^2.1.6",
+    "core-js": "^3.6.5"
+  },
+  "devDependencies": {
+    "@intlify/vue-i18n-loader": "^1.0.0",
+    "@scbd/dist-builder": "^0.0.6",
+    "@scbd/www-css": "^0.0.18",
+    "@vue/cli-plugin-babel": "~4.4.1",
+    "@vue/cli-plugin-e2e-cypress": "~4.4.1",
+    "@vue/cli-plugin-eslint": "~4.4.1",
+    "@vue/cli-service": "~4.4.1",
+    "babel-eslint": "^10.1.0",
+    "core-js": "^3.6.5",
+    "eslint": "^7.2.0",
+    "eslint-plugin-vue": "^6.2.2",
+    "rollup": "^2.15.0",
+    "vue-cli-plugin-i18n": "~1.0.1",
+    "vue-template-compiler": "^2.6.11"
+  }
+}

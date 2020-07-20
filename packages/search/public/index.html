@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <iframe src="https://accounts.cbd.int/app/authorize.html" style="display:none" ></iframe>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+
+
+      <div class="col-12">
+        <div id="app"></div>
+      </div>
+
+      <!-- <script nomodule="" id="view-legacy" src="https://cdn.cbd.int/@action-agenda/view/dist/widget/index.umd.js"></script>
+<script  type="module" id="view" src="https://cdn.cbd.int/@action-agenda/view/dist/widget/index.js"></script> -->
+      <!-- <script nomodule="" id="legacy-notice-legacy" src="https://cdn.cbd.int/@scbd/legacy-notice/dist/widget/index.umd.min.js"></script>
+      <script  force-env="production" type="module" id="action-search" src="https://cdn.cbd.int/@scbd/action-search@0.0.34/dist/widget/index.min.js" sm-top="30" md-top="60" lg-top="160"></script> -->
+    <!-- built files will be auto injected -->
+  </body>
+</html>
