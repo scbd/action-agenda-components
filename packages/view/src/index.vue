@@ -33,14 +33,14 @@
         <div class="card my-3">
           <div class="card-body p-3">
             <div class="row">
-              <TagView :name="$t('Action Agenda Themes')" :tags="record.actionDetails.actionCategories" />
-              <TagView :name="$t('Linkages to Aichi Biodiversity Targets')" :tags="record.actionDetails.aichiTargets" />
-              <TagView :name="$t('Linkages to Sustainable Development Goals')" :tags="record.actionDetails.sdgs" />
+              <TagView :name="$t('Action Agenda Theme (s)')" :tags="record.actionDetails.actionCategories" />
+              <TagView :name="$t('Aichi Biodiversity Target (s)')" :tags="record.actionDetails.aichiTargets" />
+              <TagView :name="$t('Sustainable Development Goal (s)')" :tags="record.actionDetails.sdgs" />
               <TagView :name="$t('Operational Areas (s)')" :tags="record.actionDetails.operationalAreas" />
               <TagView :name="$t('Thematic Areas (s)')" :tags="record.actionDetails.thematicAreas" />
 
               <div class="col-12" v-if="record.actionDetails.progressMeasured">
-                <h6>{{$t('progress')}}</h6>
+                <h5>{{$t('Progress Measured')}}</h5>
                 <p class="desc">{{record.actionDetails.progressMeasured}}</p>
               </div>
             </div>
@@ -51,8 +51,8 @@
       <section v-if="record.partners">
         <h2>{{$t('Partner (s)')}}</h2>
         <div class="row my-3" >
-          <div class="col-12 col-md-4 col-lg-3" v-for=" p in record.partners" :key="p.name" >
-            <div class="card partner" >
+          <div class="col-12 col-md-4 col-lg-3 mb-2" v-for=" p in record.partners" :key="p.name" >
+            <div class="card partner " >
               <div class="card-body">
                 {{p.name}}
               </div>
@@ -134,8 +134,6 @@ async function mounted(){
 
     this.record = await getAction(this.opts, this.identifier) || { action: { name: this.$t('404 Action not found') } }
   })
-
-  console.log('this', this)
 }
 
 function opts (){ return { ...getOptions(this.options, this.forceEnv), getToken: () => this.auth.token } }

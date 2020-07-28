@@ -1,6 +1,6 @@
 <template>
   <div class="col-12 col-md-6 col-xl-4" v-if="tags">
-    <h4>{{name}}</h4>
+    <h5 class="text-nowrap">{{name}}</h5>
     <table class="table table-striped table-dark table-sm">
       <tbody>
         <tr v-for="tag in tags" v-bind:key="tag.name">
