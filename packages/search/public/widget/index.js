@@ -1,6 +1,6 @@
 /* eslint-disable */
 /*!
-* @action-agenda/search 0.0.1
+* @action-agenda/search 0.0.4
 *
 * @link www.cbd.int
 * @source https://github.com/scbd/@action-agenda/search
@@ -12,7 +12,7 @@
 import { buildWidget, dependencyRef } from 'https://cdn.cbd.int/@scbd/self-embedding-component/dist/browser/index.js';
 
 var name = "https://cdn.cbd.int/@action-agenda/search/dist/browser/index.min.js";
-var version = "0.0.1";
+var version = "0.0.4";
 
 const libName   = name.replace('https://cdn.cbd.int/', '').replace('/dist/browser/index.min.js','');//hack for browser build
 const options   = {};

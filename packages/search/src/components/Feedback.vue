@@ -1,5 +1,6 @@
-<i18n src="../locales/index.json"></i18n>
+
 <template >
+  <!-- <i18n src="../locales/index.json"></i18n> -->
   <section class="feedback mb-3">
     <hr class="my-0"/>
     <div class="row px-3 px-sm-4" style="min-height: 3em;">

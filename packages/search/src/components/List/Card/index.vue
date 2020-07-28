@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-12 text-right">
           <div style="position:relative;">
-            <State  v-if="$me && $me.hasRole('ActionAdmin')" :status="meta.status"/>
+            <State  v-if="me && me.hasRole('ActionAdmin')" :status="meta.status"/>
             <span class="text-nowrap" v-if="icons.length">
               <span v-for="(icon,index) in icons" v-bind:key="index">
                 <img v-if="icon.image && !icon.url" :src="icon.image" :alt="icon.name" class="action-icon mx-1"/>
@@ -27,9 +27,9 @@
 
       <div class="btn-group" role="group" aria-label="Card actions, view, edit publish, reject">
         <a :href="viewUrl(_id)" type="button" class="btn btn-primary btn-sm">{{$t('View Action')}}</a>
-        <button v-on:click="changeStatus(_id,'publish')" v-if="$me && $me.hasRole('ActionAdmin') && status!=='published'" type="button" class="btn btn-outline-dark btn-sm">Publish</button>
-        <button v-on:click="changeStatus(_id,'draft')" v-if="$me && $me.hasRole('ActionAdmin') && status!=='draft'" type="button" class="btn btn-outline-dark btn-sm">Unpublish</button>
-        <button v-on:click="changeStatus(_id,'reject')" v-if="$me && $me.hasRole('ActionAdmin') && status!=='rejected'" type="button" class="btn btn-outline-dark btn-sm">Reject</button>
+        <button v-on:click="changeStatus(_id,'publish')" v-if="me && me.hasRole('ActionAdmin') && status!=='published'" type="button" class="btn btn-outline-dark btn-sm">Publish</button>
+        <button v-on:click="changeStatus(_id,'draft')" v-if="me && me.hasRole('ActionAdmin') && status!=='draft'" type="button" class="btn btn-outline-dark btn-sm">Unpublish</button>
+        <button v-on:click="changeStatus(_id,'reject')" v-if="me && me.hasRole('ActionAdmin') && status!=='rejected'" type="button" class="btn btn-outline-dark btn-sm">Reject</button>
 
       </div>
       <small class="text-muted float-right">{{meta.modifiedOn|dateFormat}}</small>

@@ -62,6 +62,21 @@ function _createSuper(Derived) {
 
 /***/ }),
 
+/***/ "2d4c":
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__("6b1d");
+var setPrototypeOf = __webpack_require__("c1a2");
+
+// `Object.setPrototypeOf` method
+// https://tc39.github.io/ecma262/#sec-object.setprototypeof
+$({ target: 'Object', stat: true }, {
+  setPrototypeOf: setPrototypeOf
+});
+
+
+/***/ }),
+
 /***/ "3996":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -184,6 +199,22 @@ function _isNativeReflectConstruct() {
     return false;
   }
 }
+
+/***/ }),
+
+/***/ "8f84":
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__("6b1d");
+var DESCRIPTORS = __webpack_require__("d4cb");
+var create = __webpack_require__("82e8");
+
+// `Object.create` method
+// https://tc39.github.io/ecma262/#sec-object.create
+$({ target: 'Object', stat: true, sham: !DESCRIPTORS }, {
+  create: create
+});
+
 
 /***/ }),
 

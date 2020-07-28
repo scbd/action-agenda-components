@@ -6,14 +6,13 @@ const [ libName ] = name.match(regX)
 const   options   = {}
 const   propsData = { options }
 
-const { VUE, VUE_I18N } = dependencyRef
-
-const  SCBD_SSO_AUTH = { url: `https://cdn.cbd.int/@scbd/sso-vue-plugin-scbd@0.1.6/dist/browser/index.js`, name: 'sso-vue-plugin-scbd' }
+const { VUE, VUE_I18N,  SCBD_SSO_AUTH } = dependencyRef
+const selfUrl = 'http://localhost:8089/dist/browser/index.min.js'
 
 const dependencies      = { all       : [ VUE, VUE_I18N, SCBD_SSO_AUTH ],
                             vuePlugins: [ VUE_I18N, SCBD_SSO_AUTH ],
-                            css       : [ 'https://cdn.cbd.int/@scbd/www-css' ] }
+                            css       : [ 'https://cdn.cbd.int/@scbd/www-css'] }
 
-const config            = { version, name: libName, propsData, dependencies }
+const config            = { version, name: libName, propsData, dependencies, selfUrl }
 
 buildWidget(config)

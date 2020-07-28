@@ -1,6 +1,4 @@
-<i18n src="../locales/index.json"></i18n>
 <template >
-
   <multiselect
     :id="id"
     v-model="values"
@@ -60,7 +58,7 @@
 </template>
 
 <script>
-import Multiselect from 'vue-multiselect'
+import Multiselect from './multi-select/index.js'
 import { Icon }    from '@action-agenda/icons'
 
 
@@ -79,7 +77,10 @@ export default {
   },
   methods : { update, highLight, onClose },
   computed: { counts },
-  data
+  data,
+  mounted(){
+    console.log('this.values', this.values)
+  }
 }
 
 function counts (){
@@ -117,8 +118,7 @@ function highLight({ search, option }){
 
 </script>
 
-<style >
-  @import url('https://cdn.cbd.int/vue-multiselect@2.1.6/dist/vue-multiselect.min.css');
+<style scoped>
   .fix            { padding: 0 0 0 0; background-color: #ddd; border-radius: 5px; border-color: transparent; }
   .fix.is-invalid { border-color: #dc3545; border-width: 1px; border-style: solid; }
   .fix.is-valid   { border-color: #28a745; border-width: 1px; border-style: solid; }

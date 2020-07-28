@@ -3,7 +3,7 @@ const cjs    = true
 const legacy = { umd, cjs }
 
 const modern = true
-const ssr    = { output: { dir: './dist/esm' } }
+const ssr    = true
 
 const widget     = { legacy: true, modern: true }
 const testWidget = { legacy: true, modern: true }
