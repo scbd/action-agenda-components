@@ -51,10 +51,10 @@
       <section v-if="record.partners">
         <h2>{{$t('Partner (s)')}}</h2>
         <div class="row my-3" >
-          <div class="col-12 col-md-4 col-lg-3" v-for=" [partner,index] in partners" :key="index" >
+          <div class="col-12 col-md-4 col-lg-3" v-for=" p in record.partners" :key="p.name" >
             <div class="card partner" >
               <div class="card-body">
-                  {{partner.name}}
+                {{p.name}}
               </div>
             </div>
           </div>

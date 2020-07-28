@@ -56,7 +56,7 @@ async function normalizeData(raw, options){ // eslint-disable-line
   if(raw.contacts && raw.contacts[0] && raw.contacts[0].country) raw.contacts[0].country = await lookUp('countries', raw.contacts[0].country.identifier, true)
   
   if(raw.partners && raw.partners.length)
-    raw.partners = raw.partners.filter(({ name }) => typeof name === 'string')
+    raw.partners = raw.partners.filter(({ name }) => typeof name.en === 'string')
 
   if(raw.partners && !raw.partners.length) delete(raw.partners)
 
