@@ -15,3 +15,12 @@
 [logo]:https://www.cbd.int/styles/ui/templates/cbd2011/images/logo-cbd-leaf-line.gif
 [logoText]:https://www.cbd.int/styles/ui/templates/cbd2011/images/logo-cbd-text-en.gif
 
+<!-- https://www.protectedplanet.net/ -->
+<!-- https://mission-blue.org/hope-spots/ -->
+goals - situ
+abs
+sustainable use
+portected areas - areas based - upload geo
+long term
+
+governmantalsustainable

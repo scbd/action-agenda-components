@@ -3,24 +3,6 @@ sidebar: auto
 ---
 # Guide
 
-## Introduction
-...
-
-### How It Works
-...
-
-### Features
-...
-
-### Why Not ...?
-...
-
-## Getting Started
-...
-
-## Components
-....
-
 ### Form
 
 #### Public Sector Form
@@ -46,7 +28,8 @@ sidebar: auto
 ### List
 
 ``` html
-<script id="EmbedComponent" src="https://scbd-components.s3.amazonaws.com/production/action-agenda/action-list-embed/actionListEmbed.umd.min.js?version=0.1.14" charset="utf-8"></script>
+<script nomodule="" id="legacy-notice-legacy" src="https://cdn.cbd.int/@scbd/legacy-notice/dist/widget/index.umd.min.js"></script>
+<script  type="module" id="search" src="https://cdn.cbd.int/@action-agenda/search@^0.0/dist/widget/index.js" sm-top="30" md-top="60" lg-top="160"></script>
 
 ```
 
@@ -55,7 +38,8 @@ sidebar: auto
 ### View
 
 ``` html
-<script id="EmbedComponent" src="https://scbd-components.s3.amazonaws.com/production/action-agenda/action-view-embed/actionViewEmbed.umd.min.js?version=2019.30.5" charset="utf-8"></script>
+<script nomodule="" id="view-legacy" src="https://cdn.cbd.int/@action-agenda/view@^0.0/dist/widget/index.umd.min.js"></script>
+<script  type="module" id="view" src="https://cdn.cbd.int/@action-agenda/view@^0.0/dist/widget/index.min.js"></script> 
 ```
 ![list](./view.png)
 
