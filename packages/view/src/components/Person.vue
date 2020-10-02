@@ -1,4 +1,4 @@
-<i18n src="../locales/index.json"></i18n>
+
 <template>
   <div class="card my-3">
     <div class="card-body">
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import i18n from '../locales/index.js'
 
 export default {
   name : 'PersonView',
@@ -68,7 +69,8 @@ export default {
     email     : { type: String, required: true },
     image     : { type: String },
     actorType : { type: String }
-  }
+  },
+  i18n
 }
 </script>
 

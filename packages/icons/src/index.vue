@@ -1,4 +1,4 @@
-<i18n src="./locales/index.json"></i18n>
+
 <template >
   <svg id="aa-icons" ref="aa-icons" aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
@@ -46,6 +46,15 @@
   </svg>
 </template>
 
+
+<script>
+import i18n from './locales/index.js'
+
+export default {
+  name: 'AAIcons',
+  i18n
+}
+</script>
 <style>
 .aa-icon {
   display     : inline-block;

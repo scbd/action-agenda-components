@@ -1,6 +1,6 @@
 import   Component                          from './index.js'
 import   SSO                                from '@scbd/sso-vue-plugin-scbd'
-import { buildLegacyWidget, dependencyRef } from '@scbd/self-embedding-component'
+import { buildLegacyWidget, dependencyRef } from '@houlagins/self-embedding-component'
 import { name, version }       from '../package.json'
 
 const   regX        = new RegExp('(@[^/]+/[^/]+)', 'ig')
@@ -10,8 +10,9 @@ const propsData = { options }
 
 const { VUE, VUE_I18N } = dependencyRef.legacy
 
-const dependencies      = { all       : [ VUE, VUE_I18N ],
-                            vuePlugins: [ VUE_I18N ],
+
+const dependencies      = { all       : [ VUE, VUE_I18N, SSO ],
+                            vuePlugins: [ VUE_I18N, SSO ],
                             css       : [ 'https://cdn.cbd.int/@scbd/www-css' ] }
 
 const config            = { version, name: libName, propsData, dependencies }

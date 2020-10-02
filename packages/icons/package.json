@@ -1,6 +1,6 @@
 {
   "name": "@action-agenda/icons",
-  "version": "0.0.7",
+  "version": "1.0.1",
   "readme": "https://github.com/scbd/action-agenda-components/tree/master/packages/icons#readme",
   "license": "MIT",
   "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
@@ -38,27 +38,18 @@
   },
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "DEBUG=TRUE scbd-dist-builder",
+    "build": "DEBUG=TRUE dist-builder",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint --fix",
     "release": "yarn publish --access=public --tag latest"
   },
   "dependencies": {
-    "@kazupon/vue-i18n-loader": "^0.5.0",
-    "change-case": "^4.1.1",
-    "vue": "^2.6.11",
-    "vue-i18n": "^8.18.2"
+    "change-case": "~4.1.1",
+    "vue": "2.6.11",
+    "vue-i18n": "~8.21.1"
   },
   "devDependencies": {
-    "@scbd/dist-builder": "^0.0.6",
-    "@vue/cli-plugin-babel": "~4.4.0",
-    "@vue/cli-plugin-e2e-cypress": "~4.4.0",
-    "@vue/cli-plugin-eslint": "~4.4.0",
-    "@vue/cli-service": "~4.4.0",
-    "babel-eslint": "^10.1.0",
-    "core-js": "^3.6.5",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "vue-template-compiler": "^2.6.11"
+    "@houlagins/dist-builder": "~1.0.9",
+    "vue-template-compiler": "2.6.11"
   }
 }

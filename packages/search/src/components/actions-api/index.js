@@ -1,7 +1,7 @@
-import { initializeApiStore                   } from '@scbd/cached-apis'
+import { initializeApiStore                   } from '@action-agenda/cached-apis'
 import { initializeOptions                    } from './options'
-import { list              , resetListCache   } from './list'
-import { counts            , resetCountsCache } from './counts'
+import { list, resetListCache   } from './list'
+import { counts, resetCountsCache } from './counts'
 
 export { updateOptions } from  './options' // eslint-disable-line
 export const getList   = list

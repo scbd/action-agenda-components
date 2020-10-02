@@ -1,4 +1,4 @@
-<i18n src="../../../locales/index.json"></i18n>
+
 <template>
   <div class="card card-row mb-5">
     <div class="card-header">
@@ -38,11 +38,12 @@
 </template>
 
 <script>
-import { lookUp   } from '@scbd/cached-apis'
-import { get$http } from '@scbd/load-http'
+import { lookUp   } from '@action-agenda/cached-apis'
+import { get$http } from '@houlagins/load-http'
 
 import   HorzCardAction   from './Body.vue'
 import   State            from './State.vue'
+import   i18n              from '../../../locales/index.js'
 
 export default {
   name      : 'SearchListCard',
@@ -59,7 +60,8 @@ export default {
   filters : { dateFormat },
   data,
   created,
-  updated
+  updated,
+  i18n
 }
 
 function  data(){ return { activeTab: 1, icons: [] } }

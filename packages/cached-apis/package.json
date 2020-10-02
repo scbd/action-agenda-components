@@ -1,0 +1,66 @@
+{
+  "name": "@action-agenda/cached-apis",
+  "type": "module",
+  "version": "1.0.1",
+  "license": "MIT",
+  "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
+  "description": "Local caching and lookup of rarely changed SCBD apis",
+  "homepage": "https://github.com/scbd/action-agenda-components/tree/master/packages/cached-apis#readme",
+  "readme": "https://github.com/scbd/action-agenda-components/tree/master/packages/cached-apis#readme",
+  "umd": "dist/legacy/umd/index.umd.min.js",
+  "web": "dist/browser/index.min.js",
+  "main": "dist/ems/index.js",
+  "module": "dist/esm/index.js",
+  "source": "src/index.js",
+  "src": "src/index.js",
+  "unpkg": "dist/browser/index.min.js",
+  "jsdelivr": "dist/browser/index.min.js",
+  "jsnext:main": "dist/esm/index.min.js",
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "browser": {
+    "./umd": "dist/legacy/umd/index.umd.min.js",
+    "./browser": "dist/browser/index.min.js",
+    "./": "dist/browser/index.min.js"
+  },
+  "exports": {
+    ".": [
+      {
+        "import": "./dist/esm/index.js",
+        "require": "./dist/legacy/cjs/index.common.cjs",
+        "default": "./dist/esm/index.js"
+      },
+      "./dist/legacy/umd/index.umd.min.js"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scbd/action-agenda-components.git",
+    "directory": "packages/cached-apis"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve --open",
+    "build": "DEBUG=true dist-builder",
+    "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e:headless": "vue-cli-service test:e2e --headless",
+    "lint": "vue-cli-service lint --fix",
+    "link": "lerna link",
+    "release": "yarn publish --access=public --tag latest"
+  },
+  "dependencies": {
+    "@houlagins/default-options": "~1.0.0",
+    "@houlagins/load-http": "~1.0.1",
+    "@houlagins/locale": "~1.0.0",
+    "localforage": "~1.9.0",
+    "lodash.isnil": "~4.0.0",
+    "lodash.omitby": "~4.6.0"
+  },
+  "devDependencies": {
+    "@houlagins/dist-builder": "~1.0.9",
+    "@vue/cli-plugin-e2e-cypress": "~4.5.6",
+    "vue": "2.6.11",
+    "vue-template-compiler": "2.6.11"
+  }
+}

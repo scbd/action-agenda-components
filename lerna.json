@@ -4,16 +4,8 @@
   "version": "independent",
   "command": {
     "run": {
-      "npmClient": "yarn"
-    },
-    "bootstrap": {
-      "ignore": "@scbd/www-css"
-    },
-    "link": {
-      "ignore": "@scbd/www-css"
+      "npmClient": "yarn",
+      "npmClientArgs": ["--force", "--exact"]
     }
-  },
-  "packages": [
-    "packages/*"
-  ]
+  }
 }

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { getData, lookUp } from '@scbd/cached-apis'
+import { getData, lookUp } from '@action-agenda/cached-apis'
 import   AllFiltersSelect  from './AllFiltersSelect.vue'
 
 export default {

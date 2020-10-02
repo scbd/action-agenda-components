@@ -1,4 +1,4 @@
-import { get$http          } from '@scbd/load-http'
+import { get$http          } from '@houlagins/load-http'
 import { getCountsQuery    } from './query'
 import   filterPropertyMap   from './filter-to-schema-property-map'
 

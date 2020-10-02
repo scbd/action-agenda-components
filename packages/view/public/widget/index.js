@@ -1,28 +1,31 @@
 /* eslint-disable */
 /*!
-* @action-agenda/view 0.0.1
+* @action-agenda/view 1.0.0  published: Thu Oct 01 2020 16:40:03 GMT-0400 (Eastern Daylight Time)
+* 
+* https://github.com/scbd/action-agenda-components/tree/master/packages/view#readme
 *
-* @link www.cbd.int
-* @source https://github.com/scbd/action-agenda-components/tree/master/packages/view
-* @copyright (c) 2019-2020 Secretariat of the Convention on Biological Diversity <it@cbd.int>
+* @link https://github.com/scbd/action-agenda-components/tree/master/packages/view#readme
+* @source git+https://github.com/scbd/action-agenda-components.git
+* @copyright (c) 2020 Secretariat of the Convention on Biological Diversity
 * @license MIT
-* https://github.com/scbd/action-agenda-components/blob/master/LICENCE
+* 
 */
 
-import { buildWidget, dependencyRef } from 'https://cdn.cbd.int/@scbd/self-embedding-component/dist/browser/index.js';
+import { buildWidget, dependencyRef } from 'https://cdn.cbd.int/@houlagins/self-embedding-component@~1.0.3/dist/browser/index.js';
 
-var name = "https://cdn.cbd.int/@action-agenda/view/dist/browser/index.min.js";
-var version = "0.0.1";
+var name = "@action-agenda/view";
+var version = "1.0.0";
 
-const libName   = name.replace('https://cdn.cbd.int/', '').replace('/dist/browser/index.min.js', '');//hack for browser build
+const   regX        = new RegExp('(@[^/]+/[^/]+)', 'ig');
+const [ libName ]   = name.match(regX);
 const options   = {};
 const propsData = { options };
 
 const selfUrl = 'http://localhost:8089/dist/browser/index.js';
 
-const { VUE, VUE_I18N, SCBD_SSO_AUTH } = dependencyRef;
+const { VUE, VUE_I18N } = dependencyRef;
 
-//const  SCBD_SSO_AUTH = { url: `https://cdn.cbd.int/@scbd/sso-vue-plugin-scbd@0.1.6/dist/browser/index.js`, name: 'sso-vue-plugin-scbd' }
+const  SCBD_SSO_AUTH = { url: `https://cdn.cbd.int/@scbd/sso-vue-plugin-scbd@1.0.4/dist/browser/index.js`, name: 'sso-vue-plugin-scbd' };
 
 const dependencies      = { all       : [ VUE, VUE_I18N, SCBD_SSO_AUTH ],
                             vuePlugins: [ VUE_I18N, SCBD_SSO_AUTH ],

@@ -1,5 +1,5 @@
-import { toURLSearchParams } from '@scbd/load-http'
-import { getType           } from '@scbd/cached-apis'
+import { toURLSearchParams } from '@houlagins/load-http'
+import { getType           } from '@action-agenda/cached-apis'
 import { getOptions        } from './options'
 import   filterPropertyMap   from './filter-to-schema-property-map'
 

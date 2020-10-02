@@ -2,10 +2,9 @@
 node_modules
 /dist
 cypress.env.json
-/tests/e2e/videos/
-/tests/e2e/screenshots/
-*.code-workspace
 
+*.code-workspace
+/public/widget/*
 # local env files
 .env.local
 .env.*.local

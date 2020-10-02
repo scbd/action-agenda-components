@@ -1,6 +1,6 @@
 import   Component                          from './index.js'
 import   SSO                                from '@scbd/sso-vue-plugin-scbd'
-import { buildLegacyWidget, dependencyRef } from '@scbd/self-embedding-component'
+import { buildLegacyWidget, dependencyRef } from '@houlagins/self-embedding-component'
 import { name, version }       from '../package.json'
 
 const   regX      = new RegExp('(@[^/]+/[^/]+)', 'ig')

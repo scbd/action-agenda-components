@@ -1,5 +1,5 @@
-import { get$http           }         from '@scbd/load-http'
-import { initializeApiStore, lookUp } from '@scbd/cached-apis'
+import { get$http           }         from '@houlagins/load-http'
+import { initializeApiStore, lookUp } from '@action-agenda/cached-apis'
 import   isNil                        from 'lodash.isnil'
 import   omitBy                       from 'lodash.omitby'
 import   isObject                     from 'lodash.isplainobject'

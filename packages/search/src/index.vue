@@ -11,6 +11,7 @@
 
 <script>
 import Icons from '@action-agenda/icons'
+import i18n from './locales/index.js'
 
 import { getList, getCounts, resetCache, initializeApi, updateOptions } from './components/actions-api/index.js'
 
@@ -30,7 +31,8 @@ export default {
   computed: { opts, totalPages, top },
   created,
   data,
-  errorCaptured
+  errorCaptured,
+  i18n
 }
 
 async function created(){

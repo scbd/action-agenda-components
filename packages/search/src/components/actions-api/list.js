@@ -1,4 +1,4 @@
-import { get$http             } from '@scbd/load-http'
+import { get$http             } from '@houlagins/load-http'
 import { getOptions           } from './options'
 import { getPage, getNextPage, resetPaging, getIsPageZero } from './paging'
 import   getQuery               from './query'

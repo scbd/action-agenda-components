@@ -1,9 +1,10 @@
 tests/*
-
+dist/*
 src/middleware.js
 src/plugin.template.js
-*/@scbd/ecosystem/packages/*
-*@scbd*
+
+publis/widget/*
+
 .DS_Store
 node_modules
 /dist

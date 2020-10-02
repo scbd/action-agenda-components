@@ -1,7 +1,7 @@
 
 module.exports = {
   css                  : { extract: true },
-  transpileDependencies: [ '@scbd/self-embedding-component', '@scbd/sso-vue-plugin-scbd', '@scbd/cached-apis', '@scbd/locale', '@scbd/default-options', '@scbd/load-http', 'vue-multiselect', 'ky', 'ky-universal', 'check-ie', 'change-case', 'localforage' ],
+  transpileDependencies: [ '@houlagins/self-embedding-component', '@scbd/sso-vue-plugin-scbd', '@action-agenda/icons', '@action-agenda/cached-apis', '@houlagins/locale', '@houlagins/default-options', '@houlagins/load-http', 'vue-multiselect', 'ky', 'ky-universal', 'check-ie', 'change-case', 'localforage' ],
   devServer            : {
     port   : 8891,
     headers: { 'Access-Control-Allow-Origin': '*' }

@@ -19,8 +19,8 @@
 
 <script>
 
-import { lookUp      } from '@scbd/cached-apis'
-import { getUnLocale } from '@scbd/locale'
+import { lookUp      } from '@action-agenda/cached-apis'
+import { getUnLocale } from '@houlagins/locale'
 
 export default {
   name : 'CardBody',

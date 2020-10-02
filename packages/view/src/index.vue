@@ -1,4 +1,3 @@
-<i18n src="./locales/index.json"></i18n>
 <template>
   <section >
     <Icons/>
@@ -102,6 +101,7 @@ import   getOptions      from './default-options'
 import { getAction  }    from './components/api'
 import   Entity          from './components/Entity.vue'
 import   TagView         from './components/TagView.vue'
+import   i18n            from './locales/index.js'
 
 export default {
   name : 'AAView',
@@ -113,7 +113,8 @@ export default {
   computed  : { hasDetails, opts },
   created,
   mounted,
-  data
+  data,
+  i18n
 }
 
 async function created(){
