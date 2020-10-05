@@ -1161,7 +1161,7 @@
   resolved "https://registry.yarnpkg.com/@houlagins/default-options/-/default-options-1.0.0.tgz#aa3b470b6f3723cae4896f091bfbe186916831ef"
   integrity sha512-TIc9s9R+Me+hUX72RGav6JKKxM3q4BQn3ey6cA/ReRLa2zankPIiQ9pBYDyMklpjErB3utgNyBxBgp9kF/9pcw==
 
-"@houlagins/dist-builder@~1.0.9":
+"@houlagins/dist-builder@~1.0.7", "@houlagins/dist-builder@~1.0.9":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@houlagins/dist-builder/-/dist-builder-1.0.9.tgz#c356a39398ed1e4879e1b39b2c7df1f040acdc40"
   integrity sha512-MUjp3Tyn3lap7xztJr2ZIDpDbgTUyMgZoXrPXRBCP3GOW46yBue19FkOZ63TgcD5rvnnq3ZapqeWCWvOQC/jZw==

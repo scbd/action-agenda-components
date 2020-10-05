@@ -3,7 +3,7 @@ node_modules
 /dist
 
 public/widget/*
-
+public/cbddev.xyz/*
 # local env files
 .env.local
 .env.*.local
