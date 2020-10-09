@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <LegacyNotice/>
+    <LegacyNotice minVersion="force"/>
   </div>
 </template>
 

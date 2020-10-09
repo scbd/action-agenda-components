@@ -1,4 +1,5 @@
 import { get$http          } from '@houlagins/load-http'
+import { lookUpSource      } from '@action-agenda/cached-apis'
 import { getCountsQuery    } from './query'
 import   filterPropertyMap   from './filter-to-schema-property-map'
 
@@ -10,12 +11,13 @@ export const counts =  async () => {
     const $http     = await get$http()
 
     const [ api, headers, searchParams ] = await getCountsQuery()
+    const counts = cache.has(searchParams.toString())? cache.get(searchParams.toString()) : await $http.get(api, { headers, searchParams }).then(async (res) => calculateCounts(await res.json()))
 
-    const { filterCounts, total } = cache.has(searchParams.toString())? cache.get(searchParams.toString()) : await $http.get(api, { headers, searchParams }).then(async (res) => calculateCounts(await res.json()))
 
-    updateCache(searchParams, { filterCounts, total })
+    updateCache(searchParams, counts)
+    emitCounts(counts)
 
-    return  { filterCounts, total }
+    return  counts
   }
   catch(e){
     const msg = e.response? e.response.status : ''
@@ -25,6 +27,16 @@ export const counts =  async () => {
 }
 
 export const resetCountsCache = reset
+
+function emitCounts(counts){
+  if(typeof window === 'undefined') return
+
+  const event = new Event('$actionAgendaCounts', { bubbles: true })
+
+  event.$counts = counts
+
+  window.document.dispatchEvent(event)
+}
 
 function reset(){
   globalProps.lastQuery = undefined
@@ -43,7 +55,7 @@ function updateCache(searchParams, counts){
 
 //export const getAllFiltersUsed = async () => new Set(Object.keys(await getCounts()))
 
-function calculateCounts(data=[]){
+async function calculateCounts(data=[]){
   const total        = data.length
   const allKeysUsed  = extractKeys(data)
   const filterCounts = {}
@@ -53,7 +65,27 @@ function calculateCounts(data=[]){
     if(filterCounts[key]) filterCounts[key]++
     else filterCounts[key]=1
 
-  return { filterCounts, total }
+  const totals = await getSourceTotals(filterCounts)
+
+  return { filterCounts, total, ...totals }
+}
+
+
+async function getSourceTotals(filterCounts){
+  const sourceTotals = {}
+  const sources      = {}
+
+  for (const key in filterCounts){
+    const source = await lookUpSource(key)
+
+    if(!sources[source]) sources[source]={}
+    sources[source][key]=filterCounts[key]
+
+    if(sourceTotals[source])sourceTotals[source]=sourceTotals[source]+filterCounts[key]
+    else sourceTotals[source]=filterCounts[key]
+  }
+
+  return  { sourceTotals, sources }
 }
 
 function extractKeys (data, allKeys =[]){ // eslint-disable-line

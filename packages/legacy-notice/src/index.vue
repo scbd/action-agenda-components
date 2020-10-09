@@ -29,7 +29,9 @@ import i18n    from './locales/index.js'
 export default {
   name      : 'LegacyNotice',
   components: {Icons},
+// #region snippet
   props     : { minVersion   : { type: String, default: '11'  } },
+// #endregion snippet
   methods   : { getOptions },
   computed  : { getBrowsers },
   data,
@@ -49,7 +51,7 @@ function mounted(){
 
   const { isIE, name, version } = check(window.navigator.userAgent, options)
 
-  this.isIE    = isIE
+  this.isIE    = (this.minVersion === 'force')? true : isIE
   this.name    = name
   this.version = version
 }
@@ -74,6 +76,10 @@ function makeIcon(name){
 }
 
 function getOptions(){
+
+  const ie10s = ['10', 'ie10', 'IE10']
+  const ie11s = ['11', 'ie11', 'IE11']
+
   const ie10 = true
   const ie11 = true
   const edge = true
@@ -82,8 +88,8 @@ function getOptions(){
   const ie11OrLess = { ie10, ie11 }
   const edgeOrLess = { ie10, ie11, edge }
 
-  if(['10', 'ie10', 'IE10'].includes(this.minVersion)) return ie10Opts
-  if(['11', 'ie11', 'IE11'].includes(this.minVersion)) return ie11OrLess
+  if(ie10s.includes(this.minVersion)) return ie10Opts
+  if(ie11s.includes(this.minVersion)) return ie11OrLess
   if(['edge'].includes(this.minVersion)) return edgeOrLess
 }
 

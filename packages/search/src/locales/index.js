@@ -1,4 +1,4 @@
-export default {
+export default { messages: {
   en: {
     deleted             : 'Deleted',
     draft               : 'New',
@@ -25,4 +25,4 @@ export default {
     search              : 'search',
     filter              : 'filter'
   }
-}
+} }

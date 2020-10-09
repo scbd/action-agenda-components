@@ -32,7 +32,8 @@
     <span id="lu-geo-locations">{{this.lookupGeoLocations.length}}</span><br/>
     <span id="lu-sdgs">{{this.lookupSdgs.length}}</span><br/>
     <span id="lu-action-categories">{{typeof this.lookupActionCategories === 'object'}}</span><br/>
-    {{this.lookupActionCategories}}
+    <hr/>
+    {{this.dataSources}}
   </div>
 </template>
 
@@ -42,6 +43,7 @@ import * as CachedApis from '../src/index.mjs'
 CachedApis.initializeApiStore()
 export default {
   name    : 'App',
+  methods : { buildSourceMap },
   computed: { cachedApis: () => CachedApis },
   mounted, data
 }
@@ -75,7 +77,8 @@ function data(){
     lookupFalsey          : undefined,
     isSameAs              : [],
     isSameAsReverse       : [],
-    hasAltName            : false
+    hasAltName            : false,
+    dataSources           : []
   }
 }
 
@@ -96,7 +99,7 @@ async function mounted(){ // eslint-disable-line
   this.sdgs             = await CachedApis.getSdgs()
   this.actionCategories = await CachedApis.getActionCategories()
 
-  console.log(this.actionCategories)
+
   this.lookupAll              = await CachedApis.getAllByKey([ '528B1187-F1BD-4479-9FB3-ADBD9076D361', 'ca' ])
   this.lookupDocumentStates   = await CachedApis.getDocumentStatesByKey([ 'draft' ])
   this.lookupJurisdictions    = await CachedApis.getJurisdictionsByKey([ '528B1187-F1BD-4479-9FB3-ADBD9076D361' ])
@@ -110,5 +113,25 @@ async function mounted(){ // eslint-disable-line
   this.lookupSdgs             = await CachedApis.getSdgsByKey('SDG-GOAL-05')
   this.lookupActionCategories = await CachedApis.getActionCategoriesByKey('FRESHWATER-COASTAL-AND-OCEAN-ECOSYSTEMS', true)
   this.lookupFalsey = await CachedApis.lookUp('countries', 'COASTAL-AND-OCsAN')
+
+  this.dataSources = await CachedApis.lookUpSource('SDG-GOAL-05')
+  //console.log(this.geoLocations)
+
+  //this.buildSourceMap()
+}
+
+async function buildSourceMap(){
+  const sourceMap = {}
+  let allKeys = []
+
+
+  for (const source of this.all)
+    allKeys = allKeys.concat(source.data.map(({ identifier }) => identifier))
+
+  for (const key of allKeys)
+    sourceMap[key] = await CachedApis.lookUpSource(key)
+  
+  this.dataSources = sourceMap.length
+  console.log(sourceMap)
 }
 </script>

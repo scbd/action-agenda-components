@@ -1,5 +1,5 @@
-export { actionCategories, isSameAsActionCat } from './action-cats'
-
+export { actionCategories, isSameAsActionCat } from './action-cats.mjs'
+export { sourceMap } from './source-map.mjs'
 export const sdgsShort = {
   en: [
     '1. No Poverty',

@@ -1,10 +1,10 @@
 {
   "name": "@action-agenda/search",
-  "version": "1.0.0",
-  "readme": "https://github.com/scbd/action-agenda-components/tree/master/packages/serach#readme",
+  "version": "1.0.1",
+  "readme": "https://scbd.github.io/action-agenda-components/components/search",
   "license": "MIT",
   "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
-  "homepage": "https://github.com/scbd/action-agenda-components/tree/master/packages/search#readme",
+  "homepage": "https://scbd.github.io/action-agenda-components/components/search",
   "main": "dist/esm/index.min.js",
   "module": "dist/esm/index.min.js",
   "unpkg": "dist/browser/index.min.js",
@@ -51,13 +51,12 @@
     "link": "lerna link"
   },
   "dependencies": {
-
-    "@action-agenda/cached-apis": "~1.0.1",
+    "@action-agenda/cached-apis": "~1.0.7",
     "@action-agenda/icons": "~1.0.1",
     "@houlagins/default-options": "~1.0.0",
     "@houlagins/load-http": "~1.0.1",
     "@houlagins/locale": "~1.0.0",
-    "@houlagins/self-embedding-component": "~1.0.3",
+    "@houlagins/self-embedding-component": "~1.0.7",
     "@scbd/sso-vue-plugin-scbd": "1.0.4",
 
     "vue": "2.6.11",

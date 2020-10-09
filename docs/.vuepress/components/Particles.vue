@@ -19,7 +19,7 @@
           </div>
           <div class="feature">
             <h2>Efficiency &amp; Sustainability</h2>
-            <p>Thousans of organizations are aquiring Actions for thier environmental causes.  100's have created thier own tools and displays.  Lets utalize the same tool saving resources and reducing waiste.</p>
+            <p>Thousans of organizations are aquiring Actions for their environmental causes.  100's have created their own tools and displays.  Lets utalize the same tool saving resources and reducing waiste.</p>
           </div>
         </div>
     </div>

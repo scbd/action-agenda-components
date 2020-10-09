@@ -4,7 +4,7 @@ import { name, version              } from '../../../package.json'
 const   regX        = new RegExp('(@[^/]+/[^/]+)', 'ig')
 const [ libName ]   = name.match(regX)
 const options   = {}
-const propsData = { options, forceEnv:'dev' }
+const propsData = { options, forceEnv:'production' }
 
 const selfUrl = 'http://localhost:8089/dist/browser/index.js'
 

@@ -8,9 +8,9 @@ const ssr    = { output: { dir: './dist/esm' } }
 const cdnUrl = 'https://cdn.cbd.int'
 
 const  browserEsmPackages = {
-  '@houlagins/default-options': `${cdnUrl}/@houlagins/default-options/dist/browser/index.min.js`,
-  '@houlagins/load-http'      : `${cdnUrl}/@houlagins/load-http/dist/browser/index.min.js`,
-  '@houlagins/locale'         : `${cdnUrl}/@houlagins/locale/dist/browser/index.min.js`
+  '@houlagins/default-options': `${cdnUrl}/@houlagins/default-options@~1.0.0/dist/browser/index.min.js`,
+  '@houlagins/load-http'      : `${cdnUrl}/@houlagins/load-http@~1.0.1/dist/browser/index.min.js`,
+  '@houlagins/locale'         : `${cdnUrl}/@houlagins/locale@~1.0.0/dist/browser/index.min.js`
 }
 
 export default {

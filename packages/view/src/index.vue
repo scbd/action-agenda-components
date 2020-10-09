@@ -105,25 +105,23 @@ import   i18n            from './locales/index.js'
 
 export default {
   name : 'AAView',
+  // #region snippet
   props: {
-    identifier: { type: String },
-    forceEnv  : { type: String }
+    identifier: { type: String, required: false },
+    options   : { type: Object, required: false },
+    forceEnv  : { type: String, required: false }
   },
+  // #endregion snippet
   components: { Icons, Icon, Entity, TagView },
   computed  : { hasDetails, opts },
-  created,
   mounted,
   data,
   i18n
 }
 
-async function created(){
-  this.authLoaded = await this.$initSsoScbd()
-}
-
 function data(){
   return {
-    record: {}, authLoaded: false
+    record: {}
   }
 }
 

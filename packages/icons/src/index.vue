@@ -67,5 +67,5 @@ export default {
 
 .aa-icon-search { width: 1em; }
 .aa-icon-menu { width: 1.6em; }
-.aa-icon-close { font-size: 1.5em; }
+.aa-icon-close { font-size: 1.1em; }
 </style>

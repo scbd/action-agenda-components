@@ -10,7 +10,16 @@ const stg           = { hostname: 'staging.cbd.int', ...dev }
 const prod          = { hostname: 'cbd.int', ...stg, api: 'https://www.cbd.int/api' }
 
 const environments  = { prod, stg, dev }
-const validationMap = { forceEnv: String, basePath: String, locale: String, api: String, hostname: String }
+
+// #region snippet
+const validationMap =
+{ forceEnv: String,  /* default: production */
+  basePath: String,  /* default: '/' */
+  locale  : String,  /* default: derives from the client automatically otherwise 'en' */
+  api     : String,  /* default: api/cbd.int/api/actions */
+  hostname: String   /* default: cbd.int - this is also used to derive the env if set. */
+}
+// #endregion snippet
 
 setDefaultOptions({ environments, validationMap, name })
 

@@ -5,8 +5,9 @@ import { getUnLocale } from '@houlagins/locale'
 import { get$http    } from '@houlagins/load-http'
 
 import   getDefaultOptions                                                              from './default-options.mjs'
-import { sdgsShort, orgTypeOther, actionCategories, isSameAsActionCat, documentStates } from './data/index.mjs'
+import { sourceMap, sdgsShort, orgTypeOther, actionCategories, isSameAsActionCat, documentStates } from './data/index.mjs'
 
+const cache = new Map(Object.entries(sourceMap))
 
 let options = {}
 
@@ -15,8 +16,11 @@ export const initializeApiStore   = (opts = {}) => {
 
   const { name, version } = options
 
-  localForage.config({ name: `${name}-${version}`, version, size: 4980736,  storeName: `${name}KeyValuePairs`  })
+  return localForage.config({ name: `${name}-${version}`, version, size: 4980736,  storeName: `${name}KeyValuePairs`  })
 }
+
+export const dataSources = options.dataSources
+
 export const getData  = async (dataSource, noCache=false) => {
   const localData   = noCache? noCache : await getFromLocal(validateDataSource(dataSource))
   const aichiOrSdgs = dataSource==='aichis' || dataSource==='sdgs'
@@ -125,6 +129,21 @@ export const generateAll = async () => { // eslint-disable-line
     localForage.setItem(`all-${locale}`, all)
 
   return all
+}
+
+export const  lookUpSource = async(key) => {
+  const { dataSources } = options
+
+  if(cache.has(key)) return cache.get(key)
+  
+  for (const source of dataSources){
+    if(source === 'all') continue
+
+    if(await lookUp(source, key, true)){
+      cache.set(key, source)
+      return source
+    }
+  }
 }
 
 const sanitizers = {
@@ -361,3 +380,4 @@ function padCode(code){
 
   return code
 }
+

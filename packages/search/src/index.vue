@@ -23,10 +23,12 @@ import Feedback          from './components/Feedback.vue'
 export default {
   name      : 'ScbdSearch',
   components: { FilterNav, Feedback, List, Icons },
+  // #region snippet
   props     : {
-    options : { type: Object, required: true },
+    options : { type: Object, required: false },
     forceEnv: { type: String, required: false, default: 'production' }
   },
+  // #endregion snippet
   methods : { onScbdFilterChange, getCounts, setRowsAndTotal, onScroll, onNextPageLoaded, preLoadFilter  },
   computed: { opts, totalPages, top },
   created,
@@ -36,10 +38,6 @@ export default {
 }
 
 async function created(){
-  const regX = new RegExp('(@[^/]+/[^/]+)', 'ig')
-  const match = '@action-agenda/search'.match(regX)
-
-  console.log(match)
   initializeApi({ ... this.opts, getToken: () => (this.auth || {}).token })
 
   if(this.opts.preLoadFilter) this.preLoadFilter(this.opts.preLoadFilter)
@@ -106,6 +104,7 @@ async function setRowsAndTotal(){
   this.loading    = true
 
   const { total } = await getCounts()
+
 
   this.total   = total
   this.rows    = await getList()

@@ -6,6 +6,8 @@
 <script>
 export default {
   name : 'AAIcon',
+// #region snippet
   props: [ 'name' ]
+// #endregion snippet
 }
 </script>

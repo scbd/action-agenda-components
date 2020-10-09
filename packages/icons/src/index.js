@@ -5,7 +5,9 @@ import { name       } from '../package.json'
 
 const NAME =  pascalCase(name.replace('@action-agenda/', 'AA-'))
 
+// #region snippet
 export const iconNames = [ 'close', 'edit', 'question-circle', 'earth', 'trash-o', 'file', 'cloud-upload', 'chevron-down', 'search', 'filter' ]
+// #endregion snippet
 
 export function install(Vue){
   if (install.installed) return

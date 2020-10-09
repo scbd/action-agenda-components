@@ -3,7 +3,7 @@ import { name, version              } from '../package.json'
 
 const   regX      = new RegExp('(@[^/]+/[^/]+)', 'ig')
 const [ libName ] = name.match(regX)
-const   options   = {}
+const   options   = { forceEnv: 'production'}
 const   propsData = { options }
 
 const { VUE, VUE_I18N} = dependencyRef

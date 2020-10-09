@@ -6,13 +6,4 @@ sidebarDepth: 2
 ## Description
 Partners will be assigned a clientId for api usage.  Via the clientId partners can make use of accounts.cbd.int OpenId and Oath2 and override the base schema with specific needs.  Add and validate addition properties specific to their needs.  Change the wording, help messages and error messages that will appear on their form.
 
-## Install
-
-```bash
-yarn add @action-agenda/partners-schemas
-
-#OR 
-
-npm install @action-agenda/partners-schemas
-```
 

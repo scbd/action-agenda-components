@@ -47,12 +47,12 @@
     "release": "yarn publish --access=public --tag latest"
   },
   "dependencies": {
-    "@action-agenda/cached-apis": "~1.0.1",
+    "@action-agenda/cached-apis": "~1.0.7",
     "@action-agenda/icons": "~1.0.1",
     "@houlagins/default-options": "~1.0.0",
     "@houlagins/load-http": "~1.0.1",
     "@houlagins/locale": "~1.0.0",
-    "@houlagins/self-embedding-component": "~1.0.3",
+    "@houlagins/self-embedding-component": "~1.0.7",
     "@scbd/sso-vue-plugin-scbd": "1.0.4",
     "core-js": "~3.6.5",
     "lodash.isempty": "~4.4.0",

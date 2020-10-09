@@ -1,7 +1,7 @@
 import { setDefaultOptions, getDefaultOptionsFunction } from '@houlagins/default-options'
 import { getUnLocale                                  } from '@houlagins/locale'
 
-const name     = '@scbd/search'
+const name     = '@action-agenda/search'
 const basePath = '/'
 const locale   = getUnLocale()
 const smTop      = '0'
@@ -13,7 +13,21 @@ const stg           = { hostname: 'staging.cbd.int', ...dev }
 const prod          = { hostname: 'cbd.int', ...stg, api: 'https://www.cbd.int/api' }
 
 const environments  = { prod, stg, dev }
-const validationMap = { forceEnv: String, basePath: String, locale: String, api: String, listenExternally: Boolean, preLoadFilter: String, smTop: String, mdTop: String, lgTop: String, hostname: String }
+
+// #region snippet
+const validationMap =
+{ forceEnv        : String,  /* default: production */
+  basePath        : String,  /* default: '/' */
+  locale          : String,  /* default: derives from the client automatically otherwise 'en' */
+  api             : String,  /* default: api/cbd.int/api/actions */
+  hostname        : String,  /* default: cbd.int - this is also used to derive the env if set. */
+  listenExternally: Boolean, /* default: false - listen for js event $scbdFilterChange */
+  preLoadFilter   : String,  /* preload a single filter by identifier 'AICHI-TARGET-01' */
+  smTop           : String,  /* offset sticky header in small devices */
+  mdTop           : String,  /* offset sticky header in medium devices */
+  lgTop           : String   /* offset sticky header in large devices */
+}
+// #endregion snippet
 
 
 setDefaultOptions({ environments, validationMap, name }, name)

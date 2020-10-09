@@ -1,4 +1,4 @@
-export default {
+export default { messages: {
   en: {
     Action                                     : 'Action',
     Actor                                      : 'Actor',
@@ -27,4 +27,4 @@ export default {
     draft                                      : 'New',
     Created                                    : 'Created'
   }
-}
+} }

@@ -1,7 +1,7 @@
 const themeConfig =  require('./configs/themeConfig')
 const path        = require('path')
 
-const packages    = ['cached-apis', 'icons', 'legacy-notice', 'search', 'view', 'api', 'schema', 'map', 'partners-schemas']
+const packages    = ['cached-apis', 'icons', 'legacy-notice', 'search', 'view', 'api', 'schema', 'partners-schemas', 'pie-chart']
 const title       = 'Action Agenda Components'
 const description = 'Is a modular system of independent software components which together form an Action Agenda platform. The Action platform can be used to acquire, filter and showcase Actions for your initiative, programme or organization\'s environmental cause.'
 

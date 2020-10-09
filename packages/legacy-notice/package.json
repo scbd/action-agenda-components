@@ -42,7 +42,7 @@
     "release": "yarn publish --access=public --tag latest"
   },
   "dependencies": {
-    "@houlagins/self-embedding-component": "~1.0.3",
+    "@houlagins/self-embedding-component": "~1.0.7",
     "check-ie": "~2.0.1",
     "core-js": "~3.6.5",
     "vue": "2.6.11",

@@ -77,10 +77,7 @@ export default {
   },
   methods : { update, highLight, onClose },
   computed: { counts },
-  data,
-  mounted(){
-    console.log('this.values', this.values)
-  }
+  data
 }
 
 function counts (){

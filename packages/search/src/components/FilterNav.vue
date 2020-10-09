@@ -2,7 +2,7 @@
 <template>
   <!-- <i18n src="../locales/index.json"></i18n> -->
   <section class="filter-nav">
-      <nav class="navbar navbar-light bg-light px-0 px-sm-2">
+      <nav class="position-relative navbar navbar-light bg-light px-0 px-sm-2">
           <div class="col-12">
             <AllFiltersSelect
                   id="filter-all"

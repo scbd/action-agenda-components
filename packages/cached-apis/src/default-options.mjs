@@ -2,7 +2,10 @@ import { setDefaultOptions, getDefaultOptionsFunction } from '@houlagins/default
 import { name, version                                } from '../package.json'
 
 const libName     = name.replace('https://cdn.cbd.int/', '') // replace is a hack alack for browser build
+
 const expiry      = 30
+
+// #region apisUrls
 const apisUrls = {
   regions      : 'https://api.cbd.int/api/v2013/thesaurus/domains/regions/terms',
   countries    : 'https://api.cbd.int/api/v2013/thesaurus/domains/countries/terms',
@@ -13,16 +16,21 @@ const apisUrls = {
   jurisdictions: 'https://api.cbd.int/api/v2013/thesaurus/domains/50AC1489-92B8-4D99-965A-AAE97A80F38E/terms',
   sdgs         : 'https://unstats.un.org/SDGAPI/v1/sdg/Goal/List?includechildren=false'
 }
+// #endregion apisUrls
 
+// #region dataSources
 const dataSources = [ ...Object.keys(apisUrls), 'geoLocations', 'actionCategories', 'all', 'documentStates' ]
+// #endregion dataSources
 
 const dev           = { name: libName, expiry, apisUrls, dataSources, version   }
 const stg           = { ...dev }
 const prod          = { ...stg }
 
 const environments  = { prod, stg, dev }
-const validationMap = { expiry: Number, name: String, apisUrls: Object, dataSources: Array, version: String }
 
+// #region options
+const validationMap = { expiry: Number, name: String, apisUrls: Object, dataSources: Array, version: String }
+// #endregion options
 
 setDefaultOptions({ environments, validationMap, name: libName }, libName)
 
