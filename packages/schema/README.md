@@ -2,7 +2,7 @@
 sidebarDepth: 2
 title: Schema 
 ---
-# Schema v2 <Badge text="under development" type="error"/>
+# Schema v2 <Badge text=concept" type="error"/>
 
 ## Description
 Taking into consideration needs from multiple stakeholders the schema is being redesigned.

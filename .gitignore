@@ -2,7 +2,7 @@
 node_modules
 /dist
 cypress.env.json
-
+/docs/.vuepress/dist*
 *.code-workspace
 /public/widget/*
 # local env files

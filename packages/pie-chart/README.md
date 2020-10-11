@@ -145,13 +145,13 @@ export default {
   },
   computed:{sources},
   mounted () {
-    import('../search/src/index.js').then(module => {
+    Promise.all([import('../search/src/index.js').then(module => {
       this.searchComp = module.default
-    })
+    }),
     import('./src/index.js').then(module => {
       this.pieComp = module.default
-      this.getExamp()
-    })
+      
+    })]).then(() => this.getExamp())
 
   },
   destroyed(){
@@ -169,6 +169,7 @@ function getExamp(){
 
   const test = document.getElementsByTagName('main')[0].lastElementChild.id
 
+console.log()
   if(test === 'example-data') return
 
     this.exampleHeader = document.getElementById('example')
