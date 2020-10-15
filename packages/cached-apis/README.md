@@ -45,6 +45,53 @@ initializes the local store (IndexedDB/WebSQL/local storage) depending on client
 
 ### lookUp = async(dataSource, keys, single=false)
 
+## Data References
+
+### Action Categories
+<div class="language-text"><pre><code>
+{{actionCategories}}
+</code></pre></div>
+
+### Thematic Areas
+<div class="language-text"><pre><code>
+{{subjects}}
+</code></pre></div>
+
+### Government Types
+<div class="language-text"><pre><code>
+{{govTypes}}
+</code></pre></div>
+
+### Organization Types
+<div class="language-text"><pre><code>
+{{orgTypes}}
+</code></pre></div>
+
+### Regions 
+<div class="language-text"><pre><code>
+{{regions}}
+</code></pre></div>
+
+### Aichi Biodiversity Targets
+<div class="language-text"><pre><code>
+{{aichis}}
+</code></pre></div>
+
+### SDG's
+<div class="language-text"><pre><code>
+{{sdgs}}
+</code></pre></div>
+
+### Countries
+<div class="language-text"><pre><code>
+{{countries}}
+</code></pre></div>
+
+### Jurisdictions
+<div class="language-text"><pre><code>
+{{jurisdictions}}
+</code></pre></div>
+
 
 ## Example
 <template>
@@ -55,10 +102,11 @@ initializes the local store (IndexedDB/WebSQL/local storage) depending on client
     <pre>
     {{lookUp}}
     </pre>
-    <h3>CachedApis.getData('aichis')</h3>
+    <a href="#actionCategories" class="header-anchor">#</a>
+    <h3 >CachedApis.getData('actionCategories')</h3>
     <hr/>
     <pre>
-    {{all}}
+    {{actionCategories}}
     </pre>
   </div>
 </div>
@@ -74,16 +122,33 @@ export default {
     return {
       exampleData: null,
       exampleHeader: null,
-      all:[],
-      lookUp:[]
+      sdgs:[],
+      aichis:[],
+      subjects:[],
+      jurisdictions:[],
+      govTypes:[],
+      orgTypes:[],
+      regions:[],
+      countries:[],
+      lookUp:[],
+      actionCategories:[]
     }
   },
 
   async mounted () {
     CachedApis.initializeApiStore()
-    
-    this.all = await CachedApis.getData('aichis')
+
     this.lookUp =  await CachedApis.lookUp('all', ['528B1187-F1BD-4479-9FB3-ADBD9076D361', 'ca' ,'AICHI-TARGET-10','CBD-SUBJECT-ABS'])
+    this.actionCategories =  await CachedApis.getData('actionCategories')
+    this.countries = await CachedApis.getData('countries')
+    this.regions = await CachedApis.getData('regions')
+    this.orgTypes = await CachedApis.getData('orgTypes')
+    this.govTypes = await CachedApis.getData('govTypes')
+    this.jurisdictions = await CachedApis.getData('jurisdictions')
+    this.subjects = await CachedApis.getData('subjects')
+    this.aichis = await CachedApis.getData('aichis')
+    this.sdgs = await CachedApis.getData('sdgs')
+
     this.getExamp()
   },
   destroyed(){
