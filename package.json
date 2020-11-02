@@ -25,7 +25,6 @@
     "url": "https://github.com/scbd/action-agenda-components"
   },
   "scripts": {
-    "serve": "vue-cli-service serve",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:deploy": "sh docs/.vuepress/deploy.sh",
@@ -36,15 +35,15 @@
     "vue-particles": "~1.0.9"
   },
   "devDependencies": {
-    "vue": "2.6.11",
-    "vue-template-compiler": "2.6.11",
-    "vuepress": "~1.6.0",
-    "vue-server-renderer": "2.6.11",
-    "prismjs": "1.21.0",
+    "@amcharts/amcharts4": "^4.10.5",
     "@houlagins/dist-builder": "~1.0.9",
-    "vue-i18n":"8.21.1",
     "@scbd/sso-vue-plugin-scbd": "1.0.4",
     "@scbd/www-css": "~1.0.1",
-    "@amcharts/amcharts4": "^4.10.5"
+    "prismjs": "1.21.0",
+    "vue": "2.6.11",
+    "vue-i18n": "8.21.1",
+    "vue-server-renderer": "2.6.11",
+    "vue-template-compiler": "2.6.11",
+    "vuepress": "~1.6.0"
   }
 }

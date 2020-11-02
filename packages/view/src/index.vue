@@ -22,7 +22,7 @@
       <section v-if="record.actor">
         <h2>{{$t('Submitted By')}}</h2>
 
-        <Entity :entity="record.actor"/>
+        <Entity v-on:click="" :entity="record.actor"/>
 
       </section>
       

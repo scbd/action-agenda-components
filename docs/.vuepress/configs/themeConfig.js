@@ -1,9 +1,9 @@
-const nav         = require('./nav')
-const ui          = ['search', 'view', 'icons','legacy-notice']
-const dataVisuals = [ 'pie-chart' ]
-const services    = [ 'cached-apis', 'api']
-const data        = [ 'schema', 'partners-schemas']
-
+const nav               = require('./nav')
+const ui                = ['search', 'view', 'icons','legacy-notice']
+const dataVisuals       = [ 'pie-chart' ]
+const services          = [ 'cached-apis']
+const data              = [ 'schema', 'partners-schemas']
+const underDevelopement = ['']
 
 const themeConfig = {
   nav,
@@ -39,28 +39,18 @@ const themeConfig = {
 function getComponentsSidebar(){
   return [
     {
-      title: 'Components',
+      title: 'Components V1',
       collapsable: false
     },
     {
-      title: 'UI',
+      title: 'UI V1',
       collapsable: false,
       children: ui.map(sideBarChildTemplate)
     },
     {
-      title: 'Data Visualizations',
-      collapsable: false,
-      children: dataVisuals.map(sideBarChildTemplate)
-    },
-    {
-      title: 'Services',
+      title: 'Services V1',
       collapsable: false,
       children: services.map(sideBarChildTemplate)
-    },
-    {
-      title: 'Data',
-      collapsable: false,
-      children: data.map(sideBarChildTemplate)
     }
   ]
 }
