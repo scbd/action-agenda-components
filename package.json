@@ -9,10 +9,13 @@
   "homepage": "https://scbd.github.io/action-agenda-components",
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/components/v1/*",
+      "packages/components/v2/*",
+      "packages/partners/*"
     ],
     "nohoist": [
       "**/@houlagins/dist-builder",
+      "@houlagins/schema-dot-organizer",
       "**/fmin",
       "**/@amcharts/amcharts4"
     ]
@@ -35,8 +38,10 @@
     "vue-particles": "~1.0.9"
   },
   "devDependencies": {
+    "@action-agenda/cached-apis": "^1.0.7",
+    "@action-agenda/icons": "^1.0.1",
     "@amcharts/amcharts4": "^4.10.5",
-    "@houlagins/dist-builder": "~1.0.9",
+    "@houlagins/dist-builder": "~1.0.11",
     "@scbd/sso-vue-plugin-scbd": "1.0.4",
     "@scbd/www-css": "~1.0.1",
     "prismjs": "1.21.0",

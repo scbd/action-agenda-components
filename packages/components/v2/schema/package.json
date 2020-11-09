@@ -1,0 +1,59 @@
+{
+  "name": "@action-agenda/schema",
+  "version": "2.0.0-alpha.1",
+  "type": "module",
+  "description": "https://github.com/scbd/action-agenda-components/tree/master/packages/schema#readme",
+  "bugs": {
+    "url": "https://github.com/scbd/action-agenda-components/issues"
+  },
+  "readme": "https://github.com/scbd/action-agenda-components/tree/master/packages/schema#readme",
+  "license": "MIT",
+  "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
+  "homepage": "https://github.com/scbd/action-agenda-components/tree/master/packages/schema#readme",
+  "main": "dist/esm/index.mjs",
+  "module": "dist/esm/index.mjs",
+  "unpkg": "dist/browser/index.min.js",
+  "umd": "dist/legacy/umd/index.umd.min.js",
+  "web": "dist/browser/index.min.js",
+  "jsnext:main": "dist/esm/index.min.js",
+  "src": "src/index.mjs",
+  "browser": {
+    "./umd": "dist/legacy/umd/index.umd.min.js",
+    "./browser": "dist/browser/index.min.js",
+    "./": "dist/browser/index.min.js"
+  },
+  "exports": {
+    ".": [
+      {
+        "import": "./dist/esm/index.mjs",
+        "require": "./dist/legacy/cjs/index.common.cjs",
+        "default": "./dist/esm/index.mjs"
+      },
+      "./dist/legacy/umd/index.umd.min.js"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scbd/action-agenda-components.git",
+    "directory": "packages/schema"
+  },
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "DEV=true dist-builder && sh scripts/build.sh",
+    "SDO:init": "DEV=true sdo init",
+    "SDO:generate": "DEV=true sdo generate",
+    "release": "yarn publish --access=public --tag alpha --tag latest"
+  },
+  "devDependencies": {
+    "@houlagins/dist-builder": "^1.0.11",
+    "@houlagins/schema-dot-organizer": "1.0.0-alpha.1",
+    "ajv": "^6.12.6"
+  },
+  "dependencies": {
+    "@action-agenda/cached-apis": "^1.0.7"
+  }
+}

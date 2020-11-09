@@ -1,0 +1,67 @@
+{
+  "name": "@action-agenda/pie-chart",
+  "version": "2.0.0-alpha.0",
+  "readme": "https://scbd.github.io/action-agenda-components/components/pie-chart",
+  "license": "MIT",
+  "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
+  "homepage": "https://scbd.github.io/action-agenda-components/components/pie-chart",
+  "description": "Pie chart widget",
+  "main": "dist/esm/index.js",
+  "web": "dist/browser/index.min.js",
+  "umd": "dist/legacy/umd/index.umd.min.js",
+  "unpkg": "dist/browser/index.min.js",
+  "module": "dist/esm/index.min.js",
+  "jsnext:main": "dist/esm/index.min.js",
+  "jsdelivr": "dist/browser/index.min.js",
+  "src": "src/index.js",
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "browser": {
+    "./umd": "dist/legacy/umd/index.umd.min.js",
+    "./browser": "dist/browser/index.min.js",
+    "./": "dist/browser/index.min.js"
+  },
+  "exports": {
+    ".": [
+      {
+        "import": "./dist/esm/index.js",
+        "require": "./dist/legacy/cjs/index.common.cjs",
+        "default": "./dist/esm/index.js"
+      },
+      "./dist/legacy/umd/index.umd.min.js"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scbd/action-agenda-components.git",
+    "directory": "packages/pie-chart"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve --open",
+    "build": "DEBUG=TRUE dist-builder && DEBUG=TRUE dist-builder widget",
+    "build-test-widget": "DEBUG=TRUE dist-builder testWidget",
+    "serve-test-widget": "DEBUG=TRUE dist-builder serveTestWidget",
+    "test:e2e": "vue-cli-service test:e2e",
+    "lint": "vue-cli-service lint",
+    "release": "yarn publish --access=public --tag alpha"
+  },
+  "dependencies": {
+    "@action-agenda/cached-apis": "~1.0.7",
+    "@action-agenda/icons": "~1.0.1",
+    "@amcharts/amcharts4": "^4.10.5",
+    "@houlagins/default-options": "~1.0.0",
+    "@houlagins/load-http": "~1.0.1",
+    "@houlagins/locale": "~1.0.0",
+    "@houlagins/self-embedding-component": "~1.0.7",
+    "core-js": "~3.6.5",
+    "lodash.isempty": "~4.4.0",
+    "lodash.isplainobject": "~4.0.6",
+    "vue": "2.6.11"
+  },
+  "devDependencies": {
+    "@houlagins/dist-builder": "~1.0.11",
+    "vue-template-compiler": "2.6.11"
+  }
+}
