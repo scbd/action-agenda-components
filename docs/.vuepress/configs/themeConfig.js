@@ -1,9 +1,11 @@
-const nav               = require('./nav')
-const ui                = ['search', 'view', 'icons','legacy-notice']
-const dataVisuals       = [ 'pie-chart' ]
-const services          = [ 'cached-apis']
-const data              = [ 'schema', 'partners-schemas']
-const underDevelopement = ['']
+const nav                   = require('./nav')
+const { v1, v2, partners }  = require('./config')
+const { dataVisualizations, main, data, services } = v2
+// const ui                = ['search', 'view', 'icons','legacy-notice']
+// const dataVisuals       = [ 'pie-chart' ]
+// const services          = [ 'cached-apis']
+// const data              = [ 'schema', 'partners-schemas']
+// const underDevelopement = ['']
 
 const themeConfig = {
   nav,
@@ -22,7 +24,8 @@ const themeConfig = {
       title:        'Components',
       description:  'action agenda components',
       sidebar: {
-        '/components/': getComponentsSidebar()
+        '/components/v1/': getV1SidebarV1(),
+        '/components/v2/': getV1SidebarV2()
       }
     },
     '/guide': {
@@ -36,26 +39,50 @@ const themeConfig = {
   }
 }
 
-function getComponentsSidebar(){
+function getV1SidebarV1(){
   return [
     {
       title: 'Components V1',
-      collapsable: false
-    },
-    {
-      title: 'UI V1',
       collapsable: false,
-      children: ui.map(sideBarChildTemplate)
+      children: v1.map(sideBarChildTemplateV1)
     },
-    {
-      title: 'Services V1',
-      collapsable: false,
-      children: services.map(sideBarChildTemplate)
-    }
   ]
 }
 
-function sideBarChildTemplate(pkgName){
-  return `/components/${pkgName}/`
+function sideBarChildTemplateV1(pkgName){
+  return `/components/v1/${pkgName}/`
+}
+
+function getV1SidebarV2(){
+  return [
+    {
+      title: 'Components V2',
+      collapsable: false
+    },
+    {
+      title: 'Data Visualizations',
+      collapsable: false,
+      children: dataVisualizations.map(sideBarChildTemplateV2)
+    },
+    {
+      title: 'Main',
+      collapsable: false,
+      children: main.map(sideBarChildTemplateV2)
+    },
+    {
+      title: 'Data',
+      collapsable: false,
+      children: data.map(sideBarChildTemplateV2)
+    },
+    {
+      title: 'Services',
+      collapsable: false,
+      children: services.map(sideBarChildTemplateV2)
+    },
+  ]
+}
+
+function sideBarChildTemplateV2(pkgName){
+  return `/components/v2/${pkgName}/`
 }
 module.exports = themeConfig

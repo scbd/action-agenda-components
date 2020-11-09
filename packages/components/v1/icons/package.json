@@ -1,0 +1,56 @@
+{
+  "name": "@action-agenda/icons",
+  "version": "1.0.1",
+  "readme": "https://github.com/scbd/action-agenda-components/tree/master/packages/icons#readme",
+  "license": "MIT",
+  "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
+  "homepage": "https://github.com/scbd/action-agenda-components/tree/master/packages/icons#readme",
+  "main": "dist/esm/index.mjs",
+  "web": "dist/browser/index.min.js",
+  "umd": "dist/legacy/umd/index.umd.min.js",
+  "unpkg": "dist/browser/index.min.js",
+  "module": "dist/esm/index.mjs",
+  "jsnext:main": "dist/esm/index.mjs",
+  "src": "src/index.js",
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "browser": {
+    "./umd": "dist/legacy/umd/index.umd.min.js",
+    "./browser": "dist/browser/index.min.js",
+    "./": "dist/browser/index.min.js"
+  },
+  "exports": {
+    ".": [
+      {
+        "import": "./dist/esm/index.mjs",
+        "require": "./dist/legacy/cjs/index.common.cjs",
+        "default": "./dist/esm/index.mjs"
+      },
+      "./dist/legacy/umd/index.umd.min.js"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scbd/action-agenda-components.git",
+    "directory": "packages/icons"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "DEBUG=TRUE dist-builder",
+    "test:e2e": "vue-cli-service test:e2e",
+    "lint": "vue-cli-service lint --fix",
+    "release": "yarn publish --access=public --tag latest"
+  },
+  "dependencies": {
+    "@action-agenda/cached-apis": "^1.0.7",
+    "change-case": "~4.1.1",
+    "vue": "2.6.11",
+    "vue-i18n": "~8.21.1"
+  },
+  "devDependencies": {
+    "@houlagins/dist-builder": "~1.0.9",
+    "vue-template-compiler": "2.6.11"
+  }
+}
