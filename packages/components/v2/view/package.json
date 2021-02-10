@@ -1,5 +1,5 @@
 {
-  "name": "@action-agenda/view",
+  "name": "@action-agenda/view2",
   "version": "2.0.0-alpha.0",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "vue": "^2.6.11"
+    "vue": "2.6.11"
   },
   "devDependencies": {
     "@houlagins/dist-builder": "~1.0.11",

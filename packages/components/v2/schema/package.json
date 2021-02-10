@@ -1,6 +1,6 @@
 {
   "name": "@action-agenda/schema",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.4",
   "type": "module",
   "description": "https://github.com/scbd/action-agenda-components/tree/master/packages/schema#readme",
   "bugs": {
@@ -26,7 +26,6 @@
     ".": [
       {
         "import": "./dist/esm/index.mjs",
-        "require": "./dist/legacy/cjs/index.common.cjs",
         "default": "./dist/esm/index.mjs"
       },
       "./dist/legacy/umd/index.umd.min.js"
@@ -43,17 +42,15 @@
   ],
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "DEV=true dist-builder && sh scripts/build.sh",
-    "SDO:init": "DEV=true sdo init",
-    "SDO:generate": "DEV=true sdo generate",
-    "release": "yarn publish --access=public --tag alpha --tag latest"
+    "build": "DEV=true sdo generateCustomVocab && yarn clean  && DEV=true sdo init && DEV=true sdo generate && DEV=true dist-builder && sh scripts/build.sh",
+    "release": "yarn publish --access=public --tag alpha --tag latest",
+    "clean": "sh scripts/clean.sh"
   },
   "devDependencies": {
     "@houlagins/dist-builder": "^1.0.11",
-    "@houlagins/schema-dot-organizer": "1.0.0-alpha.1",
     "ajv": "^6.12.6"
   },
   "dependencies": {
-    "@action-agenda/cached-apis": "^1.0.7"
+    "@houlagins/schema-dot-organizer": "1.0.0-beta"
   }
 }

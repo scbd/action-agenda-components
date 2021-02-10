@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  mongodb:
+      image: mongo
+      container_name: aa-mongo
+      volumes:
+        - ./mongo-volume:/data/db
+        # - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
+      ports:
+        - '27017-27019:27017-27019'
+      environment:
+        - MONGO_INITDB_DATABASE=aa-db
+        # - MONGO_INITDB_ROOT_USERNAME=rooty
+        # - MONGO_INITDB_ROOT_PASSWORD=rooty
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "100m"
+          max-file: "5"
+      deploy:
+          replicas: 1

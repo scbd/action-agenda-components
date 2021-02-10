@@ -21,3 +21,4 @@ Further, offering data <a href="https://schema.org/" rel="noopener noreferrer" t
 
 
 
+https://en.wikipedia.org/wiki/Three-schema_approach

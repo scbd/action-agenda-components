@@ -6,7 +6,7 @@
           <p class="description">
             Is a modular system of independent <b>(copy and paste)</b> software components which together form an Action platform. <i>Installed in the same manner as an embeded youtube video.</i> The Action platform can be used to acquire, filter and showcase Actions for your initiative, programme or organization's environmental cause
           </p>
-          <p class="action"><a href="/action-agenda-components/components/" class="nav-link action-button">Get Started →</a></p>
+          <p class="action"><a href="/action-agenda-components/components/v2/" class="nav-link action-button">Get Started →</a></p>
         </header>
         <div class="features">
           <div class="feature">

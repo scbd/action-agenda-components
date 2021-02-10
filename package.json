@@ -15,7 +15,7 @@
     ],
     "nohoist": [
       "**/@houlagins/dist-builder",
-      "@houlagins/schema-dot-organizer",
+      "**/@houlagins/schema-dot-organizer",
       "**/fmin",
       "**/@amcharts/amcharts4"
     ]
