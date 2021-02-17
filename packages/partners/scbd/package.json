@@ -1,19 +1,21 @@
 {
   "name": "@action-agenda/scbd",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.0",
+  "type": "module",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "dist-builder",
-    "test:e2e": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint",
-    "initt": "DEBUG=TRUE dist-builder init"
+    "build": "DEV=true sdo generateCustomVocab && DEV=true sdo init && DEV=true sdo generate && DEBUG=true dist-builder && DEV=true sdo toDist",
+    "release": "yarn publish --access=public --tag alpha --tag latest",
+    "clean": "sh scripts/clean.sh"
   },
   "dependencies": {
-    "@action-agenda/cached-apis": "^1.0.7",
+    "@action-agenda/default-config": "^2.0.0-beta.0",
+    "@houlagins/schema-dot-organizer": "^1.0.0-beta",
     "core-js": "^3.6.5",
     "vue": "2.6.11"
   },
   "devDependencies": {
+    "@houlagins/dist-builder": "~1.0.11",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-e2e-cypress": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
@@ -21,8 +23,7 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "vue-template-compiler": "2.6.11",
-    "@houlagins/dist-builder": "~1.0.11"
+    "vue-template-compiler": "2.6.11"
   },
   "readme": "ERROR: No README data found!",
   "license": "MIT",
@@ -34,17 +35,23 @@
   "module": "dist/esm/index.min.mjs",
   "jsnext:main": "dist/esm/index.min.mjs",
   "src": "src/index.js",
-  "files": ["dist/*", "src/*"],
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
   "browser": {
     "./umd": "dist/legacy/umd/index.umd.min.js",
     "./browser": "dist/browser/index.min.js",
     "./": "dist/browser/index.min.js"
   },
   "exports": {
-    ".": [{
-      "import": "./dist/esm/index.mjs",
-      "require": "./dist/legacy/cjs/index.common.js",
-      "default": "./dist/esm/index.mjs"
-    }, "./dist/legacy/umd/index.umd.min.js"]
+    ".": [
+      {
+        "import": "./dist/esm/index.mjs",
+        "require": "./dist/legacy/cjs/index.common.js",
+        "default": "./dist/esm/index.mjs"
+      },
+      "./dist/legacy/umd/index.umd.min.js"
+    ]
   }
 }

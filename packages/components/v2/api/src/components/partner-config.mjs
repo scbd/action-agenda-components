@@ -1,28 +1,28 @@
 import { SDO        } from '@houlagins/schema-dot-organizer' //loadGraph , getClassNames, getPropNames
+import { consola    } from './logger.mjs'
 import   superagent   from 'superagent'
 import   getOptions   from '../default-options.mjs'
 import   fs           from 'fs-extra'
 import   changeCase   from 'change-case'
-import { consola    } from './logger.mjs'
 import   AJV          from 'AJV'
 import   pluralize    from 'pluralize'
 import   mergePatch   from 'ajv-merge-patch'
 
-
-import * as SchemaModule from '@action-agenda/schema'
+import   * as config from '@action-agenda/default-config'
 
 const globals          = new Map()
 const configsSourceMap = new Map()
 
-export const partnerIdentifiers = [ 'system', 'scbd', 'wcmc' ]
 
 //TODO ensure context is not overwritten by async api requests
 export const setPartnerContext = (partnerIdentifier) => {
+  const { partnerIdentifiers } = config
+
   if(!partnerIdentifiers.includes(partnerIdentifier)) throw new Error(`Partner identifier not permitted: ${partnerIdentifier}`)
 
   globals.set('partnerContext', partnerIdentifier)
 }
-export const getConfig = () => getPartnerConfig(globals.get('partnerContext')); 
+export const getConfig = (key) => getPartnerConfig(key || globals.get('partnerContext')); 
 
 export const getClassFilterRegexString = createClassFilterRegexString
 export const getPropsFilterRegexString = createPropFilterRegexString
@@ -30,8 +30,7 @@ export const getPropsFilterRegexString = createPropFilterRegexString
 initSchemasSourceMap()
 
 async function getPartnerConfig(name = 'base'){
-
-
+  const { partnerIdentifiers } = config
 
   if(name != 'base' && !partnerIdentifiers.includes(name)) throw new Error(`getSchema: Partner identifier not permitted: ${name}`)
 
@@ -44,34 +43,23 @@ async function getPartnerConfig(name = 'base'){
 }
 
 async function loadAConfig(name){
-  //if(!isSchemaExpired(name)) return globals.get(name)
+  if(!isSchemaExpired(name)) return globals.get(name)
 
-  const   sdo         = new SDO()
-  const { paramCase } = changeCase
-  const   fileName    = `/tmp/tmp-${paramCase(name)}.mjs`
-  const   data        = await readFile(name)
+  const sdo    = new SDO()
+  const config = new Map()
 
-  fs.writeFileSync(fileName, data)
-
-  const   config                    = new Map()
-  const { getJsonSchema, getGraph, getSdoConfig } = (await import(fileName))
+  const { getJsonSchema, getGraph, getSdoConfig } = await getRemoteConfig()
   
-  if(getJsonSchema) config.set('jsonSchema', SchemaModule.getJsonSchema())
-  if(getGraph)      config.set('graph', SchemaModule.getGraph())
-  //if(getSdoConfig)     
-  config.set('sdoConfig', SchemaModule.getSdoConfig())
-  
-  await sdo.loadGraph(SchemaModule.getGraph())
+  if(getJsonSchema) config.set('jsonSchema', getJsonSchema())
+  if(getGraph)      config.set('graph',      getGraph())
+  if(getSdoConfig)  config.set('sdoConfig',  getSdoConfig())
+  if(getGraph)      await sdo.loadGraph(getGraph())
 
   config.set('sdo', sdo)
-
-
-  // schema.set('classNames', getClassNames())
-  // schema.set('propNames', getPropNames())
   config.set('lastCached', new Date(new Date().getTime()+5*60*1000))
 
   const validator = new AJV({allErrors: true, verbose: true, extendRefs: 'fail', useDefaults: 'empty'})//, useDefaults: 'empty' removeAdditional: 'true'
-  const jSchema   = SchemaModule.getJsonSchema()
+  const jSchema   = getJsonSchema()
 
   mergePatch(validator)
   validator.addSchema(jSchema)
@@ -84,8 +72,7 @@ async function loadAConfig(name){
 }
 
 async function createPropFilterRegexString(){
-  // TODO get prop names of every partner then create a set
-  const config    = await getConfig()//getSchema()
+  const config    = await getConfig()
   const propNames = config.get('sdo').propNames
 
   let regExString = ''
@@ -101,8 +88,8 @@ async function createPropFilterRegexString(){
 async function createClassFilterRegexString(){
   // TODO get classnames of every partner then create a set
   const { paramCase } = changeCase
-  const config     = await getConfig()//await loadSchema('base')//getSchema()
-  const classNames = config.get('sdo').classNames
+  const   config      = await getConfig()//await loadSchema('base')//getSchema()
+  const   classNames  = config.get('sdo').classNames
 
   let regExString = 'URL|URLs|url|urls|Email|Emails|email|emails';
 
@@ -129,10 +116,10 @@ function isSchemaExpired(name){
 function initSchemasSourceMap(){
   const { cdn } = getOptions()
 
-  configsSourceMap.set('base', `${cdn}/@action-agenda/schema@2.0.0-alpha.2`)
+  configsSourceMap.set('base', `${cdn}/@action-agenda/default-config`)
 }
 
-function readFile(name){
+function readRemoteFile(name){
   const url = configsSourceMap.get(name)
 
   try {
@@ -144,6 +131,14 @@ function readFile(name){
   }
 }
 
-function sleep (time) {
-  return new Promise((resolve) => setTimeout(resolve, time));
+function getRemoteConfig(name){
+  if(name === 'base') return config
+
+  const { paramCase } = changeCase
+  const   fileName    = `/tmp/tmp-${paramCase(name)}.mjs`
+  const   data        = await readRemoteFile(name)
+
+  fs.writeFileSync(fileName, data)
+
+  return import(fileName)
 }

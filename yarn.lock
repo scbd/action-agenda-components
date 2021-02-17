@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@action-agenda/schema@2.0.0-alpha.4":
+  version "2.0.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/@action-agenda/schema/-/schema-2.0.0-alpha.4.tgz#f7801e73c5063c6a20783b5207d2e032796899ab"
+  integrity sha512-UigeJlXNHQjUcXFkm+qse1d0yZED6Fscg9kAgQVoY/de7hf0Y6EaTF4R8IRDKqR2DoO3m8oy4Ifdxy/POCUpMg==
+  dependencies:
+    "@action-agenda/cached-apis" "^1.0.7"
+    "@houlagins/schema-dot-organizer" "1.0.0-alpha.8"
+
 "@akryum/winattr@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@akryum/winattr/-/winattr-3.0.0.tgz#c345d49f8415583897e345729c12b3503927dd11"
@@ -1242,7 +1250,7 @@
     lodash.isplainobject "^4.0.6"
     pm2 "^4.5.0"
 
-"@houlagins/schema-dot-organizer@1.0.0-beta":
+"@houlagins/schema-dot-organizer@1.0.0-beta", "@houlagins/schema-dot-organizer@^1.0.0-beta":
   version "1.0.0-beta"
   resolved "https://registry.yarnpkg.com/@houlagins/schema-dot-organizer/-/schema-dot-organizer-1.0.0-beta.tgz#0c283f31b12b81cfd084119a1193e855a0377718"
   integrity sha512-aK5JUK6N13pCoBQMev0Fi7S0stZrXG90OWP2SUedVH2C7SomvAIDgKYXU25AvpWfumw42F4H/j21Za195mdh9w==

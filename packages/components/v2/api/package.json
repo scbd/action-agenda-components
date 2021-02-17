@@ -8,7 +8,7 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
     "mongo": "docker-compose -f scripts/docker-compose.yml up -d",
-    "import-test-data": "sh scripts/import-common.sh"
+    "import-test-data": "sh scripts/import-test-data.sh"
   },
   "dependencies": {
     "@action-agenda/schema": "2.0.0-alpha.4",
