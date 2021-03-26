@@ -1,8 +1,8 @@
-const umd    = true
-const cjs    = true
+const umd    = false
+const cjs    = false
 const legacy = { umd, cjs }
 
-const modern = true
+const modern = false
 const ssr    = true
 
 export default {

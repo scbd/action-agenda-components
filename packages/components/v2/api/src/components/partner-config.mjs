@@ -13,6 +13,7 @@ import   * as config from '@action-agenda/default-config'
 const globals          = new Map()
 const configsSourceMap = new Map()
 
+initSchemasSourceMap()
 
 //TODO ensure context is not overwritten by async api requests
 export const setPartnerContext = (partnerIdentifier) => {
@@ -22,12 +23,11 @@ export const setPartnerContext = (partnerIdentifier) => {
 
   globals.set('partnerContext', partnerIdentifier)
 }
-export const getConfig = (key) => getPartnerConfig(key || globals.get('partnerContext')); 
-
+export const getConfig                 = (key) => getPartnerConfig(key || globals.get('partnerContext')); 
 export const getClassFilterRegexString = createClassFilterRegexString
 export const getPropsFilterRegexString = createPropFilterRegexString
+export const partnerIdentifiers        = config.partnerIdentifiers
 
-initSchemasSourceMap()
 
 async function getPartnerConfig(name = 'base'){
   const { partnerIdentifiers } = config
@@ -48,7 +48,7 @@ async function loadAConfig(name){
   const sdo    = new SDO()
   const config = new Map()
 
-  const { getJsonSchema, getGraph, getSdoConfig } = await getRemoteConfig()
+  const { getJsonSchema, getGraph, getSdoConfig } = await getRemoteConfig(name)
   
   if(getJsonSchema) config.set('jsonSchema', getJsonSchema())
   if(getGraph)      config.set('graph',      getGraph())
@@ -131,7 +131,7 @@ function readRemoteFile(name){
   }
 }
 
-function getRemoteConfig(name){
+async function getRemoteConfig(name){
   if(name === 'base') return config
 
   const { paramCase } = changeCase

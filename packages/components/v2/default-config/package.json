@@ -1,40 +1,36 @@
 {
   "name": "@action-agenda/default-config",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.1",
   "type": "module",
-  "description": "https://github.com/scbd/action-agenda-components/tree/master/packages/schema#readme",
+  "description": "https://github.com/scbd/action-agenda-network/tree/master/src/components/v2/data/default-config#index",
   "bugs": {
     "url": "https://github.com/scbd/action-agenda-components/issues"
   },
-  "readme": "https://github.com/scbd/action-agenda-components/tree/master/packages/schema#readme",
+  "readme": "https://github.com/scbd/action-agenda-network/tree/master/src/components/v2/data/default-config#index",
   "license": "MIT",
   "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
-  "homepage": "https://github.com/scbd/action-agenda-components/tree/master/packages/schema#readme",
+  "homepage": "https://github.com/scbd/action-agenda-network/tree/master/src/components/v2/data/default-config#index",
   "main": "dist/esm/index.mjs",
   "module": "dist/esm/index.mjs",
-  "unpkg": "dist/browser/index.min.js",
-  "umd": "dist/legacy/umd/index.umd.min.js",
-  "web": "dist/browser/index.min.js",
+  "unpkg": "dist/esm/index.mjs",
+  "web": "dist/esm/index.mjs",
   "jsnext:main": "dist/esm/index.min.js",
   "src": "src/index.mjs",
   "browser": {
-    "./umd": "dist/legacy/umd/index.umd.min.js",
-    "./browser": "dist/browser/index.min.js",
-    "./": "dist/browser/index.min.js"
+    "./": "dist/esm/index.mjs"
   },
   "exports": {
     ".": [
       {
         "import": "./dist/esm/index.mjs",
         "default": "./dist/esm/index.mjs"
-      },
-      "./dist/legacy/umd/index.umd.min.js"
+      }
     ]
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/scbd/action-agenda-components.git",
-    "directory": "packages/schema"
+    "directory": "packages/default-config"
   },
   "files": [
     "dist/*",
@@ -42,15 +38,15 @@
   ],
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "DEV=true sdo generateCustomVocab && DEV=true sdo init && DEV=true sdo generate && DEV=true dist-builder && DEV=true sdo toDist",
+    "build": "DEV=true sdo build && dist-builder && DEV=true sdo toDist",
     "release": "yarn publish --access=public --tag beta --tag latest",
-    "clean": "sh scripts/clean.sh"
+    "clean:reinstall": "if test -f yarn.lock; then rm yarn.lock; fi && if test -d node_modules; then rm -rf node_modules; fi && yarn --exact --force"
   },
   "devDependencies": {
     "@houlagins/dist-builder": "^1.0.11",
-    "ajv": "^6.12.6"
+    "ajv": "7.1.1"
   },
   "dependencies": {
-    "@houlagins/schema-dot-organizer": "1.0.0-beta"
+    "@houlagins/schema-dot-organizer": "1.0.1-beta.0"
   }
 }
