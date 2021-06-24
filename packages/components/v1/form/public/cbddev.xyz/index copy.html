@@ -1,0 +1,164 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>action-search</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <div style="padding: 0 2em 0 2em">
+      
+      <div class="row">
+        <div class="col text-center">
+          <h1 class="my-4">Action Agenda Search</h1>
+          <div class="my-5" style="padding: 0 20em 0 20em">
+
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+              <strong>not working in IE:</strong> 
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+          <div class="my-5">
+            <a class="btn btn-primary" data-toggle="collapse" href="#instructions" role="button" aria-expanded="false" aria-controls="instructions">Show Instructions</a>
+            <a class="btn btn-primary" data-toggle="collapse" href="#found" role="button" aria-expanded="false" aria-controls="found">Show Found Issues</a>
+            <a class="btn btn-primary" data-toggle="collapse" href="#resolved" role="button" aria-expanded="false" aria-controls="resolved">Show Resolved Issues</a>
+          </div>
+    </div>
+  </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="collapse multi-collapse" id="found">
+            <div class="card card-body">
+              <div style="padding: 1em 12em 1em 12em">
+                <h5>Found issues</h5>
+                <hr />
+                <p>
+                  <ul>
+                    <li >Not working in IE</li>
+                  </ul>
+                </p>
+                <hr />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="collapse multi-collapse" id="resolved">
+            <div class="card card-body">
+              <div style="padding: 1em 12em 1em 12em">
+                <h5>Resolved issues</h5>
+                <hr />
+                <p>
+                  <ul>
+                    <li style="text-decoration: line-through;"><b>Free text search:</b> not working after deployment</li>
+                  </ul>
+                </p>
+                <hr />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="collapse multi-collapse" id="instructions">
+            <div class="card card-body">
+              <div style="padding: 1em 12em 1em 12em">
+              <p>
+                Dear Ulrika and Catalina,<br /><br />
+        
+                Please try every functionality. You should be ably to publish and reject. This is a copy of dev set of the data so no worries.
+                Try all functionalities both signed in and as anonymously.
+              </p>
+              <h5>Signin using <a href="https://accounts.cbddev.xyz/signin">accounts.cbddev.xyz</a></h5>
+              <p>
+                Signin using the dev accounts otherwise you won't have access to the admin functionality.<br>
+        
+                <a href="https://accounts.cbddev.xyz/signin"></a>https://accounts.cbddev.xyz/signin </a>
+              </p>
+              <h5>Reporting Issues Bugs</h5>
+              <p>
+                An issue or bug is something that should work and does not. Kindly report the issue here as soon as it becomes know:</br>
+                <a href="https://jira.cbd.int/servicedesk/customer/portal/7/create/65">Jira Bug</a>
+              </p>
+              <h5>Requesting Changes</h5>
+              <p>
+                Changes are not bugs but changes such as wording, placement, icons and images ect:</br>
+                <a href="https://jira.cbd.int/servicedesk/customer/portal/7/create/79">Jira Content change</a>
+              </p>
+              <h5>Discussions, Quick Questions and All Reference Material</h5>
+              <p>
+                Kindly keep all other information here:<br />
+                <a href="https://jira.cbd.int/servicedesk/customer/portal/7/DEVDESK-311">Sorting of pledges in the Action Agenda Request </a>
+              </p>
+              <h5>Current Todo's</h5>
+              <p>
+                The following still needs to be done:
+                <ul>
+                  <li>add icons to search box</li>
+                  <li>Fix stats to say 'showing x of x'</li>
+                  <li>Update the form for the new category</li>
+                  <li>Update the action view with the new category</li>
+                </ul>
+              </p>
+              <h5>Please Note</h5>
+              <p>
+                <ul>
+                  <li>view button: will look broken when clicked but when in a production environment will display the action: the url should be: https://aa.cbddev.xyz/action?action-id=5eb4784398a015000154f130</li>
+                  <li>All other functionality should work</li>
+                </ul>
+              </p>
+              <h5>Testing Instructions</h5>
+              <p>
+                Note I am not providing a list of functions as they should be easily discoverable. If one is not found there may be an issue.
+                <ol>
+                  <li>Make a list of all functionality you can find.</li>
+                  <li>Test each functionality as signed in and anonymously</li>
+                  <li>Do 1 and 2 in each browser platform</li>
+                </ol>
+                <h5>Target Platforms</h5>
+                <ul>
+                  <li>EI 10</li>
+                  <li>EI 11</li>
+                  <li>Chrome</li>
+                  <li>Firefox</li>
+                  <li>Safari</li>
+                  <li>Edge</li>
+                  <li>IOS safari</li>
+                  <li>IOS chrome</li>
+                  <li>Android chrome</li>
+                </ul>
+              </p>
+              <h5>Lastly</h5>
+              <p>Apologies for the delay. What you see has been completed since last Friday however I have had issues with building and deployment since then.
+                There has been changes to the way things are build and deployed. The problem is when an issue is found during the build, fix then rebuild to ensure it works.
+                The building time takes a couple of minutes. So it quickly started to get out of control taking a long time to fix. In any event all build issues have been resolved and automated for my self.
+                So they should not resurface.
+              </p>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <hr />
+    <hr />
+    <br />
+    <div style="padding: 0 2em 0 2em">
+
+      <script force-env="dev" nomodule="" id="action-search-legacy" src="https://cdn.cbd.int/@scbd/action-search/dist/widget/index.umd.min.js"></script>
+      <script force-env="dev" type="module" id="action-search" src="https://cdn.cbd.int/@scbd/action-search/dist/widget/index.min.js"></script>
+    </div>
+  </body>
+
+</html>

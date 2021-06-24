@@ -43,7 +43,7 @@
     "clean:reinstall": "if test -f yarn.lock; then rm yarn.lock; fi && if test -d node_modules; then rm -rf node_modules; fi && yarn --exact --force"
   },
   "devDependencies": {
-    "@houlagins/dist-builder": "^1.0.11",
+    "@houlagins/dist-builder": "2.0.0-beta.0",
     "ajv": "7.1.1"
   },
   "dependencies": {

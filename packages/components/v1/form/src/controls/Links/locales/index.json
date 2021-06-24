@@ -1,0 +1,23 @@
+{
+    "en": {
+        "add":"Add",
+        "clear":"Clear",
+        "addLink": "Add Link",
+        "addFile": "Add File",
+        "url": {
+            "label": "Url",
+            "placeholder": " ",
+            "help": " "
+        },
+        "name": {
+            "label": "Name",
+            "placeholder": " ",
+            "help": " "
+        },
+        "chooseFile":"Choose a file",
+        "chooseFiles":"Choose files",
+        "byClickingHere":"by clicking here",
+        "orDragItHere":"or drag it here",
+        "orDragThenHere":"or drag them here"
+    }
+}

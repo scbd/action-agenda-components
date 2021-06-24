@@ -1,13 +1,10 @@
-const umd    = true
-const cjs    = true
+const umd    = false
+const cjs    = false
 const legacy = { umd, cjs }
 
-const modern = true
+const modern = false
 const ssr    = true
 
-const widget     = { legacy: true, modern: true }
-const testWidget = { legacy: true, modern: true }
-
 export default {
-  legacy, modern, ssr, widget, testWidget
+  legacy, modern, ssr
 }
