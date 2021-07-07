@@ -1,0 +1,82 @@
+module.exports = {
+   "en": {
+     "Components":"Components",
+     "Widgets": "Widgets",
+     "Action Agenda Components": "Action Agenda Components",
+     "Action Agenda Components V1": "Action Agenda Components V1",
+     "NOTICE": "NOTICE",
+     "Is a modular system of independent software components which together form an Action Agenda platform. The Action platform can be used to acquire, filter and showcase Actions for your initiative, programme or organization's environmental cause.": "Is a modular system of independent software components which together form an Action Agenda platform. The Action platform can be used to acquire, filter and showcase Actions for your initiative, programme or organization's environmental cause.",
+     "Components Version 1": "Components Version 1",
+     "Action Agenda Components has been re-branded to the": "Action Agenda Components has been re-branded to the",
+     "Action Agenda Network": "Action Agenda Network",
+     ".": ".",
+     "Please see the Action Agenda Network for details on joining.": "Please see the Action Agenda Network for details on joining.",
+     "Widget usage (for non computer programers)": "Widget usage (for non computer programers)",
+     "Component usage (for computer programers)": "Component usage (for computer programers)"
+   },
+   "ar": {
+     "Action Agenda Components": "مكونات أجندة العمل",
+     "Action Agenda Components V1": "مكونات جدول العمل V1",
+     "NOTICE": "تنويه",
+     "Is a modular system of independent software components which together form an Action Agenda platform. The Action platform can be used to acquire, filter and showcase Actions for your initiative, programme or organization's environmental cause.": "هو نظام معياري مكون من مكونات برمجية مستقلة والتي تشكل معًا منصة جدول أعمال العمل. يمكن استخدام منصة العمل لاكتساب وتصفية وعرض إجراءات لمبادرتك أو برنامجك أو مؤسستك البيئية.",
+     "Components Version 1": "إصدار المكونات 1",
+     "Action Agenda Components has been re-branded to the": "تمت إعادة تسمية مكونات جدول العمل إلى",
+     "Action Agenda Network": "شبكة جدول العمل",
+     ".": ".",
+     "Please see the Action Agenda Network for details on joining.": "يرجى الاطلاع على شبكة جدول الأعمال للحصول على تفاصيل حول الانضمام.",
+     "Widget usage (for non computer programers)": "استخدام الأداة (لغير مبرمجي الكمبيوتر)",
+     "Component usage (for computer programers)": "استخدام المكونات (لمبرمجي الكمبيوتر)"
+   },
+   "es": {
+     "Action Agenda Components": "Componentes de la agenda de acción",
+     "Action Agenda Components V1": "Componentes de la agenda de acción V1",
+     "NOTICE": "DARSE CUENTA",
+     "Is a modular system of independent software components which together form an Action Agenda platform. The Action platform can be used to acquire, filter and showcase Actions for your initiative, programme or organization's environmental cause.": "Es un sistema modular de componentes de software independientes que juntos forman una plataforma de Agenda de Acción. La plataforma de Acción se puede utilizar para adquirir, filtrar y exhibir Acciones para la causa ambiental de su iniciativa, programa u organización.",
+     "Components Version 1": "Componentes Versión 1",
+     "Action Agenda Components has been re-branded to the": "Los componentes de la agenda de acción han sido renombrados",
+     "Action Agenda Network": "Red de Agenda de Acción",
+     ".": ".",
+     "Please see the Action Agenda Network for details on joining.": "Consulte la Red de Agenda de Acción para obtener detalles sobre cómo unirse.",
+     "Widget usage (for non computer programers)": "Uso de widgets (para personas que no son programadores de computadoras)",
+     "Component usage (for computer programers)": "Uso de componentes (para programadores de computadoras)"
+   },
+   "fr": {
+     "Action Agenda Components": "Composantes du programme d'action",
+     "Action Agenda Components V1": "Composantes du programme d'action V1",
+     "NOTICE": "REMARQUER",
+     "Is a modular system of independent software components which together form an Action Agenda platform. The Action platform can be used to acquire, filter and showcase Actions for your initiative, programme or organization's environmental cause.": "Est un système modulaire de composants logiciels indépendants qui forment ensemble une plate-forme Action Agenda. La plateforme Action peut être utilisée pour acquérir, filtrer et présenter des Actions pour la cause environnementale de votre initiative, programme ou organisation.",
+     "Components Version 1": "Composants Version 1",
+     "Action Agenda Components has been re-branded to the": "Action Agenda Components a été rebaptisé",
+     "Action Agenda Network": "Réseau du programme d'action",
+     ".": ".",
+     "Please see the Action Agenda Network for details on joining.": "Veuillez consulter le réseau Action Agenda pour plus de détails sur l'adhésion.",
+     "Widget usage (for non computer programers)": "Utilisation du widget (pour les programmeurs non informatiques)",
+     "Component usage (for computer programers)": "Utilisation des composants (pour les programmeurs informatiques)"
+   },
+   "ru": {
+     "Action Agenda Components": "Компоненты программы действий",
+     "Action Agenda Components V1": "Компоненты программы действий V1",
+     "NOTICE": "УВЕДОМЛЕНИЕ",
+     "Is a modular system of independent software components which together form an Action Agenda platform. The Action platform can be used to acquire, filter and showcase Actions for your initiative, programme or organization's environmental cause.": "Это модульная система независимых программных компонентов, которые вместе образуют платформу Action Agenda. Платформу действий можно использовать для сбора, фильтрации и демонстрации действий по вашей инициативе, программе или экологическому делу организации.",
+     "Components Version 1": "Компоненты Версия 1",
+     "Action Agenda Components has been re-branded to the": "Компоненты программы действий были переименованы в",
+     "Action Agenda Network": "Сеть Программы действий",
+     ".": ".",
+     "Please see the Action Agenda Network for details on joining.": "Пожалуйста, посетите сеть Action Agenda Network для получения подробной информации о присоединении.",
+     "Widget usage (for non computer programers)": "Использование виджетов (для не компьютерных программистов)",
+     "Component usage (for computer programers)": "Использование компонентов (для программистов)"
+   },
+   "zh": {
+     "Action Agenda Components": "行动议程组件",
+     "Action Agenda Components V1": "行动议程组件 V1",
+     "NOTICE": "注意",
+     "Is a modular system of independent software components which together form an Action Agenda platform. The Action platform can be used to acquire, filter and showcase Actions for your initiative, programme or organization's environmental cause.": "是一个由独立软件组件组成的模块化系统，它们共同构成了一个行动议程平台。 Action 平台可用于为您的倡议、计划或组织的环境事业获取、过滤和展示 Actions。",
+     "Components Version 1": "组件版本 1",
+     "Action Agenda Components has been re-branded to the": "行动议程组件已重新命名为",
+     "Action Agenda Network": "行动议程网络",
+     ".": ".",
+     "Please see the Action Agenda Network for details on joining.": "有关加入的详细信息，请参阅行动议程网络。",
+     "Widget usage (for non computer programers)": "小工具使用（非计算机程序员）",
+     "Component usage (for computer programers)": "组件使用（针对计算机程序员）"
+   }
+ }

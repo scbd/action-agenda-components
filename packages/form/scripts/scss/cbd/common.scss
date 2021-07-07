@@ -1,0 +1,102 @@
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'BenchNine', sans-serif;
+}
+
+html, body {
+  height: 100%;
+}
+button:focus {
+  outline: none !important;
+  border: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+a:hover, a:focus {
+  text-decoration: none;
+}
+
+a:hover{
+  color: #646464;
+}
+
+.dialog-off-canvas-main-canvas,
+#page-wrapper {
+  min-height: 100%;
+  position: relative;
+}
+
+/* common carousel styles */
+
+.carousel-indicators li {
+  width: 19px;
+  background-color: white;
+  margin: 0 2px;
+}
+
+.carousel-indicators .active {
+  background-color: #009844;
+}
+
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-size: 10px 16px;
+  width: 10px;
+  height: 16px;
+}
+
+.carousel-control-prev-icon {
+  // background-image: url(../../images/icon_arrow_l_pos.svg);
+}
+
+.carousel-control-next-icon {
+  // background-image: url(../../images/icon_arrow_r_pos.svg);
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+  top: auto;
+  left: auto;
+  width: 59px;
+  height: 59px;
+  color: #646464;
+  opacity: 1;
+  background-color: white;
+}
+
+.limited-width-content {
+  width: 100%;
+  height: inherit;
+  max-width: 1920px;
+  margin: 0 auto;
+  display: inherit;
+  align-items: inherit;
+  flex-wrap: inherit;
+  justify-content: inherit;
+}
+
+/* common carousel styles end */
+
+
+.ie-9-only {
+  display: none;
+}
+
+
+
+@media(min-width: 992px) {
+  .mobile-only{
+    display: none !important;
+  }
+}
+
+@media(max-width: 991px){
+  .desktop-only{
+    display: none !important;
+  }
+}

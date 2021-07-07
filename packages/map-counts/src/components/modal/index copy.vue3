@@ -1,0 +1,182 @@
+<template>
+  <div ref="modal" class="aa-modal shadow-sm" >
+    <!-- <Icon @click="toggle" name="cancel" class="fr toggle"/> -->
+    <div >
+      <span>
+        <strong v-if="country">{{ country.name }}</strong>, 
+        <strong>{{ numberOfCommitments }}</strong> 
+        {{ t('commitment', numberOfCommitments) }}
+        {{ t('madeBy') }} 
+        <strong>{{ numberOfActors }}</strong> 
+        {{ t('actor', numberOfActors) }}
+      </span>
+    </div>
+    <div ref="pie" class="main-row "></div>
+
+    <div>
+      <!-- <div class="row">
+        <div class="column1"><Icon name="info-outline" class="fl"/></div>
+        <div class="column"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </div>
+      </div> -->
+
+      <button @click="view" class="btn">
+        {{ t('view') }} {{ t('commitment', numberOfCommitments) }}
+      </button>
+    </div>
+  </div>
+</template>
+
+<script>
+// import { Icon } from '@action-agenda/icons/dist/esm/index.js'
+import { PieChart, PieSeries, Legend } from '@amcharts/amcharts4/charts'
+import { create, percent } from '@amcharts/amcharts4/core'
+import   messages      from '../../locales/index.js'
+import { getUnLocale } from '@houlagins/locale'
+import { useI18n     } from 'vue-i18n'
+import { getActorTypesByCountry } from '../api'
+import { getData, lookUp, initializeApiStore } from '@action-agenda/cached-apis'
+
+export default {
+  name   : 'ActoinAgendaMapPopOver',
+  // components: { Icon },
+  props  : {
+    country: { type: Object, required: true },
+    options: { type: Object, required: true }
+    // countryCode : { type: String, required: true },
+    // countryName: { type: String, required: true }
+  },
+  setup, data,
+  methods: { toggle, createChart, dispose, view },
+  mounted, beforeDestroy, errorCaptured
+}
+function data (){
+  return { chart: null, numberOfCommitments:0, numberOfActors:0 }
+}
+
+function setup() {
+  const { t, locale } = useI18n({ locale: getUnLocale(), messages })
+
+  return { t, locale }
+}
+
+async function mounted (){
+  await initializeApiStore()
+  await getData('all')
+
+  const { countsData, numberOfCommitments, numberOfActors } = await getActorTypesByCountry(this.country.code)
+
+  this.createChart({ countsData, numberOfCommitments, numberOfActors  })
+}
+
+function createChart({ countsData, numberOfCommitments, numberOfActors  }){
+  this.numberOfCommitments = numberOfCommitments
+  this.numberOfActors      = numberOfActors
+
+  this.chart               = create(this.$refs.pie, PieChart)
+  this.chart.minHeight     = '300px'
+
+  const  pieSeries        = this.chart.series.push(new PieSeries())
+
+  this.chart.radius = 70
+  this.chart.labelsEnabled = false
+  // this.chart.responsive.enabled = true;
+  //pieSeries.chart.template.fontFamily = 'BenchNine, sans-serif'
+  pieSeries.labelsEnabled = false
+  pieSeries.autoMargins = false;
+  pieSeries.paddingLeft = '5px'
+
+
+  pieSeries.dataFields.value    = "count"
+  pieSeries.dataFields.category = "name"
+  pieSeries.labels.template.disabled = true
+  this.chart.data               =  countsData;
+
+  this.chart.innerRadius = percent(99);
+
+  this.chart.legend = new Legend();
+  this.chart.legend.position = 'right';
+  this.chart.legend.marginLeft = '-55px'
+  this.chart.legend.labels.template.fontFamily = 'BenchNine, sans-serif'
+}
+
+function view() {
+  const { basePath } = this.options
+  
+
+  window.location.href = `${basePath}?filter=${this.country.code}`
+}
+
+function toggle(){
+  const isServer = typeof window === 'undefined'
+
+  if(isServer) return
+
+  const event = new CustomEvent('countrySelected', { detail: undefined })
+
+  window.document.dispatchEvent(event)
+  this.chart.dispose()
+}
+
+function beforeDestroy(){ dispose(this.chart) }
+function dispose(chart){ if(chart && chart.dispose) chart.dispose(); console.log('chart.dispose') }
+
+function errorCaptured(err, vm){
+  dispose(vm.$data.chart)
+  console.error(err)
+}
+</script>
+
+<style scoped>
+  .aa-modal{
+    font-family: -apple-system,BlinkMacSystemFont,segoe ui,Roboto,Helvetica,Arial,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    background: #fff; 
+    opacity: .9;
+    z-index: 1;
+    min-width: 300px;
+    max-width: 400px;
+    /* min-height: 100%; */
+    padding: 1rem 1rem 1rem 1rem;
+  }
+  .shadow-sm { box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important; }
+
+  .fr{ float: right; }
+
+  .fl{ float: left; }
+  .row { display: flex; margin: 1em 0 1em 0 ;}
+
+  .main-row {
+    min-height: 200px;
+    /* display: flex;  */
+    margin: 1em 0 1em 0 ;
+    /* flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto */
+  }
+  .column1 { flex: 5%; }
+  .column { font-family: -apple-system,BlinkMacSystemFont,segoe ui,Roboto,Helvetica,Arial,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol;  flex: 95%; }
+  .btn{ 
+    font-family: -apple-system,BlinkMacSystemFont,segoe ui,Roboto,Helvetica,Arial,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol;
+    text-transform: capitalize;
+    cursor: pointer;
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+    .toggle{ cursor: pointer; }
+</style>

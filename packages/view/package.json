@@ -1,0 +1,76 @@
+{
+  "name": "@action-agenda/view",
+  "version": "1.1.16",
+  "description": "https://github.com/scbd/action-agenda-components/tree/master/packages/view#readme",
+  "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "DEBUG=TRUE dist-builder && DEBUG=TRUE dist-builder widget",
+    "test:e2e": "vue-cli-service test:e2e",
+    "lint": "vue-cli-service lint",
+    "build-test-widget": "DEBUG=TRUE dist-builder testWidget",
+    "release": "yarn publish --access=public --tag latest",
+    "serve-test-widget": "COMP_ID=view DEBUG=TRUE dist-builder serveTestWidget"
+  },
+  "main": "dist/esm/index.mjs",
+  "module": "dist/esm/index.min.mjs",
+  "browser": {
+    "./umd": "dist/legacy/umd/index.umd.min.js",
+    "./browser": "dist/browser/index.min.js",
+    "./": "dist/browser/index.min.js"
+  },
+  "unpkg": "dist/browser/index.min.js",
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "dependencies": {
+    "@action-agenda/cached-apis": "1.0.12",
+    "@action-agenda/icons": "1.0.4",
+    "@houlagins/default-options": "1.0.2",
+    "@houlagins/load-http": "1.0.3",
+    "@houlagins/locale": "1.0.0",
+    "@houlagins/self-embedding-component": "1.0.17",
+    "@scbd/sso-vue-plugin-scbd": "1.0.4",
+    "autoprefixer": "10.2.6",
+    "core-js": "3.6.5",
+    "lodash.isempty": "4.4.0",
+    "lodash.isplainobject": "4.0.6",
+    "vue": "2.6.11"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "3.0.0",
+    "@fullhuman/vue-cli-plugin-purgecss": "4.0.3",
+    "@houlagins/dist-builder": "1.0.11",
+    "@scbd/www-css": "1.0.2",
+    "node-sass": "6.0.1",
+    "postcss": "7.0.35",
+    "postcss-loader": "6.1.0",
+    "sass-loader": "10.1.0",
+    "vue-template-compiler": "2.6.11"
+  },
+  "exports": {
+    ".": [
+      {
+        "import": "./dist/esm/index.mjs",
+        "require": "./dist/legacy/cjs/index.common.cjs",
+        "default": "./dist/esm/index.ms"
+      },
+      "./dist/legacy/umd/index.umd.min.js"
+    ],
+    "./dist/": "./dist/",
+    "./src/": "./src/"
+  },
+  "homepage": "https://github.com/scbd/action-agenda-components/tree/master/packages/view#readme",
+  "jsnext:main": "dist/esm/index.min.js",
+  "license": "MIT",
+  "readme": "https://github.com/scbd/action-agenda-components/tree/master/packages/view#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scbd/action-agenda-components.git",
+    "directory": "packages/action-agenda-view"
+  },
+  "src": "src/index.js",
+  "umd": "dist/legacy/umd/index.umd.min.js",
+  "web": "dist/browser/index.min.js"
+}

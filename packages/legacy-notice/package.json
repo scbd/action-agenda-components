@@ -1,0 +1,57 @@
+{
+  "name": "@action-agenda/legacy-notice",
+  "version": "1.0.2",
+  "license": "MIT",
+  "homepage": "https://github.com/scbd/action-agenda-components/tree/master/packages/legacy-notice#readme",
+  "readme": "https://github.com/scbd/action-agenda-components/tree/master/packages/legacy-notice#readme",
+  "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
+  "main": "dist/esm/index.min.js",
+  "web": "dist/legacy/umd/index.umd.min.js",
+  "umd": "dist/legacy/umd/index.umd.min.js",
+  "unpkg": "dist/widget/index.umd.min.js",
+  "module": "dist/esm/index.js",
+  "style": "dist/esm/index.css",
+  "src": "src/index.js",
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "browser": {
+    "./umd": "dist/legacy/umd/index.umd.min.js",
+    "./browser": "dist/legacy/umd/index.umd.min.js",
+    "./sfc": "src/index.vue"
+  },
+  "exports": {
+    ".": {
+      "require": "dist/legacy/cjs/index.common.cjs",
+      "default": "dist/esm/index.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scbd/action-agenda-components.git",
+    "directory": "packages/legacy-notice"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "DEBUG=true dist-builder && dist-builder widget",
+    "build-test-widget": "dist-builder testWidget",
+    "serve-widget-test": "dist-builder serveTestWidget",
+    "serve-widget": "dist-builder serveWidget",
+    "lint": "vue-cli-service lint --fix",
+    "release": "yarn publish --access=public --tag latest"
+  },
+  "dependencies": {
+    "@action-agenda/cached-apis": "^1.0.7",
+    "@houlagins/self-embedding-component": "1.0.17",
+    "check-ie": "~2.0.1",
+    "core-js": "~3.6.5",
+    "vue": "2.6.11",
+    "vue-i18n": "8.21.1"
+  },
+  "devDependencies": {
+    "@houlagins/dist-builder": "~1.0.9",
+    "@scbd/www-css": "~1.0.1",
+    "vue-template-compiler": "2.6.11"
+  }
+}

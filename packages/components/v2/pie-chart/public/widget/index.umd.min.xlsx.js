@@ -1,2 +1,0 @@
-(("undefined"!==typeof self?self:this)["webpackJsonpPieChartTestWidget"]=("undefined"!==typeof self?self:this)["webpackJsonpPieChartTestWidget"]||[]).push([[6],[function(e,t){},function(e,t){},function(e,t){}]]);
-//# sourceMappingURL=index.umd.min.xlsx.js.map

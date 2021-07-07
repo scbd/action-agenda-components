@@ -9,15 +9,13 @@
   "homepage": "https://scbd.github.io/action-agenda-components",
   "workspaces": {
     "packages": [
-      "packages/components/v1/*",
-      "packages/components/v2/*",
-      "packages/partners/*"
+      "packages/components/*"
     ],
     "nohoist": [
       "**/@houlagins/dist-builder",
       "**/@houlagins/schema-dot-organizer",
       "**/fmin",
-      "**/@amcharts/amcharts4"
+      "**/@scbd/www-css"
     ]
   },
   "repository": {
@@ -34,21 +32,25 @@
     "clean-reinstall": "if test -f yarn.lock; then rm yarn.lock; fi && if test -d node_modules; then rm -rf node_modules; fi && lerna exec -- 'if test -f yarn.lock; then rm yarn.lock; fi && if test -d node_modules; then rm -rf node_modules; fi' && lerna bootstrap "
   },
   "dependencies": {
-    "lerna": "~3.22.1",
-    "vue-particles": "~1.0.9"
+    "lerna": "4.0.0",
+    "vue-particles": "1.0.9"
   },
   "devDependencies": {
-    "@action-agenda/cached-apis": "^1.0.7",
-    "@action-agenda/icons": "^1.0.1",
-    "@amcharts/amcharts4": "^4.10.5",
-    "@houlagins/dist-builder": "~1.0.11",
+    "@action-agenda/cached-apis": "1.0.12",
+    "@action-agenda/icons": "1.0.4",
+    "@houlagins/dist-builder": "1.0.11",
+    "@houlagins/locale": "^1.0.0",
     "@scbd/sso-vue-plugin-scbd": "1.0.4",
-    "@scbd/www-css": "~1.0.1",
+    "@scbd/www-css": "1.0.2",
+    "lodash.isempty": "^4.4.0",
+    "lodash.isplainobject": "^4.0.6",
+    "node-sass": "^6.0.1",
     "prismjs": "1.21.0",
+    "sass-loader": "7.1.0",
     "vue": "2.6.11",
-    "vue-i18n": "8.21.1",
+    "vue-i18n": "8.24.5",
     "vue-server-renderer": "2.6.11",
     "vue-template-compiler": "2.6.11",
-    "vuepress": "~1.6.0"
+    "vuepress": "1.8.2"
   }
 }

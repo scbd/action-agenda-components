@@ -1,19 +1,15 @@
 const nav                   = require('./nav')
-const { v1, v2, partners }  = require('./config')
-const { dataVisualizations, main, data, services } = v2
-// const ui                = ['search', 'view', 'icons','legacy-notice']
-// const dataVisuals       = [ 'pie-chart' ]
-// const services          = [ 'cached-apis']
-// const data              = [ 'schema', 'partners-schemas']
-// const underDevelopement = ['']
+const { v1  }  = require('./config')
+
 
 const themeConfig = {
   nav,
   repo       : 'scbd/action-agenda-components',
-  repoLabel: 'Contribute!',
-  docsDir: 'docs',
+  docsBranch: 'v1',
+  // repoLabel: 'Contribute!',
+  docsDir    : 'docs',
   editLinks  : true,
-  // lastUpdated: 'Last Updated', // string | boolean
+  lastUpdated: true, // string | boolean
   smoothScroll: true,
   locales: {
     '/': {
@@ -24,8 +20,8 @@ const themeConfig = {
       title:        'Components',
       description:  'action agenda components',
       sidebar: {
-        '/components/v1/': getV1SidebarV1(),
-        '/components/v2/': getV1SidebarV2()
+        '/components/': getV1SidebarV1(),
+        '/widgets/': getWidgetSidebarV1()
       }
     },
     '/guide': {
@@ -50,39 +46,21 @@ function getV1SidebarV1(){
 }
 
 function sideBarChildTemplateV1(pkgName){
-  return `/components/v1/${pkgName}/`
+  return `/components/${pkgName}/`
 }
 
-function getV1SidebarV2(){
+function getWidgetSidebarV1(){
   return [
     {
-      title: 'Components V2',
-      collapsable: false
-    },
-    {
-      title: 'Data Visualizations',
+      title: 'Widgets V1',
       collapsable: false,
-      children: dataVisualizations.map(sideBarChildTemplateV2)
-    },
-    {
-      title: 'Main',
-      collapsable: false,
-      children: main.map(sideBarChildTemplateV2)
-    },
-    {
-      title: 'Data',
-      collapsable: false,
-      children: data.map(sideBarChildTemplateV2)
-    },
-    {
-      title: 'Services',
-      collapsable: false,
-      children: services.map(sideBarChildTemplateV2)
+      children: [ 'view', 'search', 'form' ].map(widgetsTemplateV1)
     },
   ]
 }
 
-function sideBarChildTemplateV2(pkgName){
-  return `/components/v2/${pkgName}/`
+function widgetsTemplateV1(pkgName){
+  return `/widgets/${pkgName}.md`
 }
+
 module.exports = themeConfig

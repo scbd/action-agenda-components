@@ -1,0 +1,82 @@
+{
+  "name": "@action-agenda/map-counts",
+  "version": "2.0.0",
+  "scripts": {
+    "serve": "NODE_ENV=production vue-cli-service serve --open",
+    "build": "DEBUG=TRUE dist-builder && DEBUG=TRUE dist-builder widget",
+    "build-widget": "dist-builder widget",
+    "build-test-widget": "DEBUG=TRUE dist-builder testWidget",
+    "serve-widget-test": "dist-builder serveTestWidget",
+    "serve-widget": "dist-builder serveWidget",
+    "lint": "vue-cli-service lint --fix",
+    "release": "yarn publish --access=public --tag latest",
+    "clean-reinstall": "if test -f yarn.lock; then rm yarn.lock; fi && if test -d node_modules; then rm -rf node_modules; fi && yarn --force"
+  },
+  "dependencies": {
+    "@action-agenda/cached-apis": "1.0.12",
+    "@action-agenda/icons": "1.0.4",
+    "@amcharts/amcharts4": "4.10.20",
+    "@houlagins/locale": "1.0.0",
+    "@houlagins/self-embedding-component": "1.0.17",
+    "@scbd/amc4-base-map": "1.0.1",
+    "core-js": "3.6.5",
+    "superagent": "6.1.0",
+    "vue": "2.6.11",
+    "vue-i18n": "8.24.5"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "3.0.0",
+    "@fullhuman/vue-cli-plugin-purgecss": "4.0.3",
+    "@houlagins/dist-builder": "1.0.11",
+    "@scbd/www-css": "1.0.2",
+    "fs-extra": "10.0.0",
+    "node-sass": "6.0.1",
+    "postcss": "7.0.35",
+    "postcss-loader": "6.1.0",
+    "rollup": "^2.52.7",
+    "sass-loader": "10.1.0",
+    "vue-template-compiler": "2.6.11"
+  },
+  "readme": "https://scbd.github.io/action-agenda-components/components/map",
+  "license": "MIT",
+  "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
+  "homepage": "https://scbd.github.io/action-agenda-components/components/map",
+  "main": "dist/esm/index.min.js",
+  "module": "dist/esm/index.min.js",
+  "unpkg": "dist/browser/index.min.js",
+  "umd": "dist/legacy/umd/index.umd.min.js",
+  "web": "dist/legacy/umd/index.umd.min.js",
+  "jsnext:main": "dist/esm/index.min.js",
+  "style": "dist/esm/index.css",
+  "src": "src/index.js",
+  "browser": {
+    "./umd": "dist/legacy/umd/index.umd.min.js",
+    "./browser": "dist/browser/index.min.js",
+    "./sfc": "src/index.vue",
+    "./": "dist/browser/index.min.js"
+  },
+  "exports": {
+    ".": [
+      {
+        "import": "./dist/esm/index.js",
+        "require": "./dist/legacy/cjs/index.common.cjs",
+        "default": "./dist/esm/index.js"
+      },
+      "./dist/legacy/umd/index.umd.min.js"
+    ],
+    "./dist/": "./dist/",
+    "./src/": "./src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scbd/action-agenda-components.git",
+    "directory": "packages/map"
+  },
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "resolutions": {
+    "@amcharts/amcharts4/fmin": "0.0.2"
+  }
+}

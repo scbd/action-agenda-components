@@ -1,0 +1,92 @@
+ export default {
+   "messages": {
+     "en": {
+       "close": "close",
+       "edit": "edit",
+       "help": "help",
+       "earth": "earth",
+       "delete": "delete",
+       "file": "file",
+       "upload to cloud": "upload to cloud",
+       "down": "down",
+       "search": "search",
+       "filter": "filter",
+       "infoOutlined": "info-outlined",
+       "cancel": "cancel",
+       'question-circle': 'question-circle',
+       'trash-o': 'trash-o',
+       'cloud-upload' : 'cloud-upload',
+       'chevron-down': 'chevron-down'
+     },
+     "ar": {
+       "close": "قريب",
+       "edit": "تعديل",
+       "help": "يساعد",
+       "earth": "أرض",
+       "delete": "حذف",
+       "file": "ملف",
+       "upload to cloud": "تحميل إلى السحابة",
+       "down": "تحت",
+       "search": "بحث",
+       "filter": "منقي",
+       "infoOutlined": "المعلومات المبينة",
+       "cancel": "إلغاء"
+     },
+     "es": {
+       "close": "cerca",
+       "edit": "editar",
+       "help": "ayuda",
+       "earth": "tierra",
+       "delete": "Eliminar",
+       "file": "expediente",
+       "upload to cloud": "subir a la nube",
+       "down": "abajo",
+       "search": "buscar",
+       "filter": "filtrar",
+       "infoOutlined": "info-delineado",
+       "cancel": "cancelar"
+     },
+     "fr": {
+       "close": "Fermer",
+       "edit": "Éditer",
+       "help": "aider",
+       "earth": "Terre",
+       "delete": "effacer",
+       "file": "déposer",
+       "upload to cloud": "télécharger dans le cloud",
+       "down": "vers le bas",
+       "search": "rechercher",
+       "filter": "filtre",
+       "infoOutlined": "info-décrit",
+       "cancel": "Annuler"
+     },
+     "ru": {
+       "close": "Закрыть",
+       "edit": "редактировать",
+       "help": "помощь",
+       "earth": "земля",
+       "delete": "Удалить",
+       "file": "файл",
+       "upload to cloud": "загрузить в облако",
+       "down": "вниз",
+       "search": "поиск",
+       "filter": "фильтр",
+       "infoOutlined": "информация обрисована в общих чертах",
+       "cancel": "отменить"
+     },
+     "zh": {
+       "close": "关闭",
+       "edit": "编辑",
+       "help": "帮助",
+       "earth": "地球",
+       "delete": "删除",
+       "file": "文件",
+       "upload to cloud": "上传到云端",
+       "down": "下",
+       "search": "搜索",
+       "filter": "筛选",
+       "infoOutlined": "信息概述",
+       "cancel": "取消"
+     }
+   }
+ }

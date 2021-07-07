@@ -1,0 +1,13 @@
+/**
+ * @file
+ * Visual styles for comments in Barrio.
+ */
+
+.alert-cbd {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+}
