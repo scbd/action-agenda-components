@@ -50,7 +50,45 @@
         <small v-if="$t(`action.attachments.help`)" class="form-text text-muted">{{$t(`action.attachments.help`)}}</small>
       </div>
     </div>
-    
+
+    <div class="col-12">
+      <div class="form-group" id="group.action.startdate">
+        <label  for="action.startdate"> {{ $t(`action.startdate.label`) }} </label>
+        <input class="form-control" 
+          @input      ="update"
+          id          ="action.startdate"
+          type        ="text"
+          v-model.trim="action.startdate.en"
+          v-validate  ="'required|max:140'"
+          :class      ="[ getValidationClass($t(`action.startdate.label`)) ]" 
+          :name       ="$t(`action.startdate.label`)"
+          :placeholder="$t(`action.startdate.placeholder`)" 
+          />
+
+        <small v-if="$t(`action.startdate.help`)" class="form-text text-muted">{{$t(`action.startdate.help`)}}</small>
+        <field-error-message :error="errors.collect($t(`action.startdate.label`))"/>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="form-group" id="group.action.enddate">
+        <label  for="action.enddate"> {{ $t(`action.enddate.label`) }} </label>
+        <input class="form-control" 
+          @input      ="update"
+          id          ="action.enddate"
+          type        ="text"
+          v-model.trim="action.enddate.en"
+          v-validate  ="'required|max:140'"
+          :class      ="[ getValidationClass($t(`action.enddate.label`)) ]" 
+          :name       ="$t(`action.enddate.label`)"
+          :placeholder="$t(`action.enddate.placeholder`)" 
+          />
+
+        <small v-if="$t(`action.enddate.help`)" class="form-text text-muted">{{$t(`action.enddate.help`)}}</small>
+        <field-error-message :error="errors.collect($t(`action.enddate.label`))"/>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -72,7 +110,9 @@
               action: {
                 name        : { en:'' },
                 description : { en:'' },
-                attachments : []
+                attachments : [],
+                startdate   : { en:'' },
+                enddate     : { en:'' }
               }
             }
   }
