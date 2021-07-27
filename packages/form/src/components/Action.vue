@@ -36,11 +36,43 @@
     </div>
     <div class="col-12">
       <div class="form-group" id="group.action.attachments">
-        <label :for="`action.attachments`"> {{ $t(`Attachement (s)`) }} </label>
+        <label :for="`action.attachments`"> {{ $t(`Attachment (s)`) }} </label>
         <Links  @input="update" id="action.attachments" v-model="action.attachments" :type="[ 'files','links' ]" multi name="attachments"/>
       </div>
     </div>
-    
+
+    <div class="col-12">
+      <div class="form-group" id="group.action.startdate">
+        <label  for="action.startdate"> {{ $t(`Start Date`) }} </label>
+        <input class="form-control" 
+          @input      ="update"
+          id          ="action.startdate"
+          type        ="date"
+          v-model.trim="action.startdate[$i18n.locale]"
+          v-validate  ="'required|max:140'"
+          :class      ="[ getValidationClass(`action.startdate`) ]"
+          :name       ="`action.startdate`"
+          />
+        <field-error-message :error="errors.collect('action.startdate')"/>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="form-group" id="group.action.enddate">
+        <label  for="action.enddate"> {{ $t(`End Date`) }} </label>
+        <input class="form-control" 
+          @input      ="update"
+          id          ="action.enddate"
+          type        ="date"
+          v-model.trim="action.enddate[$i18n.locale]"
+          v-validate  ="'required|max:140'"
+          :class      ="[ getValidationClass(`action.enddate`) ]"
+          :name       ="`action.enddate`"
+          />
+        <field-error-message :error="errors.collect('action.enddate')"/>
+      </div>
+    </div>    
+
   </div>
 </template>
 
@@ -67,7 +99,9 @@
               action: {
                 name        : { [locale]: '' },
                 description : { [locale]: '' },
-                attachments : []
+                attachments : [],
+                startdate   : { [locale]: '' },
+                enddate     : { [locale]: '' }
               }
             }
   }
