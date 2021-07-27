@@ -1,0 +1,30 @@
+.view-empty {
+  margin: auto;
+  padding: 20px 50px;
+
+  .view-empty--text {
+    font-size: 18px;
+
+    strong {
+      font-weight: 700;
+    }
+  }
+
+  label {
+    display: none;
+  }
+
+  .views-exposed-form .form-item-query input {
+    border-bottom: 1px solid #003a2e;
+  }
+
+  .search-no-result--case-title {
+    font-size: 24px;
+  }
+
+  input.form-autocomplete {
+    background-image: url(../images/icon_search_pos.png);
+    background-position: 100% center;
+    background-repeat: no-repeat;
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "name": "@action-agenda/form",
+  "version": "1.0.6",
+  "readme": "https://github.com/scbd/action-agenda-components/tree/master/packages/form#readme",
+  "license": "MIT",
+  "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
+  "homepage": "https://github.com/scbd/action-agenda-components/tree/master/packages/form#readme",
+  "main": "dist/esm/index.mjs",
+  "module": "dist/esm/index.mjs",
+  "unpkg": "dist/browser/index.min.js",
+  "web": "dist/browser/index.min.js",
+  "jsnext:main": "dist/esm/index.min.js",
+  "src": "src/index.js",
+  "style": "dist/esm/index.css",
+  "browser": {
+    "./umd": "dist/legacy/umd/index.umd.min.js",
+    "./browser": "dist/browser/index.min.js",
+    "./": "dist/browser/index.min.js"
+  },
+  "exports": {
+    ".": [
+      {
+        "import": "./dist/esm/index.mjs",
+        "default": "./dist/esm/index.mjs",
+        "require": "./dist/legacy/cjs/index.common.cjs"
+      },
+      "./dist/legacy/umd/index.umd.min.js"
+    ],
+    "./dist/": "./dist/",
+    "./src/": "./src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scbd/action-agenda-components.git",
+    "directory": "packages/form"
+  },
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "scripts": {
+    "init": "dist-builder init",
+    "serve": "NODE_ENV=production vue-cli-service serve --open",
+    "build": "DEBUG=TRUE dist-builder && DEBUG=TRUE dist-builder widget",
+    "build-widget": "dist-builder widget",
+    "build-test-widget": "DEBUG=TRUE dist-builder testWidget",
+    "serve-widget-test": "dist-builder serveTestWidget",
+    "serve-widget": "dist-builder serveWidget",
+    "test:e2e": "vue-cli-service test:e2e",
+    "lint": "vue-cli-service lint --fix",
+    "release": "yarn publish --access=public --tag latest",
+    "link": "lerna link"
+  },
+  "dependencies": {
+    "@action-agenda/cached-apis": "1.0.12",
+    "@action-agenda/icons": "1.0.4",
+    "@houlagins/default-options": "1.0.2",
+    "@houlagins/load-http": "1.0.3",
+    "@houlagins/locale": "1.0.0",
+    "@houlagins/self-embedding-component": "1.0.17",
+    "@scbd/sso-vue-plugin-scbd": "1.0.4",
+    "axios": "0.21.1",
+    "change-case": "4.1.2",
+    "consola": "2.15.3",
+    "core-js": "3.6.5",
+    "humanparser": "2.6.0",
+    "lodash.clone": "4.5.0",
+    "vee-validate": "2.2.15",
+    "vue-i18n": "8.24.5",
+    "vue-multiselect": "2.1.6",
+    "vue-recaptcha-v3": "^1.9",
+    "vue-upload-component": "2.8.22"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "3.0.0",
+    "@fullhuman/vue-cli-plugin-purgecss": "4.0.3",
+    "@houlagins/dist-builder": "1.0.11",
+    "@scbd/www-css": "1.0.2",
+    "fs-extra": "^10.0.0",
+    "node-sass": "6.0.1",
+    "postcss": "7.0.35",
+    "postcss-loader": "6.1.0",
+    "sass-loader": "10.1.0",
+    "vue-template-compiler": "2.6.11",
+    "vue": "2.6.11"
+  },
+  "description": "https://github.com/scbd/action-agenda-components/tree/master/packages/form#readme",
+  "bugs": {
+    "url": "https://github.com/scbd/action-agenda-components/issues"
+  }
+}

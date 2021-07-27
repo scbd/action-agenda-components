@@ -2,26 +2,28 @@
 <section>
     <div aria-labelledby="main-title" class="home">
         <header class="hero"><img src="https://attachments.cbd.int/cbd-logo-en.svg" alt="hero">
-          <h1 id="main-title">Action Agenda Components </h1>
-          <p class="description">
-            Is a modular system of independent <b>(copy and paste)</b> software components which together form an Action platform. <i>Installed in the same manner as an embeded youtube video.</i> The Action platform can be used to acquire, filter and showcase Actions for your initiative, programme or organization's environmental cause
-          </p>
-          <p class="action"><a href="/action-agenda-components/components/" class="nav-link action-button">Get Started →</a></p>
+          <h1 id="main-title">{{title}}</h1>
+          <div class="custom-block tip text-left">
+            <h3>{{title2}}</h3>
+            <p  style="width: 70%; margin: auto;">{{s1}} <a :href="`https://scbd.github.io/action-agenda-network${$localePath}`" rel="noreferrer noopener" target="_blank" >{{aan}}</a>. {{plzSee}}</p>
+            
+            <h3>{{title3}}</h3>
+            <div style="text-align: left; width: 40%; margin: auto;">
+              <ul>
+                <li>
+                  <a :href="`${$localePath}widgets`">
+                    {{l1}}
+                  </a>
+                </li>
+                <li>
+                  <a :href="`${$localePath}components`">
+                    {{l2}}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </header>
-        <div class="features">
-          <div class="feature">
-            <h2>Simplicity First</h2>
-            <p>Set up your own platform, in minutes without any technical knowledge.  As easy as a couple of facebook posts.</p>
-          </div>
-          <div class="feature">
-            <h2>Open Source</h2>
-            <p>Need a new feature?  Contribute to the open source project, instead of developing an entire platform to suit one need. </p>
-          </div>
-          <div class="feature">
-            <h2>Efficiency &amp; Sustainability</h2>
-            <p>Thousans of organizations are aquiring Actions for their environmental causes.  100's have created their own tools and displays.  Lets utalize the same tool saving resources and reducing waiste.</p>
-          </div>
-        </div>
     </div>
 
     <ClientOnly>
@@ -51,7 +53,8 @@
 <script>
 
 export default {
-  name:'Particles'
+  name:'Particles',
+  props:[ 'title', 'title2', 'title3', 's1', 'aan', 'plzSee', 'l1', 'l2']
 }
 </script>
 

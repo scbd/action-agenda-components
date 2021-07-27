@@ -1,0 +1,30 @@
+/* IMPORTS */
+
+//@import url(font-awesome.min.css);
+// variables
+@import "variables";
+//bootstrap
+@import "./bs/bootstrap";
+//material design bootstrap
+//@import "../node_modules/mdbootstrap/scss/mdb";
+// barrio
+@import "barrio";
+// typography
+@import "typography";
+// mixins
+@import "mixins";
+
+
+//custom
+@import "./cbd/common";
+@import "./cbd/home";
+@import "./cbd/header";
+@import "./cbd/footer";
+@import "./cbd/articles";
+@import "./cbd/general";
+@import "./cbd/toolbar";
+@import "./cbd/top-search";
+@import "./cbd/user_form";
+@import "./cbd/search-no-result";
+
+

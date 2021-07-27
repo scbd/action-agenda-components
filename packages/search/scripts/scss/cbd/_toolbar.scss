@@ -1,0 +1,136 @@
+/**
+ * Toolbar module styling.
+ */
+
+$toolbar-width: 240px;
+$grid-gutter-width:         30px !default;
+$zindex-navbar-fixed:      1030 !default;
+
+body {
+  &.toolbar-fixed,
+  &.toolbar-vertical {
+    padding-top: 39px !important;
+  }
+  &.toolbar-horizontal {
+    padding-top: 39px !important;
+  }
+}
+
+body {
+  &.toolbar-fixed,
+  &.toolbar-vertical {
+    .navbar-wrapper {
+      padding-top: 39px !important;
+    }
+
+    .section-header-inner.sticky {
+      top: 199px;
+    }
+
+    .content .section-header-topics.sticky {
+      top: 188px;
+    }
+  }
+  &.toolbar-horizontal.toolbar-tray-open {
+    .navbar-wrapper {
+      padding-top: 39px !important;
+    }
+    .section-header-inner.sticky {
+      top: 239px;
+    }
+
+    .content .section-header-topics.sticky {
+      top: 228px;
+    }
+
+  }
+}
+
+@media (max-width: 991px) {
+  body {
+    &.toolbar-fixed,
+    &.toolbar-vertical {
+      .navbar-wrapper {
+        padding-top: 39px !important;
+      }
+
+      .section-header-inner.sticky {
+        top: 69px;
+        background-color: #003229;
+        overflow-x: scroll;
+        //width: 100vw;
+      }
+
+      .content .section-header-topics.sticky {
+        top: 69px;
+      }
+    }
+
+    &.toolbar-fixed.toolbar-vertical.toolbar-tray-open.toolbar-fixed,
+    &.toolbar-tray-open.toolbar-vertical.toolbar-fixed{
+      margin-left: 0px !important;
+    }
+
+    &.toolbar-horizontal.toolbar-tray-open {
+      .navbar-wrapper {
+        padding-top: 39px !important;
+      }
+      .section-header-inner.sticky {
+        top: 239px;
+      }
+
+      .content .section-header-topics.sticky {
+        top: 69px;
+      }
+    }
+  }
+}
+
+body.toolbar-fixed {
+
+  // Fix z-index.
+  .toolbar-oriented .toolbar-bar {
+    z-index: ($zindex-navbar-fixed + 1);
+  }
+
+  .navbar-fixed-top {
+    top: 39px;
+  }
+
+  // Horizontal.
+  &.toolbar-horizontal.toolbar-tray-open .navbar-fixed-top {
+    padding-top: 39px !important;
+  }
+
+  // Vertical Open.
+  &.toolbar-vertical.toolbar-tray-open {
+
+    .navbar-fixed-top {
+      left: $toolbar-width;
+    }
+
+    &.toolbar-fixed {
+      margin-left: $toolbar-width;
+
+      .toolbar-tray {
+        padding-bottom: 40px;
+        &, > .toolbar-lining:before {
+          width: $toolbar-width;
+        }
+      }
+
+    }
+
+  }
+
+}
+
+// Remove flicking.
+body.toolbar-loading {
+
+  margin-top: 0;
+
+  &.toolbar {
+    margin-bottom: ($grid-gutter-width / 2);
+  }
+}

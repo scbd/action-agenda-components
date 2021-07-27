@@ -1,19 +1,51 @@
+const { t, locales } = require('../tranlate/index.js')
+
 const nav = [
   {
     text: 'Components',
     ariaLabel: 'Components',
     items: [
-            { text: 'V1', link: '/components/v1/'  },
-            {
-              text: 'Under Development',
-              ariaLabel: 'Under Development',
-              items: [
-                      { text: 'V2', link: '/components/v2/' }
-                    ]
-            }
+            { text: 'Version 1', link: '/components/'  },
           ]
-  },
-  { text: 'Partners', link: '/partners/' }
+  },  {
+    text: 'Widgets',
+    ariaLabel: 'Widgets',
+    items: [
+            { text: 'V1 Widgets', link: '/widgets/'  },
+          ]
+  }
 ]
 
-module.exports = nav
+module.exports = getNav
+
+function getNav(onlyLocale){
+
+  if(onlyLocale) return createNav(onlyLocale)
+
+  const allNav = {}
+
+  for (const locale of locales)
+    allNav[locale] = createNav(locale)
+
+  return allNav
+}
+
+function createNav(locale){
+  const langPath = locale === 'en'? '/' : `/${locale}/`
+
+  return [
+    {
+      text: t('Components',locale),
+      ariaLabel: t('Components',locale),
+      items: [
+              { text: t('Version 1',locale), link: `${langPath}components/` },
+            ]
+    },  {
+      text: t('Widgets',locale),
+      ariaLabel: t('Widgets',locale),
+      items: [
+              { text: t('Version 1',locale), link: `${langPath}widgets/` },
+            ]
+    }
+  ]
+}
