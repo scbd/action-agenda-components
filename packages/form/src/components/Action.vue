@@ -41,35 +41,35 @@
       </div>
     </div>
 
-    <div class="col-12">
-      <div class="form-group" id="group.action.startdate">
-        <label  for="action.startdate"> {{ $t(`Start Date`) }} </label>
+    <div class="col-lg-3">
+      <div class="form-group" id="group.action.startDate">
+        <label  for="action.startDate"> {{ $t(`Start Date`) }} </label>
         <input class="form-control" 
           @input      ="update"
-          id          ="action.startdate"
+          id          ="action.startDate"
           type        ="date"
-          v-model.trim="action.startdate[$i18n.locale]"
-          v-validate  ="'required|max:140'"
-          :class      ="[ getValidationClass(`action.startdate`) ]"
-          :name       ="`action.startdate`"
+          v-model.trim="action.startDate[$i18n.locale]"
+          v-validate  ="'date|required'"
+          :class      ="[ getValidationClass(`action.startDate`) ]"
+          :name       ="`action.startDate`"
           />
-        <field-error-message :error="errors.collect('action.startdate')"/>
+        <field-error-message :error="errors.collect('action.startDate')"/>
       </div>
     </div>
 
-    <div class="col-12">
-      <div class="form-group" id="group.action.enddate">
-        <label  for="action.enddate"> {{ $t(`End Date`) }} </label>
+    <div class="col-lg-3">
+      <div class="form-group" id="group.action.endDate">
+        <label  for="action.endDate"> {{ $t(`End Date`) }} </label>
         <input class="form-control" 
           @input      ="update"
-          id          ="action.enddate"
+          id          ="action.endDate"
           type        ="date"
-          v-model.trim="action.enddate[$i18n.locale]"
-          v-validate  ="'required|max:140'"
-          :class      ="[ getValidationClass(`action.enddate`) ]"
-          :name       ="`action.enddate`"
+          v-model.trim="action.endDate[$i18n.locale]"
+          v-validate  ="'date|required'"
+          :class      ="[ getValidationClass(`action.endDate`) ]"
+          :name       ="`action.endDate`"
           />
-        <field-error-message :error="errors.collect('action.enddate')"/>
+        <field-error-message :error="errors.collect('action.endDate')"/>
       </div>
     </div>    
 
@@ -100,8 +100,8 @@
                 name        : { [locale]: '' },
                 description : { [locale]: '' },
                 attachments : [],
-                startdate   : { [locale]: '' },
-                enddate     : { [locale]: '' }
+                startDate   : { [locale]: '' },
+                endDate     : { [locale]: '' }
               }
             }
   }
