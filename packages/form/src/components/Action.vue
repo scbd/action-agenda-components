@@ -49,7 +49,7 @@
           id          ="action.startDate"
           type        ="date"
           v-model.trim="action.startDate[$i18n.locale]"
-          v-validate  ="'date|required'"
+          v-validate  ="'required'"
           :class      ="[ getValidationClass(`action.startDate`) ]"
           :name       ="`action.startDate`"
           />
@@ -58,14 +58,14 @@
     </div>
 
     <div class="col-lg-3">
-      <div class="form-group" id="group.action.endDate">
+      <div class="form-group" id="group.action.enddate">
         <label  for="action.endDate"> {{ $t(`End Date`) }} </label>
         <input class="form-control" 
           @input      ="update"
           id          ="action.endDate"
           type        ="date"
           v-model.trim="action.endDate[$i18n.locale]"
-          v-validate  ="'date|required'"
+          v-validate  ="'required'"
           :class      ="[ getValidationClass(`action.endDate`) ]"
           :name       ="`action.endDate`"
           />
@@ -100,8 +100,8 @@
                 name        : { [locale]: '' },
                 description : { [locale]: '' },
                 attachments : [],
-                startDate   : { [locale]: '' },
-                endDate     : { [locale]: '' }
+                startDate   : { [Date]: '' },
+                endDate     : { [Date]: '' }
               }
             }
   }
