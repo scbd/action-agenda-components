@@ -69,29 +69,32 @@
         </form>
     </FormFeedback>
 
-    <DebugForm v-if="false" :form="form" :error="error"/>
+    <DebugForm v-if="true" :form="form" :error="error"/>
   </section>
 </template>
 
 <script>
-import i18n from './locales/index.js'
-import Vue        from 'vue'
-import Icons      from '@action-agenda/icons'
-import axios      from 'axios'
-import consola    from 'consola'
-import {camelCase} from 'change-case'
+import   i18n                 from './locales/index.js'
+import   Vue                  from 'vue'
+import   Icons                from '@action-agenda/icons'
+import   axios                from 'axios'
+import   consola              from 'consola'
+import   FormMixin            from './components/form-mixin.js'
+import   getDefaultOptions    from './default-options.js'
+
+import { camelCase          } from 'change-case'
 import { initializeApiStore } from '@action-agenda/cached-apis'
-import FormMixin from './components/form-mixin.js'
-import getDefaultOptions from './default-options.js'
+
 //scbd controls
-import ActorSelect   from './components/controls/ActorSelect/index.vue'
-import FormFeedback  from './components/FeedbackList/index.vue'
-import Contact       from './components/Contact.vue'
-import Action        from './components/Action.vue'
-import ActionDetails from './components/ActionDetails.vue'
-import ActionDetailsRequired from './components/ActionDetailsRequired.vue'
-import Partners      from './components/Partners.vue'
-import getLocale from './components/locale.js'
+import   ActorSelect             from './components/controls/ActorSelect/index.vue'
+import   FormFeedback            from './components/FeedbackList/index.vue'
+import   Contact                 from './components/Contact.vue'
+import   Action                  from './components/Action.vue'
+import   ActionDetails           from './components/ActionDetails.vue'
+import   ActionDetailsRequired   from './components/ActionDetailsRequired.vue'
+import   Partners                from './components/Partners.vue'
+import   getLocale               from './components/locale.js'
+import { getAction             } from './components/api'
 
 export default {
   name      : 'AAForm',
@@ -143,7 +146,21 @@ export default {
     }
 }
 
-function created(){ initializeApiStore() }
+
+
+async function created(){ 
+  initializeApiStore() 
+  
+function getActionIdFromQuery(){
+  if (typeof window === 'undefined') return false
+
+  const urlParams = new URLSearchParams(location.search)
+
+  return urlParams.get('action-id')
+}
+  this.form = await getAction.get(getActionIdFromQuery)
+
+  }
 
 async function mounted(){
   this.toggleSubscription()
