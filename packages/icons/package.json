@@ -1,16 +1,16 @@
 {
   "name": "@action-agenda/icons",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "readme": "https://github.com/scbd/action-agenda-components/tree/master/packages/icons#readme",
   "license": "MIT",
   "author": "Secretariat of the Convention on Biological Diversity <it@cbd.int>",
   "homepage": "https://github.com/scbd/action-agenda-components/tree/master/packages/icons#readme",
-  "main": "dist/esm/index.mjs",
+  "main": "dist/esm/index.js",
   "web": "dist/browser/index.min.js",
   "umd": "dist/legacy/umd/index.umd.min.js",
   "unpkg": "dist/browser/index.min.js",
-  "module": "dist/esm/index.mjs",
-  "jsnext:main": "dist/esm/index.mjs",
+  "module": "dist/esm/index.js",
+  "jsnext:main": "dist/esm/index.js",
   "src": "src/index.js",
   "files": [
     "dist/*",
@@ -24,9 +24,9 @@
   "exports": {
     ".": [
       {
-        "import": "./dist/esm/index.mjs",
+        "import": "./dist/esm/index.js",
         "require": "./dist/legacy/cjs/index.common.cjs",
-        "default": "./dist/esm/index.mjs"
+        "default": "./dist/esm/index.js"
       },
       "./dist/legacy/umd/index.umd.min.js"
     ],
@@ -43,7 +43,8 @@
     "build": "DEBUG=TRUE dist-builder",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint --fix",
-    "release": "yarn publish --access=public --tag latest"
+    "release": "yarn publish --access=public --tag latest",
+    "clean-reinstall": "if test -f yarn.lock; then rm yarn.lock; fi && if test -f node_modules; then rm -rf node_modules; fi && yarn install --force"
   },
   "dependencies": {
     "change-case": "4.1.2"
