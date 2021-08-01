@@ -5,27 +5,15 @@ import   omitBy                       from 'lodash.omitby'
 import   isObject                     from 'lodash.isplainobject'
 import   isEmpty                      from 'lodash.isempty'
 
-export const getHeaders = async(options) => {
-  const { getToken } = options
-
-  return getToken && (await getToken())? { Authorization: `Ticket ${await getToken()}` } : {}
-}
-
-export const getApi = (id, options) => {
-  const { api } = options
-
-  return `${api}/v2019/actions/${encodeURIComponent(id)}`
-}
-
-export const getAction = async (options, id) => {
+export const getAction = async (options={}, id) => {
   try {
     await initializeApiStore()
     const identifier = id? id : getActionIdFromQuery()
     const opts       = options
     const $http      = await get$http()
-    const headers    = await getHeaders(opts)
-    const apiUrl     = getApi(identifier, opts)
-    const data       = await  (await $http.get(apiUrl, { headers })).json()
+    //const headers    = await getHeaders(opts)
+    //const apiUrl     = getApi(identifier, opts)
+    const data       = await  (await $http.get('https://www.cbd.int/api/v2019/actions/'+identifier)).json()
     
     return normalizeData(data, opts)
   }

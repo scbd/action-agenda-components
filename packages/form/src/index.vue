@@ -151,6 +151,17 @@ export default {
 async function created(){ 
   initializeApiStore() 
   
+  const fetchQuery = getActionIdFromQuery()
+
+  console.log('fetchQuery', fetchQuery)
+  console.log('this.options',this.options)
+
+  console.log('await getAction.get()',await getAction())
+
+  this.form = await getAction()
+
+  }
+
 function getActionIdFromQuery(){
   if (typeof window === 'undefined') return false
 
@@ -158,9 +169,6 @@ function getActionIdFromQuery(){
 
   return urlParams.get('action-id')
 }
-  this.form = await getAction.get(getActionIdFromQuery)
-
-  }
 
 async function mounted(){
   this.toggleSubscription()
