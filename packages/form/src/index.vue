@@ -156,9 +156,9 @@ async function created(){
   console.log('fetchQuery', fetchQuery)
   console.log('this.options',this.options)
 
-  console.log('await getAction.get()',await getAction())
+  console.log('await getAction.get()',await getAction(this.opts))
 
-  this.form = await getAction()
+  // this.form = await getAction(this.options)
 
   }
 
