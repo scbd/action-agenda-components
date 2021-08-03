@@ -17,5 +17,5 @@ function getActionIdFromQuery(){
 
   const urlParams = new URLSearchParams(location.search)
 
-  return urlParams.get('action-id') || ''
+  return urlParams.get('identifier') || ''
 }
