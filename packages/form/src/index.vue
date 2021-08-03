@@ -16,7 +16,7 @@
                 <div class="card-body">
                   <Action class="mb-3" v-model="form.action" />
                 </div>
-              </div>
+              </div>   
 
               <legend >{{ $t(`Commitment Linkages`) }}</legend>
 
@@ -45,6 +45,25 @@
                   <hr/>
                 </div>
               </div>
+<!--This will be moved to a new file "EditForm.vue" once operational--> 
+<!--edit form fields starts-->
+              <section v-if="form.action">
+                <h3>{{form.action.name}}</h3>
+                <input type="text" v-model="form.action.name"/>
+                <div class="card my-3">
+                 <div class="card-body">
+                  <div class="row">
+                    <div class="col-12">
+                      <p class="desc"> {{form.action.description}}</p>
+                    </div>
+                  <div class="col-12 mb-3" v-for="item in form.action.attachments" v-bind:key="item.url">
+                  <a :href="item.url" target="_blank" rel="noopener"> <Icon name="file"/> {{item.name}} </a>
+                  </div>
+                  </div>
+                </div>
+                </div>
+              </section>
+<!--edit form fields ends-->
 
             </div>
           </div>
@@ -158,8 +177,8 @@ async function created(){
 
   console.log('await getAction.get()',await getAction(this.opts))
 
-  // this.form = await getAction(this.options)
-
+  this.form = await getAction(this.opts)
+  
   }
 
 function getActionIdFromQuery(){
