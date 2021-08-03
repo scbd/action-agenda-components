@@ -39,7 +39,6 @@
     "src/*"
   ],
   "scripts": {
-    "init": "dist-builder init",
     "serve": "NODE_ENV=production vue-cli-service serve --open",
     "build": "DEBUG=TRUE dist-builder && DEBUG=TRUE dist-builder widget",
     "build-widget": "dist-builder widget",
@@ -49,7 +48,7 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint --fix",
     "release": "yarn publish --access=public --tag latest",
-    "link": "lerna link"
+    "clean-reinstall": "if test -f yarn.lock; then rm yarn.lock; fi && if test -f node_modules; then rm -rf node_modules; fi && yarn install --force"
   },
   "dependencies": {
     "@action-agenda/cached-apis": "1.0.12",
