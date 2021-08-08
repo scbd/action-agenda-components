@@ -11,7 +11,7 @@
               <div class="mb-3" v-if="actorType" :type="actorType">
                 
 <!-- Organization code -->
-  <div v-if="isSelectedType('organization') && form.actor"> 
+  <div> <!-- excluded v-if="isSelectedType('organization')" to test the code-->
     <div class="row">
       <div class="col-12">
         <div class="form-group" :id="`group.${form.actor.actorType}.name`" >
@@ -79,8 +79,7 @@
           <field-error-message :error="errors.collect(`${form.actor.actorType}.country`)" :state="validateState(`${form.actor.actorType}.country`)" />
         </div>
       </div>
-
-      <div class="col-lg-6" v-if="form.actor.types">
+   <div class="col-lg-6">
         <div class="form-group" :id="`group.${form.actor.actorType}.types`" >
           <label  :for="`${form.actor.actorType}.types`">{{ $t(`Type`) }}  </label>
           <SCBDSelect
@@ -112,14 +111,14 @@
           />
           <field-error-message :error="errors.collect(`${form.actor.actorType}.typeOther`)" :state="validateState(`${form.actor.actorType}.typeOther`)" />
         </div>
-      </div>
+      </div>  
 
     </div>  
   </div>
 <!-- Organization code end -->
 
 <!-- Public code -->
-  <div v-if="isSelectedType('public') && form.actor">
+  <div v-if="isSelectedType('public')">
     <div class="row">
       <div class="col-12">
         <div class="form-group" :id="`group.${form.actor.actorType}.name`" >
@@ -128,7 +127,7 @@
             @input      ="update"
             :id         ="`${form.actor.actorType}.name`"
             type        ="text"
-            v-model.trim="form.actor.name"
+            v-model.trim="form.actor.name[$i18n.locale]"
             v-validate  ="'required|max:140'"
             :class      ="[ getValidationClass(`${form.actor.actorType}.name`) ]" 
             :name       ="`${form.actor.actorType}.name`"
@@ -170,7 +169,7 @@
     </div>
 
     <div class="row">
-      <!-- <div class="col-lg-6">
+      <div class="col-lg-6">
 
         <div class="form-group" :id="`group.${form.actor.actorType}.country`">
           <label  :for="`${form.actor.actorType}.country`">{{ $t(`Country`) }} </label>
@@ -186,8 +185,8 @@
           />
           <field-error-message :error="errors.collect(`${form.actor.actorType}.country`)" :state="validateState(`${form.actor.actorType}.country`)" />
         </div>
-      </div> -->
-      <!-- <div class="col-lg-6">
+      </div>
+      <div class="col-lg-6">
         <div class="form-group" :id="`group.${form.actor.actorType}.types`" >
           <label  :for="`${form.actor.actorType}.types`">{{ $t(`Type`) }}  </label>
           <SCBDSelect
@@ -203,9 +202,9 @@
           />
           <field-error-message :error="errors.collect($t(`${form.actor.actorType}.types`))" :state="validateState($t(`${form.actor.actorType}.types`))" />
         </div>
-      </div> -->
+      </div>
 
-      <!-- <div class="col-6" v-if="isOther">
+      <div class="col-6" v-if="isOther">
         <div class="form-group" :id="`group.${form.actor.actorType}.typeOther`" >
           <label  :for="`${form.actor.actorType}.typeOther`">{{ $t(`Other Type`) }} </label>
           <input class="form-control"
@@ -219,14 +218,14 @@
           />
           <field-error-message :error="errors.collect(`${form.actor.actorType}.typeOther`)" :state="validateState(`${form.actor.actorType}.typeOther`)" />
         </div>
-      </div> -->
+      </div>
 
     </div>
   </div>
 <!-- Public code end -->
 
 <!-- Person code -->
-    <div v-if="isSelectedType('person') && form.actor">
+    <div v-if="isSelectedType('person')">
     <div class="row" v-if="me.isAuthenticated">
       <div class="col-lg-12">
 
@@ -374,7 +373,6 @@ export default {
 
     const formType = (this.options || {}).formType || ((this.$route || {}).params || {}).type || 'organization'
 
-
     return {
       actorType : formType,
       DEBUG     : true,
@@ -388,20 +386,20 @@ export default {
       values    : this.value,
       form      : {
                     actor         : {
-                        salutation : { [this.$i18n.locale]: '' },
-                        firstName  : { [this.$i18n.locale]: '' },
-                        middleName : { [this.$i18n.locale]: '' },
-                        lastName   : { [this.$i18n.locale]: '' },
-                        suffix     : { [this.$i18n.locale]: '' },
-                        name       : { [this.$i18n.locale]: '' },
+                        salutation : {},
+                        firstName  : {},
+                        middleName : {},
+                        lastName   : {},
+                        suffix     : {},
+                        name       : {},
                         email      : '',        
-                        name     : {  [this.$i18n.locale]: ''  },
+                        name     : {  },
                         url      : '',
                         image    : { url: '' },
                         types    : [],
                         country  : '',
                         typeOther: { },
-                        actorType: formType
+                        actorType: ''
                     },
                       orgLogo : '', //temp holder for uploaded image
                       action        : {},
@@ -428,7 +426,8 @@ export default {
 function isOther(){
   if (!this.form.actor.types || !this.form.actor.types.length) return false
 
-  if(this.form.actor.types.includes('ORG-TYPE-OTHER'))
+  for (let i = 0; i < this.form.actor.types.length; i++)
+    if(this.form.actor.types[i].identifier === 'ORG-TYPE-OTHER')
       return true
     
   return false
@@ -454,11 +453,8 @@ function showImage({ srcElement }){
 }
 
 function isSelectedType(type) {
-  if(!this.form || !this.form.actor) return false
-
-  if (this.form.actor.actorType === type) return true;
-
-  return false;
+    if (this.input.type === type) return true;
+    return false;
   }
 
 async function created(){ 

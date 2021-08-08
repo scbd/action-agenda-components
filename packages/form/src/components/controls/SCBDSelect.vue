@@ -63,18 +63,13 @@
 
   async function  created() {
     this.options = await this.load()
-    this.killWatch = this.$watch('value',loadModelWatch)
+    this.$watch('value',loadModelWatch)
   }
 
-  async function loadModelWatch(newValue,oldValue){
-    if(!oldValue && newValue){
-      this.values=newValue
-      this.killWatch()
-
+  async function loadModelWatch(newValue){
       const lookUpType = this.type === 'geoLocations'? 'all' : this.type
 
       this.values = await lookUp(lookUpType, newValue)
-    }
   }
 
   function update() {
