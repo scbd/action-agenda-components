@@ -9,310 +9,309 @@
           <div class="card">
             <div class="card-body">
               <div class="mb-3" v-if="actorType" :type="actorType">
-                
-<!-- Organization code -->
-  <div v-if="isSelectedType('organization') && form.actor"> 
-    <div class="row">
-      <div class="col-12">
-        <div class="form-group" :id="`group.${form.actor.actorType}.name`" >
-          <label  :for="`${form.actor.actorType}.name`"> {{ $t(`Name of the lead organization`) }} </label>
-          <input class="form-control" 
-            @input      ="update"
-            :id         ="`${form.actor.actorType}.name`"
-            type        ="text"
-            v-model.trim="form.actor.name[$i18n.locale]"
-            v-validate  ="'required|max:140'"
-            :class      ="[ getValidationClass(`${form.actor.actorType}.name`) ]" 
-            :name       ="`${form.actor.actorType}.name`"
-            />
-          <field-error-message :error="errors.collect(`${form.actor.actorType}.name`)"/>
-        </div>
-      </div>
-    </div>
 
-   <div class="row">
+              <!-- Organization code -->
+                <div v-if="isSelectedType('organization') && form.actor"> 
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group" :id="`group.${form.actor.actorType}.name`" >
+                        <label  :for="`${form.actor.actorType}.name`"> {{ $t(`Name of the lead organization`) }} </label>
+                        <input class="form-control" 
+                          @input      ="update"
+                          :id         ="`${form.actor.actorType}.name`"
+                          type        ="text"
+                          v-model.trim="form.actor.name[$i18n.locale]"
+                          v-validate  ="'required|max:140'"
+                          :class      ="[ getValidationClass(`${form.actor.actorType}.name`) ]" 
+                          :name       ="`${form.actor.actorType}.name`"
+                          />
+                        <field-error-message :error="errors.collect(`${form.actor.actorType}.name`)"/>
+                      </div>
+                    </div>
+                  </div>
 
-      <div class="col-lg-6">
-        <div class="form-group" :id="`group.${form.actor.actorType}.url`" >
-          <label  :for="`${form.actor.actorType}.url`">{{ $t('Website') }} </label>
-          <input class="form-control" 
-            @input="update"
-            :id="`${form.actor.actorType}.url`"
-            type="url"
-            v-model.trim="form.actor.url"
-            v-validate="'required|url'"
-            :class   ="[ getValidationClass(`${form.actor.actorType}.url`) ]" 
-            :name="`${form.actor.actorType}.url`"
-          />
-          <field-error-message :error="errors.collect(`${form.actor.actorType}.url`)" :state="validateState(`${form.actor.actorType}.url`)" />
-        </div>
-      </div>
-     <div class="col-lg-6">
-        <div class="form-group" :id="`group.${form.actor.actorType}.image`" l>
-          <label :for="`${form.actor.actorType}.image`"> {{$t(`Logo`)}} </label>
-            <Links
-            @input="update"
-            :id="`${form.actor.actorType}.image`"
-            v-model="form.actor.image"
-            :type="['files','links']"
-            :multi='false'
-            :name="`${form.actor.actorType}.image`"/>
-        </div>
-      </div>
-    </div>
- 
-    <div class="row">
-      <div class="col-lg-6">
+                  <div class="row">
 
-        <div class="form-group" :id="`group.${form.actor.actorType}.country`">
-          <label  :for="`${form.actor.actorType}.country`">{{ $t(`Country`) }} </label>
-          <SCBDSelect
-            @input="update"
-            type="countries"
-            :id="`${form.actor.actorType}.country`"
-            v-model="form.actor.country"
-            tag-view
-            v-validate="'required'"
-            :state   ="[ getValidationClass(`${form.actor.actorType}.country`) ]" 
-            :name="`${form.actor.actorType}.country`"
-          />
-          <field-error-message :error="errors.collect(`${form.actor.actorType}.country`)" :state="validateState(`${form.actor.actorType}.country`)" />
-        </div>
-      </div>
+                    <div class="col-lg-6">
+                      <div class="form-group" :id="`group.${form.actor.actorType}.url`" >
+                        <label  :for="`${form.actor.actorType}.url`">{{ $t('Website') }} </label>
+                        <input class="form-control" 
+                          @input="update"
+                          :id="`${form.actor.actorType}.url`"
+                          type="url"
+                          v-model.trim="form.actor.url"
+                          v-validate="'required|url'"
+                          :class   ="[ getValidationClass(`${form.actor.actorType}.url`) ]" 
+                          :name="`${form.actor.actorType}.url`"
+                        />
+                        <field-error-message :error="errors.collect(`${form.actor.actorType}.url`)" :state="validateState(`${form.actor.actorType}.url`)" />
+                      </div>
+                    </div>
+                  <div class="col-lg-6">
+                      <div class="form-group" :id="`group.${form.actor.actorType}.image`" l>
+                        <label :for="`${form.actor.actorType}.image`"> {{$t(`Logo`)}} </label>
+                          <Links
+                          @input="update"
+                          :id="`${form.actor.actorType}.image`"
+                          v-model="form.actor.image"
+                          :type="['files','links']"
+                          :multi='false'
+                          :name="`${form.actor.actorType}.image`"/>
+                      </div>
+                    </div>
+                  </div>
+              
+                  <div class="row">
+                    <div class="col-lg-6">
 
-      <div class="col-lg-6" v-if="form.actor.types">
-        <div class="form-group" :id="`group.${form.actor.actorType}.types`" >
-          <label  :for="`${form.actor.actorType}.types`">{{ $t(`Type`) }}  </label>
-          <SCBDSelect
-            @input="update"
-            type="orgTypes"
-            :id="`${form.actor.actorType}.types`"
-            v-model="form.actor.types"
-            multi
-            tag-view
-            v-validate="'required'"
-            :state   ="[ getValidationClass(`${form.actor.actorType}.types`) ]"
-            :name="`${form.actor.actorType}.types`"
-          />
-          <field-error-message :error="errors.collect(`${form.actor.actorType}.types`)" :state="validateState(`${form.actor.actorType}.types`)" />
-        </div>
-      </div>
+                      <div class="form-group" :id="`group.${form.actor.actorType}.country`">
+                        <label  :for="`${form.actor.actorType}.country`">{{ $t(`Country`) }} </label>
+                        <SCBDSelect
+                          @input="update"
+                          type="countries"
+                          :id="`${form.actor.actorType}.country`"
+                          v-model="form.actor.country"
+                          tag-view
+                          v-validate="'required'"
+                          :state   ="[ getValidationClass(`${form.actor.actorType}.country`) ]" 
+                          :name="`${form.actor.actorType}.country`"
+                        />
+                        <field-error-message :error="errors.collect(`${form.actor.actorType}.country`)" :state="validateState(`${form.actor.actorType}.country`)" />
+                      </div>
+                    </div>
 
-      <div class="col-6" v-if="isOther">
-        <div class="form-group" :id="`group.${form.actor.actorType}.typeOther`" >
-          <label  :for="`${form.actor.actorType}.typeOther`">{{ $t(`Other Type`) }} </label>
-          <input class="form-control"
-            @input="update"
-            :id="`${form.actor.actorType}.typeOther`"
-            type="text"
-            v-model.trim="form.actor.typeOther[$i18n.locale]"
-            v-validate="'required|max:140'"
-            :class   ="[ getValidationClass(`${form.actor.actorType}.typeOther`) ]"
-            :name="`${form.actor.actorType}.typeOther`"
-          />
-          <field-error-message :error="errors.collect(`${form.actor.actorType}.typeOther`)" :state="validateState(`${form.actor.actorType}.typeOther`)" />
-        </div>
-      </div>
+                    <div class="col-lg-6" v-if="form.actor.types">
+                      <div class="form-group" :id="`group.${form.actor.actorType}.types`" >
+                        <label  :for="`${form.actor.actorType}.types`">{{ $t(`Type`) }}  </label>
+                        <SCBDSelect
+                          @input="update"
+                          type="orgTypes"
+                          :id="`${form.actor.actorType}.types`"
+                          v-model="form.actor.types"
+                          multi
+                          tag-view
+                          v-validate="'required'"
+                          :state   ="[ getValidationClass(`${form.actor.actorType}.types`) ]"
+                          :name="`${form.actor.actorType}.types`"
+                        />
+                        <field-error-message :error="errors.collect(`${form.actor.actorType}.types`)" :state="validateState(`${form.actor.actorType}.types`)" />
+                      </div>
+                    </div>
 
-    </div>  
-  </div>
-<!-- Organization code end -->
+                    <div class="col-6" v-if="isOther">
+                      <div class="form-group" :id="`group.${form.actor.actorType}.typeOther`" >
+                        <label  :for="`${form.actor.actorType}.typeOther`">{{ $t(`Other Type`) }} </label>
+                        <input class="form-control"
+                          @input="update"
+                          :id="`${form.actor.actorType}.typeOther`"
+                          type="text"
+                          v-model.trim="form.actor.typeOther[$i18n.locale]"
+                          v-validate="'required|max:140'"
+                          :class   ="[ getValidationClass(`${form.actor.actorType}.typeOther`) ]"
+                          :name="`${form.actor.actorType}.typeOther`"
+                        />
+                        <field-error-message :error="errors.collect(`${form.actor.actorType}.typeOther`)" :state="validateState(`${form.actor.actorType}.typeOther`)" />
+                      </div>
+                    </div>
 
-<!-- Public code -->
-  <div v-if="isSelectedType('public') && form.actor">
-    <div class="row">
-      <div class="col-12">
-        <div class="form-group" :id="`group.${form.actor.actorType}.name`" >
-          <label  :for="`${form.actor.actorType}.name`"> {{ $t(`Name of the lead public organization`) }} </label>
-          <input class="form-control" 
-            @input      ="update"
-            :id         ="`${form.actor.actorType}.name`"
-            type        ="text"
-            v-model.trim="form.actor.name"
-            v-validate  ="'required|max:140'"
-            :class      ="[ getValidationClass(`${form.actor.actorType}.name`) ]" 
-            :name       ="`${form.actor.actorType}.name`"
-            />
-          <field-error-message :error="errors.collect(`${form.actor.actorType}.name`)"/>
-        </div>
-      </div>
-    </div>
+                  </div>
+                </div>
+              <!-- Organization code end -->
 
-    <div class="row">
+              <!-- Public code -->
+                <!-- <div v-if="isSelectedType('public') && form.actor">
 
-      <div class="col-lg-6">
-        <div class="form-group" :id="`group.${form.actor.actorType}.url`" >
-          <label  :for="`${form.actor.actorType}.url`">{{ $t('Website') }} </label>
-          <input class="form-control" 
-            @input="update"
-            :id="`${form.actor.actorType}.url`"
-            type="url"
-            v-model.trim="form.actor.url"
-            v-validate="'required|url'"
-            :class   ="[ getValidationClass(`${form.actor.actorType}.url`) ]" 
-            :name="`${form.actor.actorType}.url`"
-          />
-          <field-error-message :error="errors.collect(`${form.actor.actorType}.url`)" :state="validateState(`${form.actor.actorType}.url`)" />
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="form-group" :id="`group.${form.actor.actorType}.image`" l>
-          <label :for="`${form.actor.actorType}.image`"> {{$t(`Logo`)}} </label>
-            <Links
-            @input="update"
-            :id="`${form.actor.actorType}.image`"
-            v-model="form.actor.image"
-            :type="['files','links']"
-            :multi='false'
-            :name="`${form.actor.actorType}.image`"/>
-        </div>
-      </div>
-    </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group" :id="`group.${form.actor.actorType}.name`" >
+                        <label  :for="`${form.actor.actorType}.name`"> {{ $t(`Name of the lead public organization`) }} </label>
+                        <input class="form-control" 
+                          @input      ="update"
+                          :id         ="`${form.actor.actorType}.name`"
+                          type        ="text"
+                          v-model.trim="form.actor.name"
+                          v-validate  ="'required|max:140'"
+                          :class      ="[ getValidationClass(`${form.actor.actorType}.name`) ]" 
+                          :name       ="`${form.actor.actorType}.name`"
+                          />
+                        <field-error-message :error="errors.collect(`${form.actor.actorType}.name`)"/>
+                      </div>
+                    </div>
+                  </div>
 
-    <div class="row">
-      <!-- <div class="col-lg-6">
+                  <div class="row">
 
-        <div class="form-group" :id="`group.${form.actor.actorType}.country`">
-          <label  :for="`${form.actor.actorType}.country`">{{ $t(`Country`) }} </label>
-          <SCBDSelect
-            @input="update"
-            type="countries"
-            :id="`${form.actor.actorType}.country`"
-            v-model="form.actor.country"
-            tag-view
-            v-validate="'required'"
-            :state   ="[ getValidationClass(`${form.actor.actorType}.country`) ]" 
-            :name="`${form.actor.actorType}.country`"
-          />
-          <field-error-message :error="errors.collect(`${form.actor.actorType}.country`)" :state="validateState(`${form.actor.actorType}.country`)" />
-        </div>
-      </div> -->
-      <!-- <div class="col-lg-6">
-        <div class="form-group" :id="`group.${form.actor.actorType}.types`" >
-          <label  :for="`${form.actor.actorType}.types`">{{ $t(`Type`) }}  </label>
-          <SCBDSelect
-            @input="update"
-            type="govTypes"
-            :id="`${form.actor.actorType}.types`"
-            v-model="form.actor.types"
-            multi
-            tag-view
-            v-validate=""
-            :state   ="[ getValidationClass($t(`${form.actor.actorType}.types`)) ]"
-            :name="$t(`${form.actor.actorType}.types`)"
-          />
-          <field-error-message :error="errors.collect($t(`${form.actor.actorType}.types`))" :state="validateState($t(`${form.actor.actorType}.types`))" />
-        </div>
-      </div> -->
+                    <div class="col-lg-6">
+                      <div class="form-group" :id="`group.${form.actor.actorType}.url`" >
+                        <label  :for="`${form.actor.actorType}.url`">{{ $t('Website') }} </label>
+                        <input class="form-control" 
+                          @input="update"
+                          :id="`${form.actor.actorType}.url`"
+                          type="url"
+                          v-model.trim="form.actor.url"
+                          v-validate="'required|url'"
+                          :class   ="[ getValidationClass(`${form.actor.actorType}.url`) ]" 
+                          :name="`${form.actor.actorType}.url`"
+                        />
+                        <field-error-message :error="errors.collect(`${form.actor.actorType}.url`)" :state="validateState(`${form.actor.actorType}.url`)" />
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group" :id="`group.${form.actor.actorType}.image`" l>
+                        <label :for="`${form.actor.actorType}.image`"> {{$t(`Logo`)}} </label>
+                          <Links
+                          @input="update"
+                          :id="`${form.actor.actorType}.image`"
+                          v-model="form.actor.image"
+                          :type="['files','links']"
+                          :multi='false'
+                          :name="`${form.actor.actorType}.image`"/>
+                      </div>
+                    </div>
+                  </div>
 
-      <!-- <div class="col-6" v-if="isOther">
-        <div class="form-group" :id="`group.${form.actor.actorType}.typeOther`" >
-          <label  :for="`${form.actor.actorType}.typeOther`">{{ $t(`Other Type`) }} </label>
-          <input class="form-control"
-            @input="update"
-            :id="`${form.actor.actorType}.typeOther`"
-            type="text"
-            v-model.trim="form.actor.typeOther[$i18n.locale]"
-            v-validate="'required|max:140'"
-            :class   ="[ getValidationClass(`${form.actor.actorType}.typeOther`) ]"
-            :name="`${form.actor.actorType}.typeOther`"
-          />
-          <field-error-message :error="errors.collect(`${form.actor.actorType}.typeOther`)" :state="validateState(`${form.actor.actorType}.typeOther`)" />
-        </div>
-      </div> -->
+                  <div class="row">
+                    <div class="col-lg-6">
 
-    </div>
-  </div>
-<!-- Public code end -->
+                      <div class="form-group" :id="`group.${form.actor.actorType}.country`">
+                        <label  :for="`${form.actor.actorType}.country`">{{ $t(`Country`) }} </label>
+                        <SCBDSelect
+                          @input="update"
+                          type="countries"
+                          :id="`${form.actor.actorType}.country`"
+                          v-model="form.actor.country"
+                          tag-view
+                          v-validate="'required'"
+                          :state   ="[ getValidationClass(`${form.actor.actorType}.country`) ]" 
+                          :name="`${form.actor.actorType}.country`"
+                        />
+                        <field-error-message :error="errors.collect(`${form.actor.actorType}.country`)" :state="validateState(`${form.actor.actorType}.country`)" />
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group" :id="`group.${form.actor.actorType}.types`" >
+                        <label  :for="`${form.actor.actorType}.types`">{{ $t(`Type`) }}  </label>
+                        <SCBDSelect
+                          @input="update"
+                          type="govTypes"
+                          :id="`${form.actor.actorType}.types`"
+                          v-model="form.actor.types"
+                          multi
+                          tag-view
+                          v-validate=""
+                          :state   ="[ getValidationClass($t(`${form.actor.actorType}.types`)) ]"
+                          :name="$t(`${form.actor.actorType}.types`)"
+                        />
+                        <field-error-message :error="errors.collect($t(`${form.actor.actorType}.types`))" :state="validateState($t(`${form.actor.actorType}.types`))" />
+                      </div>
+                    </div>
 
-<!-- Person code -->
-    <div v-if="isSelectedType('person') && form.actor">
-    <div class="row" v-if="me.isAuthenticated">
-      <div class="col-lg-12">
+                    <div class="col-6" v-if="isOther">
+                      <div class="form-group" :id="`group.${form.actor.actorType}.typeOther`" >
+                        <label  :for="`${form.actor.actorType}.typeOther`">{{ $t(`Other Type`) }} </label>
+                        <input class="form-control"
+                          @input="update"
+                          :id="`${form.actor.actorType}.typeOther`"
+                          type="text"
+                          v-model.trim="form.actor.typeOther[$i18n.locale]"
+                          v-validate="'required|max:140'"
+                          :class   ="[ getValidationClass(`${form.actor.actorType}.typeOther`) ]"
+                          :name="`${form.actor.actorType}.typeOther`"
+                        />
+                        <field-error-message :error="errors.collect(`${form.actor.actorType}.typeOther`)" :state="validateState(`${form.actor.actorType}.typeOther`)" />
+                      </div>
+                    </div>
 
-        <div  class="form-group" :id="`group.${form.actor.actorType}.name`" >
-            <div class="form-check-inline">
-              <input
-                v-model="form.input.useAccount"
-                :value="true"
-                type="checkbox"
-                id="`RadioInline`"
-                name="RadioInline`"
-                class="form-check-input"
-                v-on:change="useAccountToggle()"
-              >
-              <label class="form-check-label align-text-bottom" for="`RadioInline`" >{{$t('Use your SCBD account profile data?')}}</label>
-            </div>
-          <hr>
-        </div>
-        
-      </div>
-    </div>
+                  </div>
+                </div> -->
+              <!-- Public code end -->
 
-    <div class="row">
-      <div class="col-lg-9">
-            
-        <div class="form-group" :id="`group.${form.actor.actorType}.name`" >
-          <label  :for="`${form.actor.actorType}.name`"> {{ $t(`Name`) }} </label>
-          <input class="form-control" 
-            @input      ="update"
-            :id         ="`${form.actor.actorType}.name`"
-            type        ="text"
-            v-model.trim="form.actor.name[$i18n.locale]"
-            v-validate  ="'required|max:140'"
-            :class      ="[ getValidationClass(`${form.actor.actorType}.name`) ]"
-            :name       ="`${form.actor.actorType}.name`"
-            />
-          <FieldErrorMessage :error="errors.collect(`${form.actor.actorType}.name`)"/>
-        </div>
+              <!-- Person code -->
+                  <!-- <div v-if="isSelectedType('person') && form.actor">
+                  <div class="row" v-if="me.isAuthenticated">
+                    <div class="col-lg-12">
 
-      </div>
+                      <div  class="form-group" :id="`group.${form.actor.actorType}.name`" >
+                          <div class="form-check-inline">
+                            <input
+                              v-model="form.input.useAccount"
+                              :value="true"
+                              type="checkbox"
+                              id="`RadioInline`"
+                              name="RadioInline`"
+                              class="form-check-input"
+                              v-on:change="useAccountToggle()"
+                            >
+                            <label class="form-check-label align-text-bottom" for="`RadioInline`" >{{$t('Use your SCBD account profile data?')}}</label>
+                          </div>
+                        <hr>
+                      </div>
+                      
+                    </div>
+                  </div>
 
-      <div class="col-lg-3">
+                  <div class="row">
+                    <div class="col-lg-9">
+                          
+                      <div class="form-group" :id="`group.${form.actor.actorType}.name`" >
+                        <label  :for="`${form.actor.actorType}.name`"> {{ $t(`Name`) }} </label>
+                        <input class="form-control" 
+                          @input      ="update"
+                          :id         ="`${form.actor.actorType}.name`"
+                          type        ="text"
+                          v-model.trim="form.actor.name[$i18n.locale]"
+                          v-validate  ="'required|max:140'"
+                          :class      ="[ getValidationClass(`${form.actor.actorType}.name`) ]"
+                          :name       ="`${form.actor.actorType}.name`"
+                          />
+                        <FieldErrorMessage :error="errors.collect(`${form.actor.actorType}.name`)"/>
+                      </div>
 
-        <div class="form-group" :id="`group.${form.actor.actorType}.country`">
-          <label  :for="`${form.actor.actorType}.country`">{{ $t(`Country`) }} </label>
-          <SCBDSelect
-            @input="update"
-            type="countries"
-            :id="`${form.actor.actorType}.country`"
-            v-model="form.actor.country"
-            tag-view
-            v-validate="'required'"
-            :state   ="[ getValidationClass(`${form.actor.actorType}.country`) ]" 
-            :name="`${form.actor.actorType}.country`"
+                    </div>
 
-          />
-          <field-error-message :error="errors.collect(`${form.actor.actorType}.country`)" :state="validateState(`${form.actor.actorType}.country`)" />
-        </div>
+                    <div class="col-lg-3">
 
-      </div>
+                      <div class="form-group" :id="`group.${form.actor.actorType}.country`">
+                        <label  :for="`${form.actor.actorType}.country`">{{ $t(`Country`) }} </label>
+                        <SCBDSelect
+                          @input="update"
+                          type="countries"
+                          :id="`${form.actor.actorType}.country`"
+                          v-model="form.actor.country"
+                          tag-view
+                          v-validate="'required'"
+                          :state   ="[ getValidationClass(`${form.actor.actorType}.country`) ]" 
+                          :name="`${form.actor.actorType}.country`"
 
-      <div class="col-lg-12">
+                        />
+                        <field-error-message :error="errors.collect(`${form.actor.actorType}.country`)" :state="validateState(`${form.actor.actorType}.country`)" />
+                      </div>
 
-        <div class="form-group" :id="`group.${form.actor.actorType}.email`" >
-          <label  :for="`${form.actor.actorType}.email`"> {{ $t(`Email`) }} </label>
-          <input class="form-control" 
-            @input      ="update"
-            :id         ="`${form.actor.actorType}.email`"
-            type        ="text"
-            v-model.trim="form.actor.email"
-            v-validate="'email|required'"
-            :class   ="[ getValidationClass(`${form.actor.actorType}.email`) ]"
-            :name       ="`${form.actor.actorType}.email`"
-            />
-          <FieldErrorMessage :error="errors.collect(`${form.actor.actorType}.email`)"/>
-        </div>
-      </div>
-    </div>
-    </div>
+                    </div>
 
-<!-- Person code end -->
+                    <div class="col-lg-12">
 
-              </div>  
+                      <div class="form-group" :id="`group.${form.actor.actorType}.email`" >
+                        <label  :for="`${form.actor.actorType}.email`"> {{ $t(`Email`) }} </label>
+                        <input class="form-control" 
+                          @input      ="update"
+                          :id         ="`${form.actor.actorType}.email`"
+                          type        ="text"
+                          v-model.trim="form.actor.email"
+                          v-validate="'email|required'"
+                          :class   ="[ getValidationClass(`${form.actor.actorType}.email`) ]"
+                          :name       ="`${form.actor.actorType}.email`"
+                          />
+                        <FieldErrorMessage :error="errors.collect(`${form.actor.actorType}.email`)"/>
+                      </div>
+                    </div>
+                  </div>
+                  </div> -->
+              <!-- Person code end -->
+
+              </div>
             </div>
           </div>
-          
 <!-- Actor line end -->
 
           <div id="ss" class="text-right mb-3">
@@ -362,69 +361,100 @@ export default {
   components: { FormFeedback, ActorSelect, Action, ActionDetails, ActionDetailsRequired, Contact, Partners, SCBDSelect, Links, Icons,
                 DebugForm: () => import('./components/DebugForm.vue') //async load of component ... only if needed
               },
-  methods   : { addError, deleteFeedback, loadCaptcha, save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup, updateContacts, validate, isSelectedType, showImage, deleteLogo },
+  methods   : { loadExistingAction, addError, deleteFeedback, loadCaptcha, save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup, updateContacts, validate, isSelectedType, showImage, deleteLogo },
   computed  : { config, actionComplete, opts: config, isOther },
   data, 
   created,
   mounted,
   i18n
 }
+function created(){ initializeApiStore() }
 
-  function data (){
-
-    const formType = (this.options || {}).formType || ((this.$route || {}).params || {}).type || 'organization'
-
-
-    return {
-      actorType : formType,
-      DEBUG     : true,
-      error     : {},
-      feedback  : {
-                    actorType       : formType,
-                    publishRequested: false,
-                    error           : ''
-                  },
-      input     : { subscription:true, type: null, person: {}, organization: {}, party: {}, public: {}  },
-      values    : this.value,
-      form      : {
-                    actor         : {
-                        salutation : { [this.$i18n.locale]: '' },
-                        firstName  : { [this.$i18n.locale]: '' },
-                        middleName : { [this.$i18n.locale]: '' },
-                        lastName   : { [this.$i18n.locale]: '' },
-                        suffix     : { [this.$i18n.locale]: '' },
-                        name       : { [this.$i18n.locale]: '' },
-                        email      : '',        
-                        name     : {  [this.$i18n.locale]: ''  },
-                        url      : '',
-                        image    : { url: '' },
-                        types    : [],
-                        country  : '',
-                        typeOther: { },
-                        actorType: formType
-                    },
-                      orgLogo : '', //temp holder for uploaded image
-                      action        : {},
-                      actionDetailsRequired   : {
-                        aichiTargets          : [],
-                        sdgs                  : [],
-                        actionCategories      : [],
-                        operationalAreas      : []
-                        //progressMeasured      : { },
-                        //thematicAreas         : []
-                    },
-                    actionDetails : {
-                      thematicAreas : [],
-                      progressMeasured : { }
-                    },
-                    partners      : [{ name: { } }],
-                    contacts      : [  ],
-                    subscription  : {},
-                    accountSignup : new Date()
-                  }
-    }
+async function mounted(){
+  this.toggleSubscription()
+  await this.loadCaptcha()
+  await this.loadExistingAction()
 }
 
+function data (){
+  const formType = (this.options || {}).formType || ((this.$route || {}).params || {}).type || 'organization'
+
+  return {
+    actorType : formType,
+    DEBUG     : true,
+    error     : {},
+    feedback  : {
+                  actorType       : formType,
+                  publishRequested: false,
+                  error           : ''
+                },
+    input     : { subscription:true, type: null, person: {}, organization: {}, party: {}, public: {}  },
+    values    : this.value,
+    form      : {
+                  actor         : {
+                      salutation : { [this.$i18n.locale]: '' },
+                      firstName  : { [this.$i18n.locale]: '' },
+                      middleName : { [this.$i18n.locale]: '' },
+                      lastName   : { [this.$i18n.locale]: '' },
+                      suffix     : { [this.$i18n.locale]: '' },
+                      name       : { [this.$i18n.locale]: '' },
+                      email      : '',        
+                      name     : {  [this.$i18n.locale]: ''  },
+                      url      : '',
+                      image    : { url: '' },
+                      types    : [],
+                      country  : '',
+                      typeOther: { },
+                      actorType: formType
+                  },
+                    orgLogo : '', //temp holder for uploaded image
+                    action        : {},
+                    actionDetailsRequired   : {
+                      aichiTargets          : [],
+                      sdgs                  : [],
+                      actionCategories      : [],
+                      operationalAreas      : []
+                      //progressMeasured      : { },
+                      //thematicAreas         : []
+                  },
+                  actionDetails : {
+                    thematicAreas : [],
+                    progressMeasured : { }
+                  },
+                  partners      : [{ name: { } }],
+                  contacts      : [  ],
+                  subscription  : {},
+                  accountSignup : new Date()
+                }
+  }
+}
+
+async function loadExistingAction(){
+  const formData = await getAction(this.opts)
+
+  this.form = formData? formData : this.form
+}
+
+async function loadCaptcha (){
+  if(this.me && this.me.isAuthenticated) return
+
+  const { VueReCaptcha } = await import('vue-recaptcha-v3')
+
+  Vue.use(VueReCaptcha, {
+    siteKey       : '6Lfj3pQUAAAAAKszUI1k4i9AceoyRNUd2G7tw74Y',
+    loaderOptions : { useRecaptchaNet: true }
+  })
+}
+
+function isSelectedType(type) {
+  if(!this.form || !this.form.actor) return false
+
+  if (this.form.actor.actorType === type) return true;
+
+  return false;
+}
+
+// actor function
 function isOther(){
   if (!this.form.actor.types || !this.form.actor.types.length) return false
 
@@ -452,48 +482,7 @@ function showImage({ srcElement }){
     reader.readAsDataURL(srcElement.files[0])
   }
 }
-
-function isSelectedType(type) {
-  if(!this.form || !this.form.actor) return false
-
-  if (this.form.actor.actorType === type) return true;
-
-  return false;
-  }
-
-async function created(){ 
-  initializeApiStore() 
-  
-
-  console.log('await getAction.get()',await getAction(this.opts))
-
-  this.form = await getAction(this.opts)
-  
-  }
-
-function getActionIdFromQuery(){
-  if (typeof window === 'undefined') return false
-
-  const urlParams = new URLSearchParams(location.search)
-
-  return urlParams.get('identifier')
-}
-
-async function mounted(){
-  this.toggleSubscription()
-  await this.loadCaptcha()
-}
-
-async function loadCaptcha (){
-  if(this.me && this.me.isAuthenticated) return
-
-  const { VueReCaptcha } = await import('vue-recaptcha-v3')
-
-  Vue.use(VueReCaptcha, {
-    siteKey       : '6Lfj3pQUAAAAAKszUI1k4i9AceoyRNUd2G7tw74Y',
-    loaderOptions : { useRecaptchaNet: true }
-  })
-}
+// end actor functions
 
 function actionComplete(){
   const locale   = getLocale()

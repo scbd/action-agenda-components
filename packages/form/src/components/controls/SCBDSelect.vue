@@ -29,9 +29,8 @@
 </template>
 
 <script>
-  import Multiselect    from 'vue-multiselect'
-  import { getData, lookUp } from '@action-agenda/cached-apis'
-
+  import   Multiselect                                from 'vue-multiselect'
+  import { getData     , lookUp, initializeApiStore } from '@action-agenda/cached-apis'
 
   import 'vue-multiselect/dist/vue-multiselect.min.css'
 
@@ -49,7 +48,6 @@
                 },
     methods: { update, load, loadModelWatch },
     data, created
-    created
   }
 
   function data() {
@@ -62,6 +60,8 @@
   }
 
   async function  created() {
+    await initializeApiStore()
+
     this.options = await this.load()
     this.$watch('value',loadModelWatch)
   }
@@ -76,11 +76,6 @@
     if(!this.multi) return this.$emit('input', clean(this.values))
 
     return this.$emit('input', this.values.map(clean))
-      returnValues = clean(this.values)
-    else 
-      returnValues = this.values.map(clean)
-
-    this.$emit('input',returnValues )
   }
 
   function clean(item) {
