@@ -9,6 +9,7 @@
 
 
 import AASearch from '../src/index.vue'
+import '../scripts/index.css'
 
 export default {
   name      : 'App',
