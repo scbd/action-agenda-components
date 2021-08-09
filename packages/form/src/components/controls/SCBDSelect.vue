@@ -48,11 +48,11 @@
                   placeholder : { type: String, default: ' ' }
                 },
     methods: { update, load, loadModelWatch },
-    data,
+    data, created
     created
   }
 
-  function   data() {
+  function data() {
     return {
               values   : this.value,
               options  : [],
@@ -67,15 +67,15 @@
   }
 
   async function loadModelWatch(newValue){
-      const lookUpType = this.type === 'geoLocations'? 'all' : this.type
+    const lookUpType = this.type === 'geoLocations'? 'all' : this.type
 
-      this.values = await lookUp(lookUpType, newValue)
+    this.values = await lookUp(lookUpType, newValue)
   }
 
   function update() {
-    let returnValues 
+    if(!this.multi) return this.$emit('input', clean(this.values))
 
-    if(!this.multi)
+    return this.$emit('input', this.values.map(clean))
       returnValues = clean(this.values)
     else 
       returnValues = this.values.map(clean)
@@ -84,15 +84,15 @@
   }
 
   function clean(item) {
-    if(item.code)
-      return { code: item.code}
+    if(item.code) return { code: item.code }
+
     return { identifier: item.identifier }
   }
 
-  function load() {  return getData(this.type) }
+  function load() { return getData(this.type) }
 </script>
 
-<style  scoped>
+<style scoped>
   .fix            { padding: 0 0 0 0; background-color: #ddd; border-radius: 5px; border-color: transparent; }
   .fix.is-invalid { border-color: #dc3545; border-width: 1px; border-style: solid; }
   .fix.is-valid   { border-color: #28a745; border-width: 1px; border-style: solid; }
