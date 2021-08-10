@@ -119,7 +119,7 @@
               <!-- Organization code end -->
 
               <!-- Public code -->
-                <!-- <div v-if="isSelectedType('public') && form.actor">
+                <div v-if="isSelectedType('public') && form.actor">
 
                   <div class="row">
                     <div class="col-12">
@@ -129,7 +129,7 @@
                           @input      ="update"
                           :id         ="`${form.actor.actorType}.name`"
                           type        ="text"
-                          v-model.trim="form.actor.name"
+                          v-model.trim="form.actor.name[$i18n.locale]"
                           v-validate  ="'required|max:140'"
                           :class      ="[ getValidationClass(`${form.actor.actorType}.name`) ]" 
                           :name       ="`${form.actor.actorType}.name`"
@@ -223,11 +223,11 @@
                     </div>
 
                   </div>
-                </div> -->
+                </div> 
               <!-- Public code end -->
 
               <!-- Person code -->
-                  <!-- <div v-if="isSelectedType('person') && form.actor">
+                 <div v-if="isSelectedType('person') && form.actor">
                   <div class="row" v-if="me.isAuthenticated">
                     <div class="col-lg-12">
 
@@ -306,13 +306,115 @@
                       </div>
                     </div>
                   </div>
-                  </div> -->
+                </div>
               <!-- Person code end -->
 
               </div>
             </div>
           </div>
 <!-- Actor line end -->
+
+<!-- Action line starts -->
+
+  <legend >{{ $t(`Commitment`) }}</legend>
+
+  <div class="card">
+  <div class="card-body">
+  <div class="row">
+
+    <div class="col-12">
+      <div class="form-group" id="group.form.action.name">
+        <label  for="form.action.name"> {{ $t(`Name`) }} </label>
+        <input class="form-control" 
+          @input      ="update"
+          id          ="form.action.name[$i18n.locale]"
+          type        ="text"
+          v-model.trim="form.action.name[$i18n.locale]"
+          v-validate  ="'required|max:140'"
+          :class      ="[ getValidationClass(`form.action.name`) ]"
+          :name       ="`form.action.name`"
+          />
+        <field-error-message :error="errors.collect('form.action.name')"/>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="form-group" :id="`group.form.action.description`">
+        <label :for="`form.action.description`"> {{ $t(`Description`) }} </label>
+        <textarea
+            class="form-control"
+            id="form.action.description"
+            @input="update"
+            v-model="form.action.description[$i18n.locale]"
+            :rows="3"
+            v-validate="'required|max:1000'"
+            :class="[ getValidationClass(`form.action.description`) ]"
+            :name="`form.action.description`"
+        />
+        <field-error-message :error="errors.collect(`form.action.description`)" />
+      </div>
+
+    </div>
+    
+    <div class="col-12">
+      <div class="form-group" id="group.action.attachments">
+        <label :for="`form.action.attachments`"> {{ $t(`Attachment (s)`) }} </label>
+        <div class="col-12 mb-3" v-for="item in form.action.attachments" v-bind:key="item.url">
+        <a :href="item.url" target="_blank" rel="noopener"> <Icon name="file"/> {{item.name[$i18n.locale]}} </a>
+        </div>
+        <Links  @input="update" id="form.action.attachments" v-model="form.action.attachments" :type="[ 'files','links' ]" multi name="attachments"/>
+      </div>
+    </div> 
+    
+  </div>
+  </div>
+  </div>
+
+<!-- Action line ends -->
+
+<!-- ActionDetails line starts -->
+
+ <!--    <div class="row" >
+      <div class="col-lg-6" >
+
+        <div class="form-group" id="group.form.actionDetailsRequired.actionCategories">
+          <label for="form.actionDetailsRequired.actionCategories"> {{ $t(`Action Themes (s)`) }} </label>
+          <SCBDSelect
+            @input="update"
+            type="actionCategories"
+            id="form.actionDetailsRequired.actionCategories"
+            v-model="form.actionDetailsRequired.actionCategories"
+            multi
+            tag-view
+            :state="validateState(`form.actionDetailsRequired.actionCategories`,form.actionDetailsRequired.actionCategories)"
+            :name="`form.actionDetailsRequired.actionCategories`"
+            v-validate="'required'"
+            />
+          <field-error-message :error="errors.collect(`form.actionDetailsRequired.actionCategories`)"/>
+        </div>
+
+      </div>
+
+     <div class="col-lg-6"  >
+        <div class="form-group" id="group.form.actionDetailsRequired.operationalAreas">
+          <label for="form.actionDetailsRequired.operationalAreas"> {{ $t(`Geographic Area (s)`) }} </label>
+          <SCBDSelect
+            type="geoLocations"
+            id="form.actionDetailsRequired.operationalAreas"
+            v-model="form.actionDetailsRequired.operationalAreas"
+            multi
+            tag-view
+            :state="validateState(`form.actionDetailsRequired.operationalAreas`,form.actionDetailsRequired.operationalAreas)"
+            :name="`form.actionDetailsRequired.operationalAreas`"
+            v-validate="'required'"
+          />
+          <field-error-message :error="errors.collect(`form.actionDetailsRequired.operationalAreas`)"/>
+        </div>
+      </div> 
+
+    </div> -->
+
+<!-- ActionDetails line ends -->
 
           <div id="ss" class="text-right mb-3">
             <!-- :disabled="!this.userLoaded" -->
@@ -342,12 +444,12 @@ import { camelCase          } from 'change-case'
 import { initializeApiStore } from '@action-agenda/cached-apis'
 
 //scbd controls
-import   ActorSelect             from './components/controls/ActorSelect/index.vue'
+//import   ActorSelect             from './components/controls/ActorSelect/index.vue'
 import   FormFeedback            from './components/FeedbackList/index.vue'
 import   Contact                 from './components/Contact.vue'
-import   Action                  from './components/Action.vue'
-import   ActionDetails           from './components/ActionDetails.vue'
-import   ActionDetailsRequired   from './components/ActionDetailsRequired.vue'
+//import   Action                  from './components/Action.vue'
+//import   ActionDetails           from './components/ActionDetails.vue'
+//import   ActionDetailsRequired   from './components/ActionDetailsRequired.vue'
 import   Partners                from './components/Partners.vue'
 import   getLocale               from './components/locale.js'
 import { getAction             } from './components/api'
@@ -356,12 +458,13 @@ export default {
   name      : 'AAForm',
   mixins    : [ FormMixin ],
   props     : { 
-                options : { type: Object, required: true}
+                options : { type: Object, required: true},
+                value   : { type: Object, required: true },
               },
-  components: { FormFeedback, ActorSelect, Action, ActionDetails, ActionDetailsRequired, Contact, Partners, SCBDSelect, Links, Icons,
+  components: { FormFeedback, Contact, Partners, SCBDSelect, Links, Icons,
                 DebugForm: () => import('./components/DebugForm.vue') //async load of component ... only if needed
               },
-  methods   : { loadExistingAction, addError, deleteFeedback, loadCaptcha, save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup, updateContacts, validate, isSelectedType, showImage, deleteLogo },
+  methods   : { loadExistingAction, addError, deleteFeedback, loadCaptcha, save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup, updateContacts, validate, isSelectedType, showImage, deleteLogo, useAccount, useAccountToggle, notUseAccount, parseName },
   computed  : { config, actionComplete, opts: config, isOther },
   data, 
   created,
@@ -388,7 +491,7 @@ function data (){
                   publishRequested: false,
                   error           : ''
                 },
-    input     : { subscription:true, type: null, person: {}, organization: {}, party: {}, public: {}  },
+    input     : { subscription:true, type: null, person: {}, organization: {}, party: {}, public: {}, useAccountInit: false, useAccount: false  },
     values    : this.value,
     form      : {
                   actor         : {
@@ -408,11 +511,15 @@ function data (){
                       actorType: formType
                   },
                     orgLogo : '', //temp holder for uploaded image
-                    action        : {},
+                    action        : {
+                      name        : { [this.$i18n.locale]: '' },
+                      description : { [this.$i18n.locale]: '' },
+                      attachments : []
+                    },
                     actionDetailsRequired   : {
                       aichiTargets          : [],
                       sdgs                  : [],
-                      actionCategories      : [],
+                      actionCategories      : {},
                       operationalAreas      : []
                       //progressMeasured      : { },
                       //thematicAreas         : []
@@ -482,6 +589,56 @@ function showImage({ srcElement }){
     reader.readAsDataURL(srcElement.files[0])
   }
 }
+
+  function useAccount() {
+    this.$set(this.form.actor, 'name', { en: this.me.name })
+    this.$set(this.form.actor, 'email', this.me.email)
+    this.$set(this.form.actor, 'country', {identifier:this.me.country})
+
+    this.form.input.useAccountInit = true
+    
+    this.update()
+  }
+
+  function useAccountToggle(value){
+    if(value != undefined) this.form.input.useAccount = value
+
+      if(!this.form.input.useAccount)
+        this.notUseAccount()
+      else
+        this.useAccount()
+
+      this.update()
+  }
+
+  function notUseAccount() {
+    let person = this.form.actor
+
+    person.country        = ''
+    person.email          = ''
+    person.salutation .en = ''
+    person.firstName  .en = ''
+    person.middleName .en = ''
+    person.lastName   .en = ''
+    person.suffix     .en = ''
+    person.name       .en = ''
+
+    this.$children.forEach(this.validateComponent)
+  }
+
+  function parseName() {
+
+    let person = this.form.actor
+    if(!person.name || !person.name.en) return
+
+    let parsedName = HumanParser.parseName(person.name.en)
+
+    person.salutation.en = parsedName.salutation
+    person.firstName .en = parsedName.firstName
+    person.middleName.en = parsedName.middleName
+    person.lastName  .en = parsedName.lastName
+    person.suffix    .en = parsedName.suffix
+  }
 // end actor functions
 
 function actionComplete(){
