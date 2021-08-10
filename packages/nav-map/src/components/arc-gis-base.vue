@@ -21,6 +21,7 @@ import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import TileLayer from "@arcgis/core/layers/TileLayer";
 import GroupLayer from "@arcgis/core/layers/GroupLayer";
+// import Graphic from "@arcgis/core/Graphic";
 // import ElevationLayer from '@arcgis/core/layers/ElevationLayer'
 // import BaseElevationLayer from '@arcgis/core/layers/BaseElevationLayer'
 
@@ -33,7 +34,7 @@ import GroupLayer from "@arcgis/core/layers/GroupLayer";
 import getCircleMarker from './circle-markers.js'
 
 const key    = "AAPK646a81c542644891abe68e9b21413e7d9MDczfDifZi8IyvG6QcxfFuNqSRmlqH95-PH9mBOSEf4a4eE2Nwt8wIRsBLWd4NO"
-
+const globalProps = {}
 
 export default {
   name: 'ArcGisMapBase',
@@ -47,26 +48,23 @@ const countries = new FeatureLayer({
       id: "53a1e68de7e4499cad77c80daba46a94"
     }
 });
-const worldImagery = new TileLayer({
-    portalItem: {
-      id: "10df2279f9684e4a9f6a7f08febac2a9" // world imagery
-    }
+const worldImg = new TileLayer({
+    url: "https://geoservices.un.org/arcgis/rest/services/ClearMap_Dark/MapServer"
 });
-worldImagery.when(() => {
-          worldImagery.sublayers.forEach((layer) => {
-            if (layer.popupEnabled === true) {
-              layer.popupEnabled = false;
-            }
-          });
+worldImg.when(() => {
+    worldImg.sublayers.forEach((layer) => {
+        if (layer.popupEnabled === true) {
+          layer.popupEnabled = false;
+      }
+  });
 });
-const graphicsLayer = new GraphicsLayer({
+const countryGraphicsLayer = new GraphicsLayer({
     blendMode: "destination-in",
-    title: "layer"
+    title: "layer",
+    effect: "bloom(200%)"
 });
 const tileLayer = new TileLayer({
-    portalItem: {
-      id: "10df2279f9684e4a9f6a7f08febac2a9" // world imagery
-    }
+    url: "https://geoservices.un.org/arcgis/rest/services/ClearMap_Dark/MapServer"
 });
 tileLayer.when(() => {
     tileLayer.sublayers.forEach((layer) => {
@@ -76,14 +74,9 @@ tileLayer.when(() => {
   });
 });
 const groupLayer = new GroupLayer({
-    layers: [
-      tileLayer,
-      graphicsLayer
-    ],
+    layers: [tileLayer,countryGraphicsLayer],
     opacity: 0 // initially this layer will be transparent
 });
-
-
 
 function created(){
   config.apiKey = key
@@ -93,7 +86,7 @@ function created(){
   
   Intl.setLocale("ru")
 
-  const baseTileLayer     = (new MapImageLayer({ url: "https://geoservices.un.org/arcgis/rest/services/ClearMap_Dark/MapServer"}))
+  const baseTileLayer = (new MapImageLayer({ url: "https://geoservices.un.org/arcgis/rest/services/ClearMap_Dark/MapServer"}))
   
   const basemap = new Basemap({
     baseLayers: [ baseTileLayer ],
@@ -103,20 +96,19 @@ function created(){
 
   console.log(basemap)
     // this.map  = new Map({ basemap });
-    this.map = new Map({
-      basemap:basemap,
-      layers: [worldImagery, groupLayer]
-    });
+  this.map = new Map({
+    basemap:basemap,
+    layers: [worldImg,groupLayer]
+  });
 
 }
 
 function mounted(){
 
   // const layer = new MapImageLayer({ url: "https://geoservices.un.org/arcgis/rest/services/ClearMap_Dark/MapServer" })
-
   // this.map.add(layer)
 
-  this.mapView = new MapView({
+  globalProps.mapView = new MapView({
       container: 'mapView',
       map: this.map,
       zoom: 6,
@@ -130,71 +122,70 @@ function mounted(){
 
   Intl.setLocale("ru")
 
-
-  console.log('this.mapView', this.mapView.when)
+  console.log('this.mapView', globalProps.mapView.when)
     
 // console.log('this.mapView11',this.mapView)
-    this.mapView.when(()=>{
-      this.mapView.graphics.add(getCircleMarker(100, this.mapView))
-      const query = {
-        geometry: this.mapView.center,
-        returnGeometry: true,
-        outFields: ["*"]
-          };
-      highlightCountry(query, this.mapView.center);
-    })
+  
+  globalProps.mapView.when(()=>{
+    globalProps.mapView.graphics.add(getCircleMarker(100, globalProps.mapView))
+    const query = {
+      geometry: globalProps.mapView.center,
+      returnGeometry: true,
+      outFields: ["*"]
+    };
+    highlightCountry(query, globalProps.mapView.center);
+  })
 
-    this.mapView.on("click", async (event) => {
-      const query = {
-        geometry: this.mapView.toMap(event),
-        returnGeometry: true,
-        outFields: ["*"]
-      };
-      highlightCountry(query, query.geometry);
-    });
-
+  globalProps.mapView.on("click", async (event) => {
+    const query = {
+      geometry: globalProps.mapView.toMap(event),
+      returnGeometry: true,
+      outFields: ["*"]
+    };
+    highlightCountry(query, query.geometry);
+  });
+}
 
 async function highlightCountry(query, zoomGeometry){
   
   const symbol = {
     type: "simple-fill",
-    color: "rgba(255, 255, 255, 1)",
+    color: "rgba(255, 255, 255, 1)",//white
     outline: null
   }
-
   // query the countries layer for a country that intersects the clicked point
   const {
       features: [feature]
     } = await countries.queryFeatures(query);
-    // user clicked on a country and the feature is returned
-    if (feature) {
-      graphicsLayer.graphics.removeAll();
-      feature.symbol = symbol;
-      // add the country to the graphics layer
-      graphicsLayer.graphics.add(feature);
-      // zoom to the highlighted country
-      this.mapView.goTo(
-        {
-          target: zoomGeometry,
-          extent: feature.geometry.extent.clone().expand(1.8)
-        },
-        { duration: 1000 }
-      );
-      // blur the world imagery basemap so that the clicked country can be highlighted
-      worldImagery.effect = "blur(8px) brightness(1.2) grayscale(0.8)";
-      // set the group layer opacity to 1
-      // also increase the layer brightness and add drop-shadow to make the clicked country stand out.
-      groupLayer.effect = "brightness(1.5) drop-shadow(0, 0px, 12px)";
-      groupLayer.opacity = 1;
-    }
-    // did not click on a country. remove effects
-    else {
-      worldImagery.effect = null;
-      groupLayer.effect = null;
-    }
+    
+  // user clicked on a country and the feature is returned
+  if (feature) {
+    countryGraphicsLayer.graphics.removeAll();
+    feature.symbol = symbol;
+    // add the country to the graphics layer
+    countryGraphicsLayer.graphics.add(feature);
+    // zoom to the highlighted country
+    globalProps.mapView.goTo(
+      {
+        target: zoomGeometry,
+        extent: feature.geometry.extent.clone().expand(1.8)
+      },
+      { duration: 500 }
+    );
+    worldImg.effect = "blur(8px) brightness(1.2) grayscale(0.8)";
+    // set the group layer opacity to 1, increase the layer brightness and add drop-shadow to make the clicked country stand out.
+    groupLayer.effect = "brightness(2.5) drop-shadow(0, 0px, 3px)";
+    groupLayer.opacity = 1;
+  }
+  // did not click on a country. remove effects
+  else {
+    worldImg.effect = null;
+    groupLayer.effect = null;
+  }
 }
 
-}
+
+
 </script>
 <style scoped>
  #mapView {
