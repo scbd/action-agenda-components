@@ -373,48 +373,164 @@
 <!-- Action line ends -->
 
 <!-- ActionDetails line starts -->
+  <legend >{{ $t(`Commitment Linkages`) }}</legend>
+    <div class="card">
+    <div class="card-body">
+    <div class="row">
+    <div class="col-lg-6" >
 
- <!--    <div class="row" >
-      <div class="col-lg-6" >
-
-        <div class="form-group" id="group.form.actionDetailsRequired.actionCategories">
-          <label for="form.actionDetailsRequired.actionCategories"> {{ $t(`Action Themes (s)`) }} </label>
+        <div class="form-group" id="group.form.actionDetails.actionCategories">
+          <label for="form.actionDetails.actionCategories"> {{ $t(`Action Themes (s)`) }} </label>
           <SCBDSelect
             @input="update"
             type="actionCategories"
-            id="form.actionDetailsRequired.actionCategories"
-            v-model="form.actionDetailsRequired.actionCategories"
+            id="form.actionDetails.actionCategories"
+            v-model="form.actionDetails.actionCategories"
             multi
             tag-view
-            :state="validateState(`form.actionDetailsRequired.actionCategories`,form.actionDetailsRequired.actionCategories)"
-            :name="`form.actionDetailsRequired.actionCategories`"
+            :state="validateState(`form.actionDetails.actionCategories`,form.actionDetails.actionCategories)"
+            :name="'form.actionDetails.actionCategories'"
             v-validate="'required'"
             />
-          <field-error-message :error="errors.collect(`form.actionDetailsRequired.actionCategories`)"/>
+          <field-error-message :error="errors.collect(`form.actionDetails.actionCategories`)"/>
         </div>
 
       </div>
 
      <div class="col-lg-6"  >
-        <div class="form-group" id="group.form.actionDetailsRequired.operationalAreas">
-          <label for="form.actionDetailsRequired.operationalAreas"> {{ $t(`Geographic Area (s)`) }} </label>
+        <div class="form-group" id="group.form.actionDetails.operationalAreas">
+          <label for="form.actionDetails.operationalAreas"> {{ $t(`Geographic Area (s)`) }} </label>
           <SCBDSelect
             type="geoLocations"
-            id="form.actionDetailsRequired.operationalAreas"
-            v-model="form.actionDetailsRequired.operationalAreas"
+            id="form.actionDetails.operationalAreas"
+            v-model="form.actionDetails.operationalAreas"
             multi
             tag-view
-            :state="validateState(`form.actionDetailsRequired.operationalAreas`,form.actionDetailsRequired.operationalAreas)"
-            :name="`form.actionDetailsRequired.operationalAreas`"
+            :state="validateState(`form.actionDetails.operationalAreas`,form.actionDetails.operationalAreas)"
+            :name="`form.actionDetails.operationalAreas`"
             v-validate="'required'"
           />
-          <field-error-message :error="errors.collect(`form.actionDetailsRequired.operationalAreas`)"/>
+          <field-error-message :error="errors.collect(`form.actionDetails.operationalAreas`)"/>
         </div>
       </div> 
 
+    </div>
+
+    <div class="row" >
+      <div class="col-lg-6" >
+
+        <div class="form-group" id="group.form.actionDetails.aichiTargets">
+          <label for="form.actionDetails.aichiTargets"> {{ $t(`Aichi Biodiversity Target (s)`) }} </label>
+          <SCBDSelect
+            @input="update"
+            type="aichis"
+            id="form.actionDetails.aichiTargets"
+            v-model="form.actionDetails.aichiTargets"
+            multi
+            tag-view
+            :state="validateState(`form.actionDetails.aichiTargets`,form.actionDetails.aichiTargets)"
+            :name="`form.actionDetails.aichiTargets`"
+            v-validate="'required'"
+          />
+          <field-error-message :error="errors.collect(`form.actionDetails.aichiTargets`)"/>
+        </div>
+
+      </div>
+      <div class="col-lg-6" >
+
+        <div class="form-group" id="group.form.actionDetails.sdgs">
+          <label for="form.actionDetails.sdgs"> {{ $t(`Sustainable Development Goal (s)`) }} </label>
+          <SCBDSelect
+            @input="update"
+              type="sdgs"
+              id="form.actionDetails.sdgs"
+              v-model="form.actionDetails.sdgs"
+              multi
+              tag-view
+              :state="validateState(`form.actionDetails.sdgs`,form.actionDetails.sdgs)"
+              :name="`form.actionDetails.sdgs`"
+              v-validate="'required'"
+          />
+          <field-error-message :error="errors.collect(`form.actionDetails.sdgs`)"/>
+        </div>
+
+      </div>
+    </div>
+    </div>
+    </div>
+<!-- ActionDetails line ends -->
+
+<!-- Contact line starts -->
+  <!--  <legend>{{ $t('Contacts') }}  </legend>
+    <div class="card" >
+      <div class="card-body">
+
+        <div class="row" v-if="me.isAuthenticated">
+          <div class="col-lg-12">
+
+
+            <div  class="form-group" :id="`group.form.contact.useAccount`" >
+                <div class="form-check-inline">
+                  <input
+                    v-model="input.useAccount"
+                    :value="true"
+                    type="checkbox"
+                    id="form.contact.useAccount"
+                    :name="'form.contact.useAccount'"
+                    class="form-check-input"
+                    v-on:change="useAccountToggle()"
+                  >
+                  <label class="form-check-label align-text-bottom" for="form.contact.useAccount" >{{'form.contact.useAccount'}}</label>
+                </div>
+              <hr>
+            </div>
+            
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6">
+            
+            <div class="form-group" id="group.form.contact.name">
+              <label  for="form.contact.name"> {{ $t(`Name`) }} </label>
+              <input class="form-control" 
+                @input      ="update"
+                id          ="form.contact.name"
+                type        ="text"
+                v-model.trim="form.contact.name[$i18n.locale]"
+                v-validate  ="'required|max:140'"
+                :class      ="[ getValidationClass(`form.contact.name`) ]" 
+                :name       ="`form.contact.name`"
+                />
+              <field-error-message :error="errors.collect(`form.contact.name`)"/>
+            </div>
+
+          </div>
+
+          <div class="col-lg-6">
+
+            <div class="form-group" id="group.form.contact.email" >
+              <label  for="form.contact.email"> {{ $t(`Email`) }} </label>
+              <input class="form-control" 
+                @input      ="update"
+                id          ="form.contact.email"
+                type        ="text"
+                v-model.trim="form.contact.email"
+                v-validate  ="'email|required'"
+                :class      ="[ getValidationClass(`form.contact.email`) ]" 
+                :name       ="`form.contact.email`"
+              />
+    
+              <field-error-message :error="errors.collect(`form.contact.email`)"/>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
     </div> -->
 
-<!-- ActionDetails line ends -->
+<!-- Contact line ends -->
 
           <div id="ss" class="text-right mb-3">
             <!-- :disabled="!this.userLoaded" -->
@@ -444,12 +560,7 @@ import { camelCase          } from 'change-case'
 import { initializeApiStore } from '@action-agenda/cached-apis'
 
 //scbd controls
-//import   ActorSelect             from './components/controls/ActorSelect/index.vue'
 import   FormFeedback            from './components/FeedbackList/index.vue'
-import   Contact                 from './components/Contact.vue'
-//import   Action                  from './components/Action.vue'
-//import   ActionDetails           from './components/ActionDetails.vue'
-//import   ActionDetailsRequired   from './components/ActionDetailsRequired.vue'
 import   Partners                from './components/Partners.vue'
 import   getLocale               from './components/locale.js'
 import { getAction             } from './components/api'
@@ -461,10 +572,10 @@ export default {
                 options : { type: Object, required: true},
                 value   : { type: Object, required: true },
               },
-  components: { FormFeedback, Contact, Partners, SCBDSelect, Links, Icons,
+  components: { FormFeedback, Partners, SCBDSelect, Links, Icons,
                 DebugForm: () => import('./components/DebugForm.vue') //async load of component ... only if needed
               },
-  methods   : { loadExistingAction, addError, deleteFeedback, loadCaptcha, save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup, updateContacts, validate, isSelectedType, showImage, deleteLogo, useAccount, useAccountToggle, notUseAccount, parseName },
+  methods   : { loadExistingAction, addError, deleteFeedback, loadCaptcha, save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup, updateContacts, validate, isSelectedType, showImage, deleteLogo, useAccount, beforeUpdate, useAccountToggle, notUseAccount, parseName },
   computed  : { config, actionComplete, opts: config, isOther },
   data, 
   created,
@@ -510,26 +621,32 @@ function data (){
                       typeOther: { },
                       actorType: formType
                   },
-                    orgLogo : '', //temp holder for uploaded image
-                    action        : {
+                  orgLogo : '', //temp holder for uploaded image
+                  action        : {
                       name        : { [this.$i18n.locale]: '' },
                       description : { [this.$i18n.locale]: '' },
                       attachments : []
                     },
-                    actionDetailsRequired   : {
-                      aichiTargets          : [],
-                      sdgs                  : [],
-                      actionCategories      : {},
-                      operationalAreas      : []
-                      //progressMeasured      : { },
-                      //thematicAreas         : []
-                  },
-                  actionDetails : {
-                    thematicAreas : [],
-                    progressMeasured : { }
+                  actionDetails   : {
+                      aichiTargets     : [],
+                      sdgs             : [],
+                      progressMeasured : { en:'' },
+                      thematicAreas    : [],
+                      operationalAreas : [],
+                      actionCategories : []
                   },
                   partners      : [{ name: { } }],
-                  contacts      : [  ],
+                  contact: {
+                    salutation : {},
+                    firstName  : {},
+                    middleName : {},
+                    lastName   : {},
+                    suffix     : {},
+                    name       : {},
+                    country    : '',
+                    email      : '',
+                    actorType  : 'person'
+                  },
                   subscription  : {},
                   accountSignup : new Date()
                 }
@@ -598,6 +715,10 @@ function showImage({ srcElement }){
     this.form.input.useAccountInit = true
     
     this.update()
+  }
+
+  function beforeUpdate() {
+    if (!this.input.useAccountInit && this.me.isAuthenticated) this.useAccountToggle(true)
   }
 
   function useAccountToggle(value){
