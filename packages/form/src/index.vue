@@ -312,7 +312,7 @@
               </div>
             </div>
           </div>
-<!-- Actor line end -->
+<!-- Actor line ends -->
 
 <!-- Action line starts -->
 
@@ -377,9 +377,9 @@
     <div class="card">
     <div class="card-body">
     <div class="row">
-    <div class="col-lg-6" >
+    <div class="col-lg-6" v-if="options.actionCategories">
 
-        <div class="form-group" id="group.form.actionDetails.actionCategories">
+        <div class="form-group" id="group.form.actionDetails.actionCategories" >
           <label for="form.actionDetails.actionCategories"> {{ $t(`Action Themes (s)`) }} </label>
           <SCBDSelect
             @input="update"
@@ -397,7 +397,7 @@
 
       </div>
 
-     <div class="col-lg-6"  >
+     <div class="col-lg-6" v-if="options.operationalAreas">
         <div class="form-group" id="group.form.actionDetails.operationalAreas">
           <label for="form.actionDetails.operationalAreas"> {{ $t(`Geographic Area (s)`) }} </label>
           <SCBDSelect
@@ -417,7 +417,7 @@
     </div>
 
     <div class="row" >
-      <div class="col-lg-6" >
+      <div class="col-lg-6" v-if="options.aichiTargets">
 
         <div class="form-group" id="group.form.actionDetails.aichiTargets">
           <label for="form.actionDetails.aichiTargets"> {{ $t(`Aichi Biodiversity Target (s)`) }} </label>
@@ -436,7 +436,7 @@
         </div>
 
       </div>
-      <div class="col-lg-6" >
+      <div class="col-lg-6" v-if="options.sdgs">
 
         <div class="form-group" id="group.form.actionDetails.sdgs">
           <label for="form.actionDetails.sdgs"> {{ $t(`Sustainable Development Goal (s)`) }} </label>
@@ -457,11 +457,11 @@
       </div>
     </div>
     </div>
-    </div>
+    </div> 
 <!-- ActionDetails line ends -->
 
 <!-- Contact line starts -->
-  <!--  <legend>{{ $t('Contacts') }}  </legend>
+    <legend>{{ $t('Contacts') }}  </legend>
     <div class="card" >
       <div class="card-body">
 
@@ -488,7 +488,7 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row" v-if="me.isAuthenticated">
           <div class="col-lg-6">
             
             <div class="form-group" id="group.form.contact.name">
@@ -528,8 +528,7 @@
         </div>
 
       </div>
-    </div> -->
-
+    </div>
 <!-- Contact line ends -->
 
           <div id="ss" class="text-right mb-3">
@@ -554,7 +553,7 @@ import   FormMixin            from './components/form-mixin.js'
 import   getDefaultOptions    from './default-options.js'
 import   SCBDSelect           from './components/controls/SCBDSelect.vue'
 import   Links                from './components/controls/Links/index.vue'
-//import   HumanParser          from './components/controls/ActorSelect/humanparser'
+import   HumanParser          from 'humanparser'
 
 import { camelCase          } from 'change-case'
 import { initializeApiStore } from '@action-agenda/cached-apis'
@@ -569,8 +568,8 @@ export default {
   name      : 'AAForm',
   mixins    : [ FormMixin ],
   props     : { 
-                options : { type: Object, required: true},
-                value   : { type: Object, required: true },
+                options : { type: Object},
+                value   : { type: Object, required: true }
               },
   components: { FormFeedback, Partners, SCBDSelect, Links, Icons,
                 DebugForm: () => import('./components/DebugForm.vue') //async load of component ... only if needed
@@ -637,13 +636,7 @@ function data (){
                   },
                   partners      : [{ name: { } }],
                   contact: {
-                    salutation : {},
-                    firstName  : {},
-                    middleName : {},
-                    lastName   : {},
-                    suffix     : {},
-                    name       : {},
-                    country    : '',
+                    name       : { [this.$i18n.locale]: '' },
                     email      : '',
                     actorType  : 'person'
                   },
@@ -712,9 +705,11 @@ function showImage({ srcElement }){
     this.$set(this.form.actor, 'email', this.me.email)
     this.$set(this.form.actor, 'country', {identifier:this.me.country})
 
+    this.$set(this.form.contact, 'name', { en: this.me.name })
+    this.$set(this.form.contact, 'email', this.me.email)
+
     this.form.input.useAccountInit = true
-    
-    this.update()
+
   }
 
   function beforeUpdate() {
@@ -722,9 +717,9 @@ function showImage({ srcElement }){
   }
 
   function useAccountToggle(value){
-    if(value != undefined) this.form.input.useAccount = value
+    if(value != undefined) this.input.useAccount = value
 
-      if(!this.form.input.useAccount)
+      if(!this.input.useAccount)
         this.notUseAccount()
       else
         this.useAccount()
@@ -734,6 +729,8 @@ function showImage({ srcElement }){
 
   function notUseAccount() {
     let person = this.form.actor
+    let personC = this.form.contact
+    
 
     person.country        = ''
     person.email          = ''
@@ -743,6 +740,9 @@ function showImage({ srcElement }){
     person.lastName   .en = ''
     person.suffix     .en = ''
     person.name       .en = ''
+
+    personC.name      .en = ''
+    personC.email         = ''
 
     this.$children.forEach(this.validateComponent)
   }
@@ -772,7 +772,7 @@ function actionComplete(){
 }
 
 function updateContacts(){
-  if(this.actorType === 'person') this.form.contacts = [this.form.actor]
+  if(this.actorType === 'person') this.form.contact = [this.form.actor]
 }
 
 function config(){
