@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-5">
           <div style="position:relative;">
-            <div class="logo-container"> <img class="logo-image" :src='image.url' :alt='image.name'></div>
+            <div v-if="actor.image" class="logo-container"> <img class="logo-image" :src='actor.image.url' :alt='actor.image.name'></div>
           </div>
         </div>
         <!-- <div class="col-5 text-right">
@@ -76,7 +76,7 @@ export default {
     actor        : { type: Object, required: true },    
   },
   computed: { status },
-  methods : { getStatusUrl, changeStatus, loadIcons, viewUrl, loadLogo, filteredCategory, actionStatus },
+  methods : { getStatusUrl, changeStatus, loadIcons, viewUrl, filteredCategory, actionStatus },
   filters : { dateFormat },
   data,
   created,
@@ -84,7 +84,7 @@ export default {
   i18n
 }
 
-function  data(){ return { activeTab: 1, icons: [], image: {}, imageName: ''} }
+function  data(){ return { activeTab: 1, icons: []} }
 
 function actionStatus() {
   const status = this.meta.status
@@ -96,21 +96,12 @@ function filteredCategory(numOfCategories) {
   return this.icons.slice(0,numOfCategories);   // Display only 2 categories
 }
 
-async function loadLogo() {
-  if (!this.actor.image) return
-
-  const logoData = this.actor.image
-  this.image = logoData
-}
-
 async function updated(){ 
   await this.loadIcons()
-  await this.loadLogo() 
   }
 
 async function created(){
   await this.loadIcons()
-  await this.loadLogo()
   this.activeTab = 1
 }
 
