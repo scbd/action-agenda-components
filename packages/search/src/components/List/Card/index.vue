@@ -3,23 +3,43 @@
   <div class="card card-row mb-5">
     <div class="card-header">
       <div class="row">
-        <div class="col-12 text-right">
+        <div class="col-5">
           <div style="position:relative;">
+            <div class="logo-container"> <img class="logo-image" :src='image.url' :alt='image.name'></div>
+          </div>
+        </div>
+        <!-- <div class="col-5 text-right">
+          <div style="position:relative;">
+            <span class="action-status"> {{meta.status}} </span>
+          </div>
+        </div>
+        <div class="col-5 text-right">
+          <div style="position:relative;">
+            <span v-for="(category,index) in filteredCategory(2)" v-bind:key="index"  class="action-categories-name">{{category.name}}<span v-if="index+1 < 2">, </span></span>
+          </div>
+        </div> -->
+        <div class="col-5 text-right">
+          <div style="position:relative;">
+            <span class="action-status"> {{meta.status}} </span>
+            <span v-for="(category,index) in filteredCategory(2)" v-bind:key="index"  class="action-categories-name">{{category.name}}<span v-if="index+1 < 2">, </span></span>
+
             <State  v-if="me && me.hasRole('ActionAdmin')" :status="meta.status"/>
             <span class="text-nowrap" v-if="icons.length">
               <span v-for="(icon,index) in icons" v-bind:key="index">
                 <img v-if="icon.image && !icon.url" :src="icon.image" :alt="icon.name" class="action-icon mx-1"/>
-                <a v-if="icon.image && icon.url" :href="icon.url" hreflang="en" :title="icon.name"> <img :src="icon.image" :alt="icon.name" class="action-icon mx-1"/> </a>
+                <a v-if="icon.image && icon.url" :href="icon.url" hreflang="en" :title="icon.name"> 
+                  <img :src="icon.image" :alt="icon.name" class="action-icon mx-1"/> 
+                </a>
               </span>
             </span>
           </div>
         </div>
       </div>
-  
+
     </div>
 
     <!-- TAB 1 -->
-    <HorzCardAction  v-bind="{...action, actionDetails }" />
+    <HorzCardAction  v-bind="{...action, actionDetails, ...actor }" />  
 
 
     <!-- FOOTER -->
@@ -52,10 +72,11 @@ export default {
     action       : { type: Object, required: true },
     actionDetails: { type: Object },
     meta         : { type: Object },
-    options      : { type: Object, required: true }
+    options      : { type: Object, required: true },
+    actor        : { type: Object, required: true },    
   },
   computed: { status },
-  methods : { getStatusUrl, changeStatus, loadIcons, viewUrl },
+  methods : { getStatusUrl, changeStatus, loadIcons, viewUrl, loadLogo, filteredCategory, actionStatus },
   filters : { dateFormat },
   data,
   created,
@@ -63,12 +84,33 @@ export default {
   i18n
 }
 
-function  data(){ return { activeTab: 1, icons: [] } }
+function  data(){ return { activeTab: 1, icons: [], image: {}, imageName: ''} }
 
-async function updated(){ await this.loadIcons() }
+function actionStatus() {
+  const status = this.meta.status
+
+  return status
+}
+
+function filteredCategory(numOfCategories) {
+  return this.icons.slice(0,numOfCategories);   // Display only 2 categories
+}
+
+async function loadLogo() {
+  if (!this.actor.image) return
+
+  const logoData = this.actor.image
+  this.image = logoData
+}
+
+async function updated(){ 
+  await this.loadIcons()
+  await this.loadLogo() 
+  }
 
 async function created(){
   await this.loadIcons()
+  await this.loadLogo()
   this.activeTab = 1
 }
 
@@ -149,4 +191,5 @@ async function loadIcons(){
   .nav-item{ cursor:pointer; }
   .tabs{max-width: 50%;}
   .action-icon{max-width: 1.5em;}
+
 </style>

@@ -10,6 +10,8 @@ const i18n = new VueI18n({ locale: 'en', fallbackLocale: 'en', messages: { en: {
 
 Vue.config.productionTip = false
 
+Vue.config.devtools = true
+
 new Vue({
   i18n,
   render: h => h(App)

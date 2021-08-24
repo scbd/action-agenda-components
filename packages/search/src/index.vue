@@ -20,6 +20,8 @@ import getDefaultOptions from './default-options'
 import FilterNav         from './components/FilterNav.vue'
 import Feedback          from './components/Feedback.vue'
 
+import '@scbd/www-css/dist/style.css'
+
 export default {
   name      : 'ScbdSearch',
   components: { FilterNav, Feedback, List, Icons },

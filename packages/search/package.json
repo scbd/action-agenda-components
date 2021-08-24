@@ -56,11 +56,13 @@
   "dependencies": {
     "@action-agenda/cached-apis": "1.0.12",
     "@action-agenda/icons": "1.0.4",
+    "@action-agenda/search": "^1.0.8",
     "@houlagins/default-options": "1.0.2",
     "@houlagins/load-http": "1.0.3",
     "@houlagins/locale": "1.0.0",
     "@houlagins/self-embedding-component": "1.0.17",
     "@scbd/sso-vue-plugin-scbd": "1.0.4",
+    "axios": "^0.21.1",
     "core-js": "3.6.5",
     "vue": "2.6.11",
     "vue-i18n": "8.24.5",

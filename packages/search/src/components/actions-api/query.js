@@ -66,7 +66,7 @@ function readSearchParams (){
 }
 
 function defaultQuery (){
-  const f  = { ... getMongoFilterFields(), meta: 1, 'action.name': 1, 'action.description': 1, 'action.image': 1 }
+  const f  = { ... getMongoFilterFields(), meta: 1, 'action.name': 1, 'action.description': 1, 'action.image': 1, 'actor.name': 1, 'actor.country':1, 'actor.actorType':1, 'actor.image':1 }
 
   delete(f['meta.status'])
   delete(f['actor.country.identifier'])

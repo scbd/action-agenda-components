@@ -3,7 +3,7 @@
     <div class="row no-gutters">
       <div class="col-sm-12" >
         <div class="card-body">
-          <h5 class="card-title">{{nameComp}}</h5>
+          <h5 class="card-title">{{nameComp}}, {{actorCountry}} - {{actorTypeComp}}</h5>
           <p class="card-text desc"> {{descriptionComp}} </p>
           <span v-if="icons.length">
             <span v-for="(icon,index) in icons" v-bind:key="index">
@@ -27,25 +27,29 @@ export default {
   props: {
     name         : { type: Object, required: true },
     description  : { type: Object, required: true },
-    actionDetails: { type: Object }
+    actionDetails: { type: Object },
+    country      : { type: Object, required: true },   
+    actorType    : { type: Object, required: true  }   
   },
-  computed: { nameComp, descriptionComp },
-  methods : { loadIcons },
+
+  computed: { nameComp, descriptionComp, actorTypeComp },
+  methods : { loadIcons, countryComp },
   updated,
   created,
   data
 }
 
 function data(){
-  return { icons: [] }
+  return { icons: [], actorCountry:''}
 }
-
 
 async function updated(){
   await this.loadIcons()
+  await this.countryComp()
 }
 async function created(){
   await this.loadIcons()
+  await this.countryComp()
 }
 
 async function loadIcons(){
@@ -67,6 +71,22 @@ function nameComp(){
   const locale = getUnLocale()
   
   return this.name[locale] || this.name['en']
+}
+
+async function countryComp() {
+  if (!this.country) return
+
+  let nameOfCountry = {}
+  if (this.country) 
+      nameOfCountry = await lookUp('countries',this.country.identifier, true)
+  
+  this.actorCountry = nameOfCountry.name    
+}
+
+function actorTypeComp() {
+  if (!this.actorType) return
+  
+  return this.actorType
 }
 
 function descriptionComp(){
