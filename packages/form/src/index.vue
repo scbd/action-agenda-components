@@ -456,9 +456,51 @@
 
       </div>
     </div>
+
+    <div class="row">
+      <div class="col-lg-12" v-if="options.thematicAreas">
+
+        <div class="form-group" id="group.form.actionDetails.thematicAreas">
+          <label for="form.actionDetails.thematicAreas"> {{ $t(`Thematic Areas (s)`) }} </label>
+          <SCBDSelect
+            type="subjects"
+            id="form.actionDetails.subjects"
+            v-model="form.actionDetails.thematicAreas"
+            multi
+            tag-view
+            :state="validateState(`form.actionDetails.thematicAreas`,form.actionDetails.thematicAreas)"
+            :name="`form.actionDetails.thematicAreas`"
+            />
+          <field-error-message :error="errors.collect(`form.actionDetails.thematicAreas`)"/>
+        </div>
+
+      </div>
+    </div>
+
+   <div class="row" v-if="options.progressMeasured">
+      <div class="col">
+        <div class="form-group" id="group.form.actionDetails.progressMeasured">
+          <label for="form.actionDetails.progressMeasured"> {{ $t(`Progress tracking`) }} </label>
+          <textarea
+            @input="update"
+            id="form.actionDetails.progressMeasured"
+            v-model="form.actionDetails.progressMeasured[$i18n.locale]"
+            v-validate="'max:1000'"
+            class="form-control" 
+            :class="[ getValidationClass(`form.action.progressMeasured`) ]" 
+            :rows="3"
+            :name="`form.actionDetails.progressMeasured`"
+            :placeholder="$t(`Describe how you measure progress. Provide a link if relevant.`)"
+          />
+          <field-error-message :error="errors.collect(`form.actionDetails.progressMeasured`)"/>
+        </div>
+      </div>
+    </div> 
+
     </div>
     </div> 
 <!-- ActionDetails line ends -->
+
 
 <!-- Contact line starts -->
     <legend>{{ $t('Contacts') }}  </legend>
@@ -629,7 +671,7 @@ function data (){
                   actionDetails   : {
                       aichiTargets     : [],
                       sdgs             : [],
-                      progressMeasured : { en:'' },
+                      progressMeasured : { [this.$i18n.locale]:'' },
                       thematicAreas    : [],
                       operationalAreas : [],
                       actionCategories : []
