@@ -357,7 +357,7 @@
     </div>
     
     <div class="col-12">
-      <div class="form-group" id="group.action.attachments">
+      <div class="form-group" id="group.form.action.attachments">
         <label :for="`form.action.attachments`"> {{ $t(`Attachment (s)`) }} </label>
         <div class="col-12 mb-3" v-for="item in form.action.attachments" v-bind:key="item.url">
         <a :href="item.url" target="_blank" rel="noopener"> <Icon name="file"/> {{item.name[$i18n.locale]}} </a>
@@ -366,6 +366,38 @@
       </div>
     </div> 
     
+    <div class="col-lg-3" v-if="form.action.startDate">
+      <div class="form-group" id="group.form.action.startDate">
+        <label  for="form.action.startDate"> {{ $t(`Start Date`) }} </label>
+        <input class="form-control" 
+          @input      ="update"
+          id          ="form.action.startDate"
+          type        ="date"
+          v-model.trim="form.action.startDate[$i18n.locale]"
+          v-validate  ="'required'"
+          :class      ="[ getValidationClass(`form.action.startDate`) ]"
+          :name       ="`form.action.startDate`"
+          />
+        <field-error-message :error="errors.collect('form.action.startDate')"/>
+      </div>
+    </div>
+
+    <div class="col-lg-3" v-if="form.action.enddate">
+      <div class="form-group" id="group.form.action.enddate">
+        <label  for="form.action.endDate"> {{ $t(`End Date`) }} </label>
+        <input class="form-control" 
+          @input      ="update"
+          id          ="form.action.endDate"
+          type        ="date"
+          v-model.trim="form.action.endDate[$i18n.locale]"
+          v-validate  ="'required'"
+          :class      ="[ getValidationClass(`form.action.endDate`) ]"
+          :name       ="`form.action.endDate`"
+          />
+        <field-error-message :error="errors.collect('form.action.endDate')"/>
+      </div>
+    </div> 
+
   </div>
   </div>
   </div>
@@ -377,7 +409,7 @@
     <div class="card">
     <div class="card-body">
     <div class="row">
-    <div class="col-lg-6" v-if="options.actionCategories">
+    <div class="col-lg-6" v-if="form.actionDetails.actionCategories">
 
         <div class="form-group" id="group.form.actionDetails.actionCategories" >
           <label for="form.actionDetails.actionCategories"> {{ $t(`Action Themes (s)`) }} </label>
@@ -397,7 +429,7 @@
 
       </div>
 
-     <div class="col-lg-6" v-if="options.operationalAreas">
+     <div class="col-lg-6" v-if="form.actionDetails.operationalAreas">
         <div class="form-group" id="group.form.actionDetails.operationalAreas">
           <label for="form.actionDetails.operationalAreas"> {{ $t(`Geographic Area (s)`) }} </label>
           <SCBDSelect
@@ -417,7 +449,7 @@
     </div>
 
     <div class="row" >
-      <div class="col-lg-6" v-if="options.aichiTargets">
+      <div class="col-lg-6" v-if="form.actionDetails.aichiTargets">
 
         <div class="form-group" id="group.form.actionDetails.aichiTargets">
           <label for="form.actionDetails.aichiTargets"> {{ $t(`Aichi Biodiversity Target (s)`) }} </label>
@@ -436,7 +468,7 @@
         </div>
 
       </div>
-      <div class="col-lg-6" v-if="options.sdgs">
+      <div class="col-lg-6" v-if="form.actionDetails.sdgs">
 
         <div class="form-group" id="group.form.actionDetails.sdgs">
           <label for="form.actionDetails.sdgs"> {{ $t(`Sustainable Development Goal (s)`) }} </label>
@@ -458,7 +490,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12" v-if="options.thematicAreas">
+      <div class="col-lg-12" v-if="form.actionDetails.thematicAreas">
 
         <div class="form-group" id="group.form.actionDetails.thematicAreas">
           <label for="form.actionDetails.thematicAreas"> {{ $t(`Thematic Areas (s)`) }} </label>
@@ -477,7 +509,7 @@
       </div>
     </div>
 
-   <div class="row" v-if="options.progressMeasured">
+   <div class="row" v-if="form.actionDetails.progressMeasured">
       <div class="col">
         <div class="form-group" id="group.form.actionDetails.progressMeasured">
           <label for="form.actionDetails.progressMeasured"> {{ $t(`Progress tracking`) }} </label>
@@ -666,7 +698,9 @@ function data (){
                   action        : {
                       name        : { [this.$i18n.locale]: '' },
                       description : { [this.$i18n.locale]: '' },
-                      attachments : []
+                      attachments : [],
+                      startDate   : { [Date]: ''},
+                      endDate     : { [Date]: ''}
                     },
                   actionDetails   : {
                       aichiTargets     : [],
