@@ -15,6 +15,22 @@
               <div class="col-12 mb-3" v-for="item in record.action.attachments" v-bind:key="item.url">
                 <a :href="item.url" target="_blank" rel="noopener"> <Icon name="file"/> {{item.name}} </a>
               </div>
+              <div class="col-12">
+              <tr>
+                <th class="align-middle text-nowrap" scope="row" >{{$t('Start Date')}}: </th>
+                <td class="col-10 p-3 ">
+                {{ record.action.startDate }}
+                </td>
+              </tr>                
+              </div>
+              <div class="col-12">
+              <tr>
+                <th class="align-middle text-nowrap" scope="row" >{{$t('End Date')}}: </th>
+                <td class="col-10 p-3 ">
+                {{ record.action.endDate }}
+                </td>
+              </tr>  
+              </div>
             </div>
           </div>
         </div>
