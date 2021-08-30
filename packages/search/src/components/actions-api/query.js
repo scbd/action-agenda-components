@@ -77,7 +77,7 @@ function defaultQuery (){
 function defaultCountsQuery (){
   const q  = {}
   const sk = 0
-  const s  = { 'meta.modifiedOn': -1 }
+  const s  = { 'meta.modifiedOn': -1, 'meta.createdOn': -1 }  // -1?
   const f  =  getMongoFilterFields()
 
   return { q, sk, s, f }
