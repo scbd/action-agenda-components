@@ -5,7 +5,7 @@
       <FilterNav @$scbdFilterChange="onScbdFilterChange" :get-counts="getCounts" adminRole="ActionAdmin" />
       <Feedback v-bind="{ total, page, totalPages, loading }" />
     </div>
-    <List v-if="total && rows.length" :rows="rows" :options="opts" :on-scroll="onScroll"  />
+    <List v-if="total && rows.length" :rows="rows" @update-sortedRows="updateSorting" :options="opts" :on-scroll="onScroll"  />
   </div>
 </template>
 
@@ -29,12 +29,16 @@ export default {
     forceEnv: { type: String, required: false, default: 'production' }
   },
   // #endregion snippet
-  methods : { onScbdFilterChange, getCounts, setRowsAndTotal, onScroll, onNextPageLoaded, preLoadFilter  },
+  methods : { onScbdFilterChange, getCounts, setRowsAndTotal, onScroll, onNextPageLoaded, preLoadFilter, updateSorting },
   computed: { opts, totalPages, top },
   created,
   data,
   errorCaptured,
   i18n
+}
+
+function updateSorting(updatedRows) {
+  this.rows = updatedRows
 }
 
 async function created(){

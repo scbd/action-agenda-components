@@ -323,11 +323,14 @@ a > #aa-search code {
   align-items: center;
   justify-content: space-between;
 }
-#aa-search .sort-list {
+#aa-search .sort-list-container {
   text-align: right;
   padding-bottom: 0.5rem;
 }
-
+#aa-search .sort-list {
+  background-color: #dfe9e0;
+  font-weight: bold;
+}
 #aa-search .card {
   position: relative;
   display: flex;

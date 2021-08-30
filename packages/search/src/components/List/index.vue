@@ -1,7 +1,7 @@
 <template >
   <div class="list" ref="list">
-    <div class="sort-list">
-      <select  v-model="sortBy" name="sort-by" @change="sortRows()" >
+    <div class="sort-list-container">
+      <select  v-model="sortBy" name="sort-by" @change="sortRows()" class="sort-list" >
         <option value="" selected disabled> Sort By</option>
         <option value="modifiedOn">Date Updated</option>
         <option value="createdOn">Date Created</option>
@@ -37,11 +37,20 @@ function sortRows () {
 
   console.log(this.sortBy)
 
-  const sortedRows = this.rows.slice().sort( (a,b) => { 
-    b.meta[this.sortBy] - a.meta[this.sortBy] 
-    })
+  let modifier = 1
+  if (this.sortBy == 'createdOn') modifier = -1
+  const sortedRows = this.rows.slice().sort( (a,b) => {
+    if (a.meta[this.sortBy] < b.meta[this.sortBy]) return 1 * modifier
+    if (a.meta[this.sortBy] > b.meta[this.sortBy]) return -1 * modifier
+    return 0
+  })
+
+  // const sortedRows = this.rows.slice().sort( (a,b) => { 
+  //   b.meta[this.sortBy] - a.meta[this.sortBy] 
+  //   })
 
   this.rows = sortedRows
+  this.$emit('update-sortedRows',this.rows)
 }
 
 
