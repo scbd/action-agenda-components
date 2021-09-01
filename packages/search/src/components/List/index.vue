@@ -37,17 +37,18 @@ function sortRows () {
 
   console.log(this.sortBy)
 
-  let modifier = 1
-  if (this.sortBy == 'createdOn') modifier = -1
-  const sortedRows = this.rows.slice().sort( (a,b) => {
-    if (a.meta[this.sortBy] < b.meta[this.sortBy]) return 1 * modifier
-    if (a.meta[this.sortBy] > b.meta[this.sortBy]) return -1 * modifier
-    return 0
-  })
-
-  // const sortedRows = this.rows.slice().sort( (a,b) => { 
-  //   b.meta[this.sortBy] - a.meta[this.sortBy] 
-  //   })
+  // let modifier = 1
+  // if (this.sortBy == 'createdOn') modifier = -1
+  // const sortedRows = this.rows.slice().sort( (a,b) => {
+  //   if ( new Date(a.meta[this.sortBy]) < new Date(b.meta[this.sortBy])) return 1 * modifier
+  //   if ( new Date(a.meta[this.sortBy]) > new Date(b.meta[this.sortBy])) return -1 * modifier
+  //   return 0
+  // })
+  const sortedRows = this.rows.slice().sort( (a,b) => { 
+    if (this.sortBy=='createdOn') 
+      return new Date(a.meta[this.sortBy]) - new Date(b.meta[this.sortBy])
+    return new Date(b.meta[this.sortBy]) - new Date(a.meta[this.sortBy])
+    })
 
   this.rows = sortedRows
   this.$emit('update-sortedRows',this.rows)

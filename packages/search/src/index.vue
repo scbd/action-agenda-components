@@ -37,7 +37,10 @@ export default {
   i18n
 }
 
-function updateSorting(updatedRows) {
+async function updateSorting(updatedRows) {
+  const alist = await getList(true)
+  console.log(alist)
+  console.log(this.rows.length)
   this.rows = updatedRows
 }
 
