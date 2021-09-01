@@ -373,7 +373,7 @@
           @input      ="update"
           id          ="form.action.startDate"
           type        ="date"
-          v-model.trim="form.action.startDate[$i18n.locale]"
+          v-model.trim="form.action.startDate"
           v-validate  ="'required'"
           :class      ="[ getValidationClass(`form.action.startDate`) ]"
           :name       ="`form.action.startDate`"
@@ -382,14 +382,14 @@
       </div>
     </div>
 
-    <div class="col-lg-3" v-if="form.action.enddate">
-      <div class="form-group" id="group.form.action.enddate">
+    <div class="col-lg-3" v-if="form.action.endDate">
+      <div class="form-group" id="group.form.action.endDate">
         <label  for="form.action.endDate"> {{ $t(`End Date`) }} </label>
         <input class="form-control" 
           @input      ="update"
           id          ="form.action.endDate"
           type        ="date"
-          v-model.trim="form.action.endDate[$i18n.locale]"
+          v-model.trim="form.action.endDate"
           v-validate  ="'required'"
           :class      ="[ getValidationClass(`form.action.endDate`) ]"
           :name       ="`form.action.endDate`"
@@ -613,7 +613,7 @@
         </form>
     </FormFeedback>
 
-    <DebugForm v-if="true" :form="form" :error="error"/>
+    <DebugForm v-if="false" :form="form" :error="error"/>
   </section>
 </template>
 
