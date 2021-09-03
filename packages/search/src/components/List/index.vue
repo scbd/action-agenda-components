@@ -2,15 +2,14 @@
   <div class="list" ref="list">
     <div class="sort-list-container">
       <select  v-model="sortBy" name="sort-by" @change="sortRows()" class="sort-list" >
-        <option value="" selected disabled> Sort By</option>
+
+        <option value="" disabled selected> Sort By</option>
         <option value="modifiedOn">Date Updated</option>
         <option value="createdOn">Date Created</option>
       </select>
     </div>
 
-    <card v-for="(action,index) in rows" v-bind:key="index"   v-bind="cardProps(action)"/>
-    <!-- <card  v-for="(action,index) in sortRows2('modifiedOn', 'asc')" v-bind:key="index"   v-bind="cardProps(action)"/> -->
-
+    <card v-for="(action,index) in rows" v-bind:key="index"   v-bind="cardProps(action)" :sortBy="sortBy"/>
   </div>
 </template>
 
@@ -31,42 +30,27 @@ export default {
   data
 }
 
-function data () {return { sortBy: '' }} 
+function data () {return { sortBy: 'modifiedOn' }} //By Default - Sort by modifiedOn
 
 function sortRows () {
 
-  console.log(this.sortBy)
 
-  // let modifier = 1
-  // if (this.sortBy == 'createdOn') modifier = -1
-  // const sortedRows = this.rows.slice().sort( (a,b) => {
-  //   if ( new Date(a.meta[this.sortBy]) < new Date(b.meta[this.sortBy])) return 1 * modifier
-  //   if ( new Date(a.meta[this.sortBy]) > new Date(b.meta[this.sortBy])) return -1 * modifier
-  //   return 0
-  // })
+
   const sortedRows = this.rows.slice().sort( (a,b) => { 
     if (this.sortBy=='createdOn') 
       return new Date(a.meta[this.sortBy]) - new Date(b.meta[this.sortBy])
     return new Date(b.meta[this.sortBy]) - new Date(a.meta[this.sortBy])
     })
 
-  this.rows = sortedRows
-  this.$emit('update-sortedRows',this.rows)
-}
-
-
-// Temp Test Function to sort by direction as well - ascending and descending
-function sortRows2(sortBy, sortDirection) {
-let modifier = 1
-if (sortDirection=='desc') modifier = -1
-
-const sortedRows = this.rows.slice().sort( (a,b) => {
-    if (a.meta[sortBy] < b.meta[sortBy]) return 1 * modifier
-    if (a.meta[sortBy] > b.meta[sortBy]) return -1 * modifier
+  /**let modifier = 1
+  if (this.sortBy == 'createdOn') modifier = -1
+  const sortedRows = this.rows.slice().sort( (a,b) => {
+    if ( new Date(a.meta[this.sortBy]) < new Date(b.meta[this.sortBy])) return 1 * modifier
+    if ( new Date(a.meta[this.sortBy]) > new Date(b.meta[this.sortBy])) return -1 * modifier
     return 0
-  })  
-  console.log(sortedRows)
-  return sortedRows
+  })*/
+
+  this.$emit('updateRows',sortedRows)
 }
 
 function mounted(){

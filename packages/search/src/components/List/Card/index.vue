@@ -15,7 +15,6 @@
           </div>
         </div>
       </div>
-  
     </div>
 
     <!-- TAB 1 -->
@@ -32,7 +31,8 @@
         <button v-on:click="changeStatus(_id,'reject')" v-if="me && me.hasRole('ActionAdmin') && status!=='rejected'" type="button" class="btn btn-outline-dark btn-sm">{{$t('Reject')}}</button>
 
       </div>
-      <small class="text-muted float-right">{{meta.modifiedOn|dateFormat}}</small>
+      <!-- <small class="text-muted float-right">{{meta.modifiedOn|dateFormat}}</small> -->
+      <small class="text-muted float-right">{{meta[sortBy]|dateFormat}}</small>
     </div>
   </div>
 </template>
@@ -52,7 +52,8 @@ export default {
     action       : { type: Object, required: true },
     actionDetails: { type: Object },
     meta         : { type: Object },
-    options      : { type: Object, required: true }
+    options      : { type: Object, required: true },
+    sortBy       : { type: Object, required: true }
   },
   computed: { status },
   methods : { getStatusUrl, changeStatus, loadIcons, viewUrl },
