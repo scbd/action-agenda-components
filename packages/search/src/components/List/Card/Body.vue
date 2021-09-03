@@ -84,9 +84,9 @@ async function countryComp() {
 }
 
 function actorTypeComp() {
-  if (!this.actorType) return
+  if (!this.actorType) return 
   
-  return this.actorType
+  return String(this.actorType)
 }
 
 function descriptionComp(){

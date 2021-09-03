@@ -5,19 +5,11 @@
       <div class="row">
         <div class="col-5">
           <div style="position:relative;">
-            <div v-if="actor.image" class="logo-container"> <img class="logo-image" :src='actor.image.url' :alt='actor.image.name'></div>
+            <div v-if="actor.image" class="logo-container"> 
+              <img class="logo-image" :src='actor.image.url' :alt='actor.image.name.en'/>
+            </div>
           </div>
         </div>
-        <!-- <div class="col-5 text-right">
-          <div style="position:relative;">
-            <span class="action-status"> {{meta.status}} </span>
-          </div>
-        </div>
-        <div class="col-5 text-right">
-          <div style="position:relative;">
-            <span v-for="(category,index) in filteredCategory(2)" v-bind:key="index"  class="action-categories-name">{{category.name}}<span v-if="index+1 < 2">, </span></span>
-          </div>
-        </div> -->
         <div class="col-5 text-right">
           <div style="position:relative;">
             <span class="action-status"> {{meta.status}} </span>
@@ -88,11 +80,10 @@ function  data(){ return { activeTab: 1, icons: []} }
 
 function actionStatus() {
   const status = this.meta.status
-
   return status
 }
 
-function filteredCategory(numOfCategories) {
+function filteredCategory(numOfCategories) {  
   return this.icons.slice(0,numOfCategories);   // Display only 2 categories
 }
 

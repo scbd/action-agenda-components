@@ -127,6 +127,7 @@ a > #aa-search code {
 #aa-search .col-5 {
   flex: 1 1 25%;
   max-width: 100%;
+  padding: 0;
 }
 #aa-search .col-11 {
   flex: 0 0 91.6666666667%;
@@ -351,10 +352,11 @@ a > #aa-search code {
 
 #aa-search .logo-container {
   float: left;
-  width: 10rem;
-  /* height: 5rem; */
-  position: relative;
-  object-fit: fill;
+  width: 6em;
+  height: auto;
+  /* height: auto; */
+  /* position: relative; */
+  object-fit: cover;
 }
 
 #aa-search .logo-image {
