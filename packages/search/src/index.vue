@@ -108,8 +108,7 @@ async function setRowsAndTotal(){
   this.loading    = true
 
   const { total } = await getCounts()
-
-
+  
   this.total   = total
   this.rows    = await getList()
   this.loading = false

@@ -38,7 +38,7 @@ export const getCountsSearchParams = async() => {
 
 
 async function query (){
-  const filters = readSearchParams()
+  const filters = readSearchParams('filter')
   let q = {}
 
   for (const key of filters){
@@ -59,10 +59,10 @@ function getFilterType(key){
   return getType(key)
 }
 
-function readSearchParams (){
+function readSearchParams (paramType){
   const params  = (new URL(document.location)).searchParams
   
-  return params.getAll('filter')
+  return params.getAll(paramType)
 }
 
 function defaultQuery (){

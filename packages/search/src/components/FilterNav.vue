@@ -16,6 +16,15 @@
               />
           </div>
       </nav>
+
+      <!-- Temporary Testing placement Only -->
+      <div class="sort-list-container">
+        <select  v-model="sort" name="sort-by" @change="updateSortSearchQuery" class="sort-list" >
+          <option value="" disabled selected > Sort By</option>
+          <option value="modifiedOn">Date Updated</option>
+          <option value="createdOn">Date Created</option>
+        </select>
+
   </section>
 </template>
 
@@ -31,7 +40,7 @@ export default {
     adminRole: { type: [ Array, String ] }
   },
   components: { AllFiltersSelect },
-  methods   : { initialize, addTextSearch, updateSearchQuery, onChange, readSearchParams, addFilter, injectTextAsOption },
+  methods   : { initialize, addTextSearch, updateSearchQuery, updateSortSearchQuery, onChange, readSearchParams, addFilter, injectTextAsOption },
   data,
   created,
   errorCaptured
@@ -55,7 +64,8 @@ function  data(){
       filter: '',
       data  : []
     },
-    countsMap: undefined
+    countsMap: undefined,
+    sort: {},    // Should be string or object?
   }
 }
 
@@ -106,7 +116,12 @@ function isAdmin($me={}, role){
 
 function updateSearchQuery(){
   resetSearchParams()
-  this.filters.forEach(({ identifier }) => addParam(identifier))
+  this.filters.forEach(({ identifier }) => addParam(identifier,'filter'))
+}
+
+function updateSortSearchQuery(){
+  resetSearchParams()
+  addParam(this.sort,'s')
 }
 
 async function addFilter(identifier){
@@ -124,6 +139,9 @@ function readSearchParams(){
   const filters = params.getAll('filter')
 
   filters.forEach(identifier => this.addFilter(identifier))
+
+  const getSort = params.get('s')
+  this.sort = getSort
 }
 
 function resetSearchParams(){
@@ -133,12 +151,14 @@ function resetSearchParams(){
   window.history.pushState({ path: newUrl }, '', newUrl)
 }
 
-function addParam(value){
+function addParam(value, paramType) {
+
   const { origin, search, pathname } = new URL(window.location)
-  const newSearchParam              = `filter=${encodeURIComponent(value)}`
+
+  const newSearchParam              = (paramType==='s') ? `s=${encodeURIComponent(value)}` : `filter=${encodeURIComponent(value)}`
   const newSearch                   = !search? `?${newSearchParam}` : `${search}&${newSearchParam}`
   const newUrl                      = `${origin}${pathname}${newSearch}`
-  
+
   window.history.pushState({ path: newUrl }, '', newUrl)
 }
 

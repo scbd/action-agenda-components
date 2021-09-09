@@ -1,13 +1,12 @@
 <template >
   <div class="list" ref="list">
-    <div class="sort-list-container">
+    <!-- <div class="sort-list-container">
       <select  v-model="sortBy" name="sort-by" @change="sortRows()" class="sort-list" >
-
-        <option value="" disabled selected> Sort By</option>
+        <option value="" disabled selected hidden> Sort By</option>
         <option value="modifiedOn">Date Updated</option>
         <option value="createdOn">Date Created</option>
       </select>
-    </div>
+    </div> -->
 
     <card v-for="(action,index) in rows" v-bind:key="index"   v-bind="cardProps(action)" :sortBy="sortBy"/>
   </div>
@@ -33,8 +32,6 @@ export default {
 function data () {return { sortBy: 'modifiedOn' }} //By Default - Sort by modifiedOn
 
 function sortRows () {
-
-
 
   const sortedRows = this.rows.slice().sort( (a,b) => { 
     if (this.sortBy=='createdOn') 
