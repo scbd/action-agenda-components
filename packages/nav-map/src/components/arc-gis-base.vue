@@ -5,17 +5,15 @@
 </template>
 
 <script>
-import                                          "@arcgis/core/assets/esri/themes/dark/main.css"
-// import WebMap from                              "@arcgis/core/WebMap"                          
+import "@arcgis/core/assets/esri/themes/dark/main.css"
+// import WebMap from "@arcgis/core/WebMap"                          
 import MapView from "@arcgis/core/views/MapView"
-// import SceneView from "@arcgis/core/views/SceneView"
 import Map from "@arcgis/core/Map"
 // import { load as projectionLoad, project } from "@arcgis/core/geometry/projection"             
-import config from                              "@arcgis/core/config"
+import config from "@arcgis/core/config"
 import MapImageLayer from '@arcgis/core/layers/MapImageLayer'
 import * as Intl from '@arcgis/core/intl'
 // import TileLayer from "@arcgis/core/layers/TileLayer"
-// import GeoJSONLayer from '@arcgis/core/layers/GeoJSONLayer'
 import Basemap from '@arcgis/core/Basemap'
 import GraphicsLayer from "@arcgis/core/layers/GraphicsLayer";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
@@ -25,7 +23,7 @@ import GroupLayer from "@arcgis/core/layers/GroupLayer";
 // import ElevationLayer from '@arcgis/core/layers/ElevationLayer'
 // import BaseElevationLayer from '@arcgis/core/layers/BaseElevationLayer'
 
-// import  SpatialReference from '@arcgis/core/geometry/SpatialReference'
+// import SpatialReference from '@arcgis/core/geometry/SpatialReference'
 // import Graphic from '@arcgis/core/Graphic'
 // import Point from '@arcgis/core/geometry/Point'
 // import Mesh from '@arcgis/core/geometry/Mesh'
@@ -44,12 +42,11 @@ export default {
 function data(){ return { map: undefined} }
 
 const countries = new FeatureLayer({
-    portalItem: {
-      id: "53a1e68de7e4499cad77c80daba46a94"
-    }
+    //This URL still doesn't work
+    url: "https://geoportal.un.org/arcgis/home/webmap/viewer.html?useExisting=1&layers=ef3a590937a7496fa178bab3f564a4e2&layerId=0"
 });
 const worldImg = new TileLayer({
-    url: "https://geoservices.un.org/arcgis/rest/services/ClearMap_Dark/MapServer"
+    url: "https://geoservices.un.org/arcgis/rest/services/ClearMap_WebDark/MapServer"
 });
 worldImg.when(() => {
     worldImg.sublayers.forEach((layer) => {
@@ -64,7 +61,7 @@ const countryGraphicsLayer = new GraphicsLayer({
     effect: "bloom(200%)"
 });
 const tileLayer = new TileLayer({
-    url: "https://geoservices.un.org/arcgis/rest/services/ClearMap_Dark/MapServer"
+    url: "https://geoservices.un.org/arcgis/rest/services/ClearMap_WebDark/MapServer"
 });
 tileLayer.when(() => {
     tileLayer.sublayers.forEach((layer) => {
@@ -86,7 +83,7 @@ function created(){
   
   Intl.setLocale("ru")
 
-  const baseTileLayer = (new MapImageLayer({ url: "https://geoservices.un.org/arcgis/rest/services/ClearMap_Dark/MapServer"}))
+  const baseTileLayer = (new MapImageLayer({ url: "https://geoservices.un.org/arcgis/rest/services/ClearMap_WebDark/MapServer"}))
   
   const basemap = new Basemap({
     baseLayers: [ baseTileLayer ],
@@ -105,9 +102,6 @@ function created(){
 
 function mounted(){
 
-  // const layer = new MapImageLayer({ url: "https://geoservices.un.org/arcgis/rest/services/ClearMap_Dark/MapServer" })
-  // this.map.add(layer)
-
   globalProps.mapView = new MapView({
       container: 'mapView',
       map: this.map,
@@ -123,8 +117,6 @@ function mounted(){
   Intl.setLocale("ru")
 
   console.log('this.mapView', globalProps.mapView.when)
-    
-// console.log('this.mapView11',this.mapView)
   
   globalProps.mapView.when(()=>{
     globalProps.mapView.graphics.add(getCircleMarker(100, globalProps.mapView))
@@ -153,16 +145,13 @@ async function highlightCountry(query, zoomGeometry){
     color: "rgba(255, 255, 255, 1)",//white
     outline: null
   }
-  // query the countries layer for a country that intersects the clicked point
   const {
       features: [feature]
     } = await countries.queryFeatures(query);
     
-  // user clicked on a country and the feature is returned
   if (feature) {
     countryGraphicsLayer.graphics.removeAll();
     feature.symbol = symbol;
-    // add the country to the graphics layer
     countryGraphicsLayer.graphics.add(feature);
     // zoom to the highlighted country
     globalProps.mapView.goTo(
@@ -173,7 +162,6 @@ async function highlightCountry(query, zoomGeometry){
       { duration: 500 }
     );
     worldImg.effect = "blur(8px) brightness(1.2) grayscale(0.8)";
-    // set the group layer opacity to 1, increase the layer brightness and add drop-shadow to make the clicked country stand out.
     groupLayer.effect = "brightness(2.5) drop-shadow(0, 0px, 3px)";
     groupLayer.opacity = 1;
   }
