@@ -2,6 +2,7 @@ import { toURLSearchParams } from '@houlagins/load-http'
 import { getType           } from '@action-agenda/cached-apis'
 import { getOptions        } from './options'
 import   filterPropertyMap   from './filter-to-schema-property-map'
+import { values } from 'lodash'
 
 //primary module api
 export default (page={}) => Promise.all([ getApi(), getHeaders(), getSearchParams(page) ])
@@ -30,15 +31,33 @@ export const getSearchParams = async(page={}) => {
 
 export const getCountsSearchParams = async() => {
   const params = { q: await query() }
-  
+
   return toURLSearchParams(Object.assign(defaultCountsQuery(), params))
+}
+
+export const getSortParams = async(page={}) => {
+  const params = {s: await sortQuery(), ...page }
+
+  // return toURLSearchParams(Object.assign(defaultQuery(), params))
 }
 
 // private function
 
+function sortQuery() {
+  const sortType = readParamType('s')
+  let s = {}
+
+  const key = Object.keys(sortType)
+  const type = 'meta'
+
+  // Unsure of how to form s to send to api here?
+
+
+  return s
+}
 
 async function query (){
-  const filters = readSearchParams('filter')
+  const filters = readParamType('filter')
   let q = {}
 
   for (const key of filters){
@@ -49,7 +68,6 @@ async function query (){
     if(type === '$text') q =  addTextQuery(key, q)
     else q = getMongoPropertyQuery(q, type, key)
   }
-
   return q
 }
 
@@ -59,7 +77,7 @@ function getFilterType(key){
   return getType(key)
 }
 
-function readSearchParams (paramType){
+function readParamType (paramType){
   const params  = (new URL(document.location)).searchParams
   
   return params.getAll(paramType)
@@ -104,7 +122,7 @@ function getMongoPropertyQuery(q, type, key){
     if(!q[pPath]) return q[pPath] = { $all: [ { identifier: key } ] }
 
     if (q[pPath].$all) return q[pPath].$all.push({ identifier: key })
-  })
+  })  
 
   return q
 }
