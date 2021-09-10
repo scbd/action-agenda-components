@@ -2,19 +2,20 @@
   <div class="card my-3">
     <div class="card-body">
 
-      <div class="card-title">
-        <div v-if="image" class="text-center"><img class="img-fluid" :src="image.url" /></div>
-        <h3 class="text-center">{{name}} </h3>
-      </div>
-
       <div class="card-text">
-        <table class="table table-striped table-dark table-sm">
+        <table class="table table-borderless table-dark table-sm">
           <tbody>
             <tr v-if="url">
               <th class="align-middle" scope="row" >{{$t('Website')}}: </th>
               <td  class="col-10 p-3">
                 <a v-if="hasProtocol" :href="url" >{{url}}</a>
                 <span v-if="!hasProtocol">{{url}}</span>
+              </td>
+            </tr>
+            <tr v-if="url">
+              <th class="align-middle" scope="row" ></th>
+              <td  class="col-10 p-3">
+                <img v-if="image" style="max-width:20%;" :src="image.url" />
               </td>
             </tr>
             <tr v-if="country">

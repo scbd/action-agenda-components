@@ -5,30 +5,61 @@
     <div  v-show="!loading">
 
       <section v-if="record.action">
-        <h1>{{record.action.name}}</h1>
-        <div class="card my-3">
+        <div class="card">
           <div class="card-body">
-            <div class="row">
-              <div class="col-12">
-                <p class="desc"> {{record.action.description}}</p>
-              </div>
-              <div class="col-12 mb-3" v-for="item in record.action.attachments" v-bind:key="item.url">
-                <a :href="item.url" target="_blank" rel="noopener"> <Icon name="file"/> {{item.name}} </a>
+            <div>
+              <h4>{{$t('Title of Business Commitment:')}}</h4>
+            </div> 
+            <div>
+              <p>{{record.action.name}}</p>
+            </div> 
+            <div>
+              <h4>{{$t('Description:')}}</h4>
+            </div> 
+            <div>
+              <p>{{record.action.description}}</p>
+            </div> 
+            <div>
+              <h4>{{$t('Partners:')}}</h4>
+            </div> 
+            <div class="row my-3" >
+              <div class="col-12 col-md-4 col-lg-3" v-for=" p in record.partners" :key="p.name" >
+                <div class="card partner " >
+                  <div class="card-body">
+                    {{p.name}}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
+            <div>
+              <h4>{{$t('Focal Point:')}}</h4>
+            </div> 
+            <div>
+              <Entity :entity="record.contacts[0]"/>
+            </div> 
+            <div>
+              <h4>{{$t('Contact details:')}}</h4>
+            </div> 
+            <div>
+              <p></p>
+            </div> 
+            <div>
+              <h4>{{$t('Web address:')}}</h4>
+            </div> 
+            <div>
+              <Entity  :entity="record.actor"/>
+            </div>             
+          </div>  
+          <div>
+            <div>
 
-      <section v-if="record.actor">
-        <h2>{{$t('Submitted By')}}</h2>
-
-        <Entity  :entity="record.actor"/>
-
+            </div> 
+          </div> 
+        </div>  
       </section>
       
       <section v-if="record.actionDetails">
-        <h2>{{$t('Action Details')}}</h2>
+        <h4>{{$t('Action Details')}}</h4>
 
         <div class="card my-3">
           <div class="card-body p-3">
@@ -46,25 +77,6 @@
             </div>
           </div>
         </div>
-      </section>
-
-      <section v-if="record.partners">
-        <h2>{{$t('Partner (s)')}}</h2>
-        <div class="row my-3" >
-          <div class="col-12 col-md-4 col-lg-3 mb-2" v-for=" p in record.partners" :key="p.name" >
-            <div class="card partner " >
-              <div class="card-body">
-                {{p.name}}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section v-if="record.contacts">
-        <h2>{{$t('Contact')}}</h2>
-
-        <Entity :entity="record.contacts[0]"/>
       </section>
     </div>
 
@@ -151,7 +163,7 @@ function hasDetails(){
 }
 
 
-// <style lang="scss" >
+//<style lang="scss" >
 
 //   #aa-view {
       // *,
@@ -168,5 +180,5 @@ function hasDetails(){
 //     .item span { margin-left:-3em; }
 //     .item span:first-line { margin-left:0; }
 //   }
-// </style>
+//</style>   
 </script>

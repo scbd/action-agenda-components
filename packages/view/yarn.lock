@@ -1176,10 +1176,10 @@
   resolved "https://registry.yarnpkg.com/@houlagins/locale/-/locale-1.0.0.tgz#060712a663da221535a0e414043ac27010dbed0f"
   integrity sha512-bMYbzjOEyO9pg9r9SwqzQcoycEwM7w9KXFCKz4s5zkB2hXgF+/9INQCp7cND2qkgzExXLVHqSXTEbW5zfkQCjw==
 
-"@houlagins/self-embedding-component@1.0.15":
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/@houlagins/self-embedding-component/-/self-embedding-component-1.0.15.tgz#fd28490867573690fdb899b87fb6bc2000dd6a0e"
-  integrity sha512-8CayAcAQeV5dv3kyL0qbhcZ5gmkUGTL0OEcxDhIUgrTv31NFKNvkIcpRBtBuCPkmO+wFzk30RA6BrWZaMM7WMA==
+"@houlagins/self-embedding-component@1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@houlagins/self-embedding-component/-/self-embedding-component-1.0.17.tgz#783ceb128401c7817db5fe2675d03563fc216749"
+  integrity sha512-j+fVVpIZHhJYmnsbK3hu212YjDoeenmgw9u1ZbZ0pBL4FQ0d09DHfiGhXK7HLYpIO8zeg1InhZE465vVMpksaw==
   dependencies:
     "@houlagins/default-options" "1.0.2"
     "@houlagins/locale" "^1.0.0"
