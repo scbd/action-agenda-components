@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AAForm  :options="{ formType: 'public' }" force-env="production"/>
+    <AAForm  :options="{ formType: 'business' }" force-env="production"/>
   </div>
 </template>
 
