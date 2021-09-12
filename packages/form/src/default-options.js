@@ -1,92 +1,41 @@
-import { setDefaultOptions, getDefaultOptionsFunction } from '@houlagins/default-options'
 import getLocale from './components/locale.js'
 
-const name     = '@action-agenda/form'
-const basePath = '/'
-const locale   = getLocale()
-const formType = 'organization'
+const basePath      = '/'
+const formType      = 'organization'
+const label         = '' // form label
+const api           = 'https://api.cbd.int/api'
 
-  
-const person = {
-  label:false,
-  locale,
-  api: 'https://api.cbddev.xyz/api', basePath, locale,
-  actionDetails:{      
-    operationalAreas:false,
-    thematicAreas:false, 
-    aichiTargets:true, 
-    sdgs:true,
-    progressMeasured:true
-  },
-  contacts:false,
-  partners:false,
-  anonymous:true, 
-  accountSignup:true, 
-  mailingList:{list:'action-agenda', tags:['person'], msg:''}, 
+const actionDetails = { // show these input fields
+                        operationalAreas: true,
+                        thematicAreas   : true,
+                        aichiTargets    : true,
+                        sdgs            : true,
+                        progressMeasured: true
+                      }
+
+const contacts      = true // show these input fields
+const partners      = true // show these input fields
+const anonymous     = true // allow anon to fill form or make them sign in with accounts.cbd.int
+const accountSignup = true // if anon, auto create account or associate account based on email.
+const mailingList   = { list: 'action-agenda', tags: [ 'organization' ], msg: 'Join our mailing list and receive updates on the Action Agenda.' }
+
+const options = {
+  formType, api, basePath, getLocale, label, actionDetails, contacts, partners, anonymous, accountSignup, mailingList
 }
 
-const organization = {
-  locale,
-  label:false,
-  api: 'https://api.cbddev.xyz/api', basePath, locale,
-  actionDetails:{      
-    operationalAreas:true,
-    thematicAreas:true, 
-    aichiTargets:true, 
-    sdgs:true,
-    progressMeasured:true
-  },
-  contacts:true,
-  partners:true,
-  anonymous:true, 
-  accountSignup:true, 
-  mailingList:{list:'action-agenda', tags:['organization'], msg:'Join our mailing list and receive updates on the Action Agenda.'}, 
-}
+const organizationOptions         = options
+const publicOrganizationOptions   = { ...organizationOptions, formType: 'public',   mailingList: { ...mailingList, tags:[ 'public' ] } }
+const businessOrganizationOptions = { ...organizationOptions, formType: 'business', mailingList: { ...mailingList, tags:[ 'business' ] } }
 
-const publicOrg = {
-  locale,
-  label:false,
-  api: 'https://api.cbddev.xyz/api', basePath, locale,
-  actionDetails:{      
-    operationalAreas:true,
-    thematicAreas:true, 
-    aichiTargets:true, 
-    sdgs:true,
-    progressMeasured:true
-  },
-  contacts:true,
-  partners:true,
-  anonymous:true, 
-  accountSignup:true, 
-  mailingList:{list:'action-agenda', tags:['public'], msg:'Join our mailing list and receive updates on the Action Agenda.'}, 
-}
+const personOptions               = { ...organizationOptions,       formType: 'person', mailingList: { ...mailingList, tags:[ 'person' ] } }
+const partyOptions                = { ...publicOrganizationOptions, formType: 'party' ,  anonymous: false, accountSignup: false, mailingList: { ...mailingList, tags:['party'] } }
 
-const party = {
-  locale,
-  label:false,
-  api: 'https://api.cbddev.xyz/api', basePath, locale,
-  actionDetails:{      
-    operationalAreas:true,
-    thematicAreas:true, 
-    aichiTargets:true, 
-    sdgs:true,
-    progressMeasured:true
-  },
-  contacts:true,
-  partners:true,
-  anonymous:false, 
-  accountSignup:true, 
-  mailingList:{list:'action-agenda', tags:['party'], msg:'Join our mailing list and receive updates on the Action Agenda.'}, 
-}
+const formTypeMap = new Map([
+  [ 'organization', organizationOptions         ],
+  [ 'public'      , publicOrganizationOptions   ],
+  [ 'person'      , personOptions               ],
+  [ 'business'    , businessOrganizationOptions ],
+  [ 'party'       , partyOptions                ]
+])
 
-const dev           = { formType, person, party, public:publicOrg, organization }
-const stg           = { ...dev }
-const prod          = { ...stg, person: { ...person, api: 'https://www.cbd.int/api' }, party: {...party , api: 'https://www.cbd.int/api' }, public:{... publicOrg, api: 'https://www.cbd.int/api'}, organization: {...organization, api: 'https://www.cbd.int/api'}  }
-
-const environments  = { prod, stg, dev }
-const validationMap = { formType: String, forceEnv: String, basePath: String, locale: String, api: String, person: Object, party: Object, public: Object, organization: Object }
-
-
-setDefaultOptions({ environments, validationMap, name }, name)
-
-export  default getDefaultOptionsFunction(name)
+export default (formType) => formTypeMap.get(formType) || organizationOptions

@@ -2,8 +2,7 @@
   <section id="aa-form">
     <Icons v-once/>
     <FormFeedback :error="error" :publish-requested="feedback.publishRequested" :has-slot="true" @deleteFeedback="deleteFeedback" >
-    
-        <form v-if="((actorType!=='party') || (actorType==='party' && me.isGov)) && !feedback.publishRequested" @submit="onSubmit"  novalidate>
+        <form v-if="config && ((actorType!=='party') || (actorType==='party' && me.isGov)) && !feedback.publishRequested" @submit="onSubmit"  novalidate>
 
           <legend v-if="config.label">{{ $t(`title.${actorType}`) }}</legend>
           <div class="card">
@@ -175,9 +174,8 @@ function updateContacts(){
 }
 
 function config(){
-  const propsOptions = this.options? this.options[this.actorType] || this.options : {}
-
-  return getDefaultOptions(propsOptions)[this.actorType]
+console.log('getDefaultOptions(propsOptions)[this.actorType]', getDefaultOptions(this.actorType))
+  return getDefaultOptions(this.actorType)
 }
 
 function validate(){

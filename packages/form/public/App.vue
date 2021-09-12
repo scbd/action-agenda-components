@@ -1,11 +1,10 @@
 <template>
   <div id="app">
-    <AAForm  :options="{ formType: 'public' }" force-env="production"/>
+    <AAForm  :options="{ formType: 'business' }" force-env="production"/>
   </div>
 </template>
 
 <script>
-// import '@scbd/www-css'
 import '../scripts/index.css'
 import AAForm from '../src/index.vue'
 
