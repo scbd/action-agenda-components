@@ -16,6 +16,7 @@
   import   Person         from './Person.vue'
   import   Organization   from './Organization.vue'
   import   Public         from './Public.vue'
+  import   Business       from './business.vue'
 
   export default {
     name      : 'ActorSelect',
