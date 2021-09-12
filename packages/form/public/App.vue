@@ -5,7 +5,6 @@
 </template>
 
 <script>
-// import '@scbd/www-css'
 import '../scripts/index.css'
 import AAForm from '../src/index.vue'
 

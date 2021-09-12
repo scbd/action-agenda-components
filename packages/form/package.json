@@ -49,13 +49,12 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint --fix",
     "release": "yarn publish --access=public --tag latest",
-    "link": "lerna link"
+    "clean-reinstall": "if test -f yarn.lock; then rm yarn.lock; fi && if test -d node_modules; then rm -rf node_modules; fi && yarn"
+
   },
   "dependencies": {
-    "@action-agenda/cached-apis": "1.0.12",
-    "@action-agenda/icons": "1.0.4",
-    "@houlagins/default-options": "1.0.2",
-    "@houlagins/load-http": "1.0.3",
+    "@action-agenda/cached-apis": "1.0.13",
+    "@action-agenda/icons": "1.0.6",
     "@houlagins/locale": "1.0.0",
     "@houlagins/self-embedding-component": "1.0.17",
     "@scbd/sso-vue-plugin-scbd": "1.0.4",
