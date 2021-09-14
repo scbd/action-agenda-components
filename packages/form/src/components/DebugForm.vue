@@ -1,5 +1,6 @@
 <template >
   <section >
+    <hr/>
     <br/><br/><br/>
     <legend>DEBUG:</legend>
     <div class="card debug">
@@ -28,16 +29,16 @@
 
       </div>
     </div>
+    <hr/>
   </section>
 </template>
 <script>
-
-
   export default {
-    name      : 'DebugForm',
-    props: ['form','error']
+    name  :  'DebugForm',
+    props : ['form'     ,'error']
   }
-
-
-
 </script>
+
+<style >
+.debug{ border: solid 1px red;}
+</style>
