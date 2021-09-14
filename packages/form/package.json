@@ -39,7 +39,6 @@
     "src/*"
   ],
   "scripts": {
-    "init": "dist-builder init",
     "serve": "NODE_ENV=production vue-cli-service serve --open",
     "build": "DEBUG=TRUE dist-builder && DEBUG=TRUE dist-builder widget",
     "build-widget": "dist-builder widget",
@@ -49,7 +48,7 @@
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint --fix",
     "release": "yarn publish --access=public --tag latest",
-    "link": "lerna link"
+    "clean-reinstall": "if test -f yarn.lock; then rm yarn.lock; fi && if test -f node_modules; then rm -rf node_modules; fi && yarn install --force"
   },
   "dependencies": {
     "@action-agenda/cached-apis": "1.0.12",
@@ -59,7 +58,7 @@
     "@houlagins/locale": "1.0.0",
     "@houlagins/self-embedding-component": "1.0.17",
     "@scbd/sso-vue-plugin-scbd": "1.0.4",
-    "axios": "0.21.1",
+    "axios": "^0.21.1",
     "change-case": "4.1.2",
     "consola": "2.15.3",
     "core-js": "3.6.5",
@@ -81,8 +80,8 @@
     "postcss": "7.0.35",
     "postcss-loader": "6.1.0",
     "sass-loader": "10.1.0",
-    "vue-template-compiler": "2.6.11",
-    "vue": "2.6.11"
+    "vue": "2.6.11",
+    "vue-template-compiler": "2.6.11"
   },
   "description": "https://github.com/scbd/action-agenda-components/tree/master/packages/form#readme",
   "bugs": {
