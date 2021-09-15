@@ -24,7 +24,7 @@ export const getApiUri = async() => {
 }
 
 export const getApiQuery= async(page={}) => {
-  const params = { q: await query(), ...page }
+  const params = { q: await getMongoQuery(), s: getMongoSortQuery(), ...page }
   
   return toURLSearchParams(Object.assign(defaultApiQuery(), params))
 }
@@ -35,25 +35,11 @@ export const getCountsApiQuery = async() => {
   return toURLSearchParams(Object.assign(defaultCountsApiQuery(), params))
 }
 
-export const getSortParams = async(page={}) => {
-  const params = {s: await sortQuery(), ...page }
-
-  // return toURLSearchParams(Object.assign(defaultQuery(), params))
-}
-
 // private function
+function getMongoSortQuery() {
+  const sortPropertyName = readSearchParamsByName('s')[0]
 
-function sortQuery() {
-  const sortType = readParamType('s')
-  let s = {}
-
-  const key = Object.keys(sortType)
-  const type = 'meta'
-
-  // Unsure of how to form s to send to api here?
-
-
-  return s
+  return sortPropertyName? { [`meta.${sortPropertyName}`]: -1 }: { 'meta.modifiedOn': -1, 'meta.createdOn': -1 }
 }
 
 async function getMongoQuery (){
@@ -70,12 +56,6 @@ async function getMongoQuery (){
   }
   return q
 }
-
-// function getFilterType(key){
-//   if(key.includes('FREETEXT-')) return '$text'
-
-//   return getType(key)
-// }
 
 function readSearchParamsByName (searchParamName){
   const params  = (new URL(document.location)).searchParams
@@ -111,7 +91,6 @@ function  getMongoFilterFields(){
   
   return f
 }
-
 
 function getMongoPropertyQuery(q, type, key){
   const propertyPaths = filterPropertyMap[type]
