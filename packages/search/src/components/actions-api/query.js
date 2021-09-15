@@ -5,9 +5,9 @@ import   filterPropertyMap   from './filter-to-schema-property-map'
 import { values } from 'lodash'
 
 //primary module api
-export default (page={}) => Promise.all([ getApi(), getHeaders(), getSearchParams(page) ])
+export default (page={}) => Promise.all([ getApiUri(), getHeaders(), getApiQuery(page) ])
 
-export const getCountsQuery = () => Promise.all([ getApi(), getHeaders(), getCountsSearchParams() ])
+export const getCountsQuery = () => Promise.all([ getApiUri(), getHeaders(), getCountsApiQuery() ])
 
 
 //secondary module api
@@ -17,22 +17,22 @@ export const getHeaders = async() => {
   return (await getToken())? { Authorization: `Ticket ${await getToken()}` } : {}
 }
 
-export const getApi = async() => {
+export const getApiUri = async() => {
   const { api } = await getOptions()
 
   return `${api}/v2019/actions`
 }
 
-export const getSearchParams = async(page={}) => {
+export const getApiQuery= async(page={}) => {
   const params = { q: await query(), ...page }
   
-  return toURLSearchParams(Object.assign(defaultQuery(), params))
+  return toURLSearchParams(Object.assign(defaultApiQuery(), params))
 }
 
-export const getCountsSearchParams = async() => {
-  const params = { q: await query() }
+export const getCountsApiQuery = async() => {
+  const params = { q: await getMongoQuery() }
 
-  return toURLSearchParams(Object.assign(defaultCountsQuery(), params))
+  return toURLSearchParams(Object.assign(defaultCountsApiQuery(), params))
 }
 
 export const getSortParams = async(page={}) => {
@@ -56,12 +56,12 @@ function sortQuery() {
   return s
 }
 
-async function query (){
-  const filters = readParamType('filter')
+async function getMongoQuery (){
+  const filters = readSearchParamsByName('filter')
   let q = {}
 
   for (const key of filters){
-    const type = await getFilterType(key)
+    const type = await readSearchParamsByName(key)
 
     if(!type) continue
 
@@ -71,28 +71,29 @@ async function query (){
   return q
 }
 
-function getFilterType(key){
-  if(key.includes('FREETEXT-')) return '$text'
+// function getFilterType(key){
+//   if(key.includes('FREETEXT-')) return '$text'
 
-  return getType(key)
-}
+//   return getType(key)
+// }
 
-function readParamType (paramType){
+function readSearchParamsByName (searchParamName){
   const params  = (new URL(document.location)).searchParams
   
-  return params.getAll(paramType)
+  return params.getAll(searchParamName)
 }
 
-function defaultQuery (){
+function defaultApiQuery (){
   const f  = { ... getMongoFilterFields(), meta: 1, 'action.name': 1, 'action.description': 1, 'action.image': 1 }
 
   delete(f['meta.status'])
   delete(f['actor.country.identifier'])
   delete(f['actor.types'])
 
-  return { ...defaultCountsQuery(),  f }
+  return { ...defaultCountsApiQuery(),  f }
 }
-function defaultCountsQuery (){
+
+function defaultCountsApiQuery (){
   const q  = {}
   const sk = 0
   const s  = { 'meta.modifiedOn': -1, 'meta.createdOn': -1 }  // -1?
@@ -100,6 +101,7 @@ function defaultCountsQuery (){
 
   return { q, sk, s, f }
 }
+
 function  getMongoFilterFields(){
   const f = {}
 
