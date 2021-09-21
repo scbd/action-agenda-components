@@ -3,13 +3,6 @@
   <div class="card card-row mb-5">
     <div class="card-header">
       <div class="row">
-        <div class="col-5">
-          <div style="position:relative;">
-            <div v-if="actor.image" class="logo-container"> 
-              <img class="logo-image" :src='actor.image.url' :alt='getLogoName'/>
-            </div>
-          </div>
-        </div>
         <div class="col-5 text-right">
           <div style="position:relative;">
             <span v-if="meta.status" class="action-status"> {{meta.status}} </span>
@@ -66,7 +59,7 @@ export default {
     options      : { type: Object, required: true },
     actor        : { type: Object, required: true },    
   },
-  computed: { status, getLogoName },
+  computed: { status },
   methods : { getStatusUrl, changeStatus, loadIcons, viewUrl, filteredCategory },
   filters : { dateFormat },
   data,
@@ -77,11 +70,11 @@ export default {
 
 function  data(){ return { activeTab: 1, icons: []} }
 
-function getLogoName() {
-  const locale = this.$i18n.locale
+// function getLogoName() {
+//   const locale = this.$i18n.locale
 
-  return this.actor.image.name[locale] || this.actor.image.name['en']
-}
+//   return this.actor.image.name[locale] || this.actor.image.name['en']
+// }
 
 function filteredCategory(numOfCategories) {  
   return this.icons.slice(0,numOfCategories);   // Display only 2 categories

@@ -1,9 +1,14 @@
 <template>
   <div class="container-fluid" >
-    <div class="row no-gutters">
-      <div class="col-sm-12" >
-        <div class="card-body">
-          <h5 class="card-title">{{nameComp}}, {{actorCountry}} - {{actorTypeComp}}</h5>
+    <div class="row no-gutters row-background-color">
+        <div v-if="image" class="col-sm-1">
+          <div class="logo-container"> 
+            <img class="logo-image" :src='image.url' :alt='getLogoName'/>
+          </div> 
+        </div>
+        <div class="col-sm-11">
+          <div class="card-body">
+          <h5 class="card-title">  {{nameComp}}, {{actorCountry}} - {{actorTypeComp}}</h5>
           <p class="card-text desc"> {{descriptionComp}} </p>
           <span v-if="icons.length">
             <span v-for="(icon,index) in icons" v-bind:key="index">
@@ -11,8 +16,8 @@
               <a v-if="icon && icon.image && icon.url" :href="icon.url" hreflang="en" :title="icon.name"> <img :src="icon.image" :alt="icon.name" class="action-icon mx-1"/> </a>
             </span>
           </span>
+          </div>
         </div>
-      </div>
     </div>
   </div>
 </template>
@@ -21,6 +26,7 @@
 
 import { lookUp      } from '@action-agenda/cached-apis'
 import { getUnLocale } from '@houlagins/locale'
+import   i18n              from '../../../locales/index.js'
 
 export default {
   name : 'CardBody',
@@ -28,15 +34,17 @@ export default {
     name         : { type: Object, required: true },
     description  : { type: Object, required: true },
     actionDetails: { type: Object },
-    country      : { type: Object, required: true },   
-    actorType    : { type: Object, required: true  }   
+    country      : { type: Object, required: true },
+    actorType    : { type: Object, required: true },
+    image        : { type: Object, required: true }   
   },
 
-  computed: { nameComp, descriptionComp, actorTypeComp },
+  computed: { nameComp, descriptionComp, actorTypeComp, getLogoName },
   methods : { loadIcons, countryComp },
   updated,
   created,
-  data
+  data,
+  i18n
 }
 
 function data(){
@@ -76,9 +84,7 @@ function nameComp(){
 async function countryComp() {
   if (!this.country) return
 
-  let nameOfCountry = {}
-  if (this.country) 
-      nameOfCountry = await lookUp('countries',this.country.identifier, true)
+  const nameOfCountry = await lookUp('countries',this.country.identifier, true)
   
   this.actorCountry = nameOfCountry.name    
 }
@@ -94,6 +100,13 @@ function descriptionComp(){
 
   return this.description[locale] || this.description['en']
 }
+
+function getLogoName() {
+  const locale = this.$i18n.locale
+
+  return this.image.name[locale] || this.image.name['en']
+}
+
 </script>
 
 <style scoped>

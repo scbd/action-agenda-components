@@ -110,7 +110,9 @@ a > #aa-search code {
   padding-right: 15px;
   padding-left: 15px;
 }
-
+#aa-search .col-sm-1 {
+  pad: 5em;
+}
 #aa-search .col {
   flex-basis: 0;
   flex-grow: 1;
@@ -351,18 +353,21 @@ a > #aa-search code {
 }
 
 #aa-search .logo-container {
-  float: left;
-  width: 6em;
+  /* float: left; */
+  width: auto;
   height: auto;
-  /* height: auto; */
-  /* position: relative; */
   object-fit: cover;
+  padding-top: 1.25rem;
+  padding-left: 0.5rem;
 }
 
 #aa-search .logo-image {
   max-width: 100%;
   height: auto;
   display: inline-block;
+}
+#aa-search .row-background-color {
+  background-color: #dfe9e0;
 }
 
 #aa-search .action-status {
