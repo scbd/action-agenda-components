@@ -7,20 +7,20 @@
     
     <Person  @input="update"  v-model="input.person"  v-if="isSelectedType('person')"/>
 
+    <Business  @input="update"  v-model="input.business"  v-if="isSelectedType('business')"/>
+
   </section>
 </template>
-
-
 
 <script>
   import   Person         from './Person.vue'
   import   Organization   from './Organization.vue'
   import   Public         from './Public.vue'
-  import   Business       from './business.vue'
+  import   Business       from './Business.vue'
 
   export default {
     name      : 'ActorSelect',
-    components: { Person, Organization, Public },
+    components: { Person, Organization, Public, Business },
     props: {
       value: { type: Object, required: true },
       type : { type: String, required: true }
@@ -38,7 +38,7 @@
 
   function data (){
     return {
-      input: { type: null, person: {}, organization: {}, party: {}, public: {} },
+      input: { type: null, person: {}, organization: {}, party: {}, public: {}, business: {} },
       values: this.value
     }
   }
