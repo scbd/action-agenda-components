@@ -4,605 +4,62 @@
     <FormFeedback :error="error" :publish-requested="feedback.publishRequested" :has-slot="true" @deleteFeedback="deleteFeedback" >
     
         <form v-if="((actorType!=='party') || (actorType==='party' && me.isGov)) && !feedback.publishRequested" @submit="onSubmit"  novalidate>
-<!--Actor line starts -->
+
           <legend v-if="config.label">{{ $t(`title.${actorType}`) }}</legend>
           <div class="card">
             <div class="card-body">
-              <div class="mb-3" v-if="actorType" :type="actorType">
+              <ActorSelect v-if="actorType" class="mb-3"  v-model="form.actor" :type="actorType" @input="updateContacts"/>
 
-              <!-- Organization code -->
-                <div v-if="isSelectedType('organization') && form.actor"> 
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="form-group" :id="`group.${form.actor.actorType}.name`" >
-                        <label  :for="`${form.actor.actorType}.name`"> {{ $t(`Name of the lead organization`) }} </label>
-                        <input class="form-control" 
-                          @input      ="update"
-                          :id         ="`${form.actor.actorType}.name`"
-                          type        ="text"
-                          v-model.trim="form.actor.name[$i18n.locale]"
-                          v-validate  ="'required|max:140'"
-                          :class      ="[ getValidationClass(`${form.actor.actorType}.name`) ]" 
-                          :name       ="`${form.actor.actorType}.name`"
-                          />
-                        <field-error-message :error="errors.collect(`${form.actor.actorType}.name`)"/>
-                      </div>
-                    </div>
-                  </div>
+              <legend >{{ $t(`Commitment`) }}</legend>
 
-                  <div class="row">
-
-                    <div class="col-lg-6">
-                      <div class="form-group" :id="`group.${form.actor.actorType}.url`" >
-                        <label  :for="`${form.actor.actorType}.url`">{{ $t('Website') }} </label>
-                        <input class="form-control" 
-                          @input="update"
-                          :id="`${form.actor.actorType}.url`"
-                          type="url"
-                          v-model.trim="form.actor.url"
-                          v-validate="'url'"
-                          :class   ="[ getValidationClass(`${form.actor.actorType}.url`) ]" 
-                          :name="`${form.actor.actorType}.url`"
-                        />
-                        <field-error-message :error="errors.collect(`${form.actor.actorType}.url`)" :state="validateState(`${form.actor.actorType}.url`)" />
-                      </div>
-                    </div>
-                  <div class="col-lg-6">
-                      <div class="form-group" :id="`group.${form.actor.actorType}.image`" l>
-                        <label :for="`${form.actor.actorType}.image`"> {{$t(`Logo`)}} </label>
-                          <Links
-                          @input="update"
-                          :id="`${form.actor.actorType}.image`"
-                          v-model="form.actor.image"
-                          :type="['files','links']"
-                          :multi='false'
-                          :name="`${form.actor.actorType}.image`"/>
-                      </div>
-                    </div>
-                  </div>
-              
-                  <div class="row">
-                    <div class="col-lg-6">
-
-                      <div class="form-group" :id="`group.${form.actor.actorType}.country`">
-                        <label  :for="`${form.actor.actorType}.country`">{{ $t(`Country`) }} </label>
-                        <SCBDSelect
-                          @input="update"
-                          type="countries"
-                          :id="`${form.actor.actorType}.country`"
-                          v-model="form.actor.country"
-                          tag-view
-                          v-validate="'required'"
-                          :state   ="[ getValidationClass(`${form.actor.actorType}.country`) ]" 
-                          :name="`${form.actor.actorType}.country`"
-                        />
-                        <field-error-message :error="errors.collect(`${form.actor.actorType}.country`)" :state="validateState(`${form.actor.actorType}.country`)" />
-                      </div>
-                    </div>
-
-                    <div class="col-lg-6" v-if="form.actor.types">
-                      <div class="form-group" :id="`group.${form.actor.actorType}.types`" >
-                        <label  :for="`${form.actor.actorType}.types`">{{ $t(`Type`) }}  </label>
-                        <SCBDSelect
-                          @input="update"
-                          type="orgTypes"
-                          :id="`${form.actor.actorType}.types`"
-                          v-model="form.actor.types"
-                          multi
-                          tag-view
-                          v-validate="'required'"
-                          :state   ="[ getValidationClass(`${form.actor.actorType}.types`) ]"
-                          :name="`${form.actor.actorType}.types`"
-                        />
-                        <field-error-message :error="errors.collect(`${form.actor.actorType}.types`)" :state="validateState(`${form.actor.actorType}.types`)" />
-                      </div>
-                    </div>
-
-                    <div class="col-6" v-if="isOther">
-                      <div class="form-group" :id="`group.${form.actor.actorType}.typeOther`" >
-                        <label  :for="`${form.actor.actorType}.typeOther`">{{ $t(`Other Type`) }} </label>
-                        <input class="form-control"
-                          @input="update"
-                          :id="`${form.actor.actorType}.typeOther`"
-                          type="text"
-                          v-model.trim="form.actor.typeOther[$i18n.locale]"
-                          v-validate="'required|max:140'"
-                          :class   ="[ getValidationClass(`${form.actor.actorType}.typeOther`) ]"
-                          :name="`${form.actor.actorType}.typeOther`"
-                        />
-                        <field-error-message :error="errors.collect(`${form.actor.actorType}.typeOther`)" :state="validateState(`${form.actor.actorType}.typeOther`)" />
-                      </div>
-                    </div>
-
-                  </div>
+              <div class="card">
+                <div class="card-body">
+                  <Action class="mb-3" v-model="form.action" />
                 </div>
-              <!-- Organization code end -->
+              </div>
 
-              <!-- Public code -->
-                <div v-if="isSelectedType('public') && form.actor">
+              <legend >{{ $t(`Commitment Linkages`) }}</legend>
 
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="form-group" :id="`group.${form.actor.actorType}.name`" >
-                        <label  :for="`${form.actor.actorType}.name`"> {{ $t(`Name of the lead public organization`) }} </label>
-                        <input class="form-control" 
-                          @input      ="update"
-                          :id         ="`${form.actor.actorType}.name`"
-                          type        ="text"
-                          v-model.trim="form.actor.name[$i18n.locale]"
-                          v-validate  ="'required|max:140'"
-                          :class      ="[ getValidationClass(`${form.actor.actorType}.name`) ]" 
-                          :name       ="`${form.actor.actorType}.name`"
-                          />
-                        <field-error-message :error="errors.collect(`${form.actor.actorType}.name`)"/>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-
-                    <div class="col-lg-6">
-                      <div class="form-group" :id="`group.${form.actor.actorType}.url`" >
-                        <label  :for="`${form.actor.actorType}.url`">{{ $t('Website') }} </label>
-                        <input class="form-control" 
-                          @input="update"
-                          :id="`${form.actor.actorType}.url`"
-                          type="url"
-                          v-model.trim="form.actor.url"
-                          v-validate="'required|url'"
-                          :class   ="[ getValidationClass(`${form.actor.actorType}.url`) ]" 
-                          :name="`${form.actor.actorType}.url`"
-                        />
-                        <field-error-message :error="errors.collect(`${form.actor.actorType}.url`)" :state="validateState(`${form.actor.actorType}.url`)" />
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group" :id="`group.${form.actor.actorType}.image`" l>
-                        <label :for="`${form.actor.actorType}.image`"> {{$t(`Logo`)}} </label>
-                          <Links
-                          @input="update"
-                          :id="`${form.actor.actorType}.image`"
-                          v-model="form.actor.image"
-                          :type="['files','links']"
-                          :multi='false'
-                          :name="`${form.actor.actorType}.image`"/>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-6">
-
-                      <div class="form-group" :id="`group.${form.actor.actorType}.country`">
-                        <label  :for="`${form.actor.actorType}.country`">{{ $t(`Country`) }} </label>
-                        <SCBDSelect
-                          @input="update"
-                          type="countries"
-                          :id="`${form.actor.actorType}.country`"
-                          v-model="form.actor.country"
-                          tag-view
-                          v-validate="'required'"
-                          :state   ="[ getValidationClass(`${form.actor.actorType}.country`) ]" 
-                          :name="`${form.actor.actorType}.country`"
-                        />
-                        <field-error-message :error="errors.collect(`${form.actor.actorType}.country`)" :state="validateState(`${form.actor.actorType}.country`)" />
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group" :id="`group.${form.actor.actorType}.types`" >
-                        <label  :for="`${form.actor.actorType}.types`">{{ $t(`Type`) }}  </label>
-                        <SCBDSelect
-                          @input="update"
-                          type="govTypes"
-                          :id="`${form.actor.actorType}.types`"
-                          v-model="form.actor.types"
-                          multi
-                          tag-view
-                          v-validate=""
-                          :state   ="[ getValidationClass($t(`${form.actor.actorType}.types`)) ]"
-                          :name="$t(`${form.actor.actorType}.types`)"
-                        />
-                        <field-error-message :error="errors.collect($t(`${form.actor.actorType}.types`))" :state="validateState($t(`${form.actor.actorType}.types`))" />
-                      </div>
-                    </div>
-
-                    <div class="col-6" v-if="isOther">
-                      <div class="form-group" :id="`group.${form.actor.actorType}.typeOther`" >
-                        <label  :for="`${form.actor.actorType}.typeOther`">{{ $t(`Other Type`) }} </label>
-                        <input class="form-control"
-                          @input="update"
-                          :id="`${form.actor.actorType}.typeOther`"
-                          type="text"
-                          v-model.trim="form.actor.typeOther[$i18n.locale]"
-                          v-validate="'required|max:140'"
-                          :class   ="[ getValidationClass(`${form.actor.actorType}.typeOther`) ]"
-                          :name="`${form.actor.actorType}.typeOther`"
-                        />
-                        <field-error-message :error="errors.collect(`${form.actor.actorType}.typeOther`)" :state="validateState(`${form.actor.actorType}.typeOther`)" />
-                      </div>
-                    </div>
-
-                  </div>
-                </div> 
-              <!-- Public code end -->
-
-              <!-- Person code -->
-                 <div v-if="isSelectedType('person') && form.actor">
-                  <div class="row" v-if="me.isAuthenticated">
-                    <div class="col-lg-12">
-
-                      <div  class="form-group" :id="`group.${form.actor.actorType}.name`" >
-                          <div class="form-check-inline">
-                            <input
-                              v-model="form.input.useAccount"
-                              :value="true"
-                              type="checkbox"
-                              id="`RadioInline`"
-                              name="RadioInline`"
-                              class="form-check-input"
-                              v-on:change="useAccountToggle()"
-                            >
-                            <label class="form-check-label align-text-bottom" for="`RadioInline`" >{{$t('Use your SCBD account profile data?')}}</label>
-                          </div>
-                        <hr>
-                      </div>
-                      
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-9">
-                          
-                      <div class="form-group" :id="`group.${form.actor.actorType}.name`" >
-                        <label  :for="`${form.actor.actorType}.name`"> {{ $t(`Name`) }} </label>
-                        <input class="form-control" 
-                          @input      ="update"
-                          :id         ="`${form.actor.actorType}.name`"
-                          type        ="text"
-                          v-model.trim="form.actor.name[$i18n.locale]"
-                          v-validate  ="'required|max:140'"
-                          :class      ="[ getValidationClass(`${form.actor.actorType}.name`) ]"
-                          :name       ="`${form.actor.actorType}.name`"
-                          />
-                        <FieldErrorMessage :error="errors.collect(`${form.actor.actorType}.name`)"/>
-                      </div>
-
-                    </div>
-
-                    <div class="col-lg-3">
-
-                      <div class="form-group" :id="`group.${form.actor.actorType}.country`">
-                        <label  :for="`${form.actor.actorType}.country`">{{ $t(`Country`) }} </label>
-                        <SCBDSelect
-                          @input="update"
-                          type="countries"
-                          :id="`${form.actor.actorType}.country`"
-                          v-model="form.actor.country"
-                          tag-view
-                          v-validate="'required'"
-                          :state   ="[ getValidationClass(`${form.actor.actorType}.country`) ]" 
-                          :name="`${form.actor.actorType}.country`"
-
-                        />
-                        <field-error-message :error="errors.collect(`${form.actor.actorType}.country`)" :state="validateState(`${form.actor.actorType}.country`)" />
-                      </div>
-
-                    </div>
-
-                    <div class="col-lg-12">
-
-                      <div class="form-group" :id="`group.${form.actor.actorType}.email`" >
-                        <label  :for="`${form.actor.actorType}.email`"> {{ $t(`Email`) }} </label>
-                        <input class="form-control" 
-                          @input      ="update"
-                          :id         ="`${form.actor.actorType}.email`"
-                          type        ="text"
-                          v-model.trim="form.actor.email"
-                          v-validate="'email|required'"
-                          :class   ="[ getValidationClass(`${form.actor.actorType}.email`) ]"
-                          :name       ="`${form.actor.actorType}.email`"
-                          />
-                        <FieldErrorMessage :error="errors.collect(`${form.actor.actorType}.email`)"/>
-                      </div>
-                    </div>
-                  </div>
+              <div class="card">
+                <div class="card-body">
+                  <ActionDetailsRequired class="mb-3" v-model="form.actionDetails" />
                 </div>
-              <!-- Person code end -->
+              </div>
+
+              <Contact v-if="config.contacts" class="mb-3" v-model="form.contacts[0]"/>
+
+              <div  class="row" v-if="config.mailingList">
+                <div class="col-lg-12">
+                      <div class="form-check-inline">
+                        <input
+                          v-model="input.subscription"
+                          :value="false"
+                          type="checkbox"
+                          id="action.mailingList"
+                          name="mailingList"
+                          class="form-check-input"
+                          v-on:change="toggleSubscription()"
+                        />
+                        <label class="form-check-label align-text-bottom" for="action.mailingList" >{{$t('Join our mailing list and receive updates on the Action Agenda.')}}</label>
+                      </div>
+                  <hr/>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <section v-if="actionComplete">
+            <legend>{{$t('Optional Information')}} - <a href="#ss" class="title-link">{{$t('Skip and')}}  <button class="btn btn-primary" type="submit" variant="primary">{{$t('Submit')}}</button></a></legend>
+            <div class="card" v-if="actionComplete">
+              <div class="card-body"> 
+
+                <ActionDetails class="mb-3" v-if="actionComplete" v-model="form.actionDetails" :options="config.actionDetails"/>
+                <Partners v-if="config.partners" v-model="form.partners" :label="$t('Partners')"/>
 
               </div>
             </div>
-          </div>
-<!-- Actor line ends -->
-
-<!-- Action line starts -->
-
-  <legend >{{ $t(`Commitment`) }}</legend>
-
-  <div class="card">
-  <div class="card-body">
-  <div class="row">
-
-    <div class="col-12">
-      <div class="form-group" id="group.form.action.name">
-        <label  for="form.action.name"> {{ $t(`Name`) }} </label>
-        <input class="form-control" 
-          @input      ="update"
-          id          ="form.action.name[$i18n.locale]"
-          type        ="text"
-          v-model.trim="form.action.name[$i18n.locale]"
-          v-validate  ="'required|max:140'"
-          :class      ="[ getValidationClass(`form.action.name`) ]"
-          :name       ="`form.action.name`"
-          />
-        <field-error-message :error="errors.collect('form.action.name')"/>
-      </div>
-    </div>
-
-    <div class="col-12">
-      <div class="form-group" :id="`group.form.action.description`">
-        <label :for="`form.action.description`"> {{ $t(`Description`) }} </label>
-        <textarea
-            class="form-control"
-            id="form.action.description"
-            @input="update"
-            v-model="form.action.description[$i18n.locale]"
-            :rows="3"
-            v-validate="'required|max:1000'"
-            :class="[ getValidationClass(`form.action.description`) ]"
-            :name="`form.action.description`"
-        />
-        <field-error-message :error="errors.collect(`form.action.description`)" />
-      </div>
-
-    </div>
-    
-    <div class="col-12">
-      <div class="form-group" id="group.form.action.attachments">
-        <label :for="`form.action.attachments`"> {{ $t(`Attachment (s)`) }} </label>
-        <div class="col-12 mb-3" v-for="item in form.action.attachments" v-bind:key="item.url">
-        <a :href="item.url" target="_blank" rel="noopener"> <Icon name="file"/> {{item.name[$i18n.locale]}} </a>
-        </div>
-        <Links  @input="update" id="form.action.attachments" v-model="form.action.attachments" :type="[ 'files','links' ]" multi name="attachments"/>
-      </div>
-    </div> 
-    
-    <div class="col-lg-3" v-if="form.action.startDate">
-      <div class="form-group" id="group.form.action.startDate">
-        <label  for="form.action.startDate"> {{ $t(`Start Date`) }} </label>
-        <input class="form-control" 
-          @input      ="update"
-          id          ="form.action.startDate"
-          type        ="date"
-          v-model.trim="form.action.startDate"
-          v-validate  ="'required'"
-          :class      ="[ getValidationClass(`form.action.startDate`) ]"
-          :name       ="`form.action.startDate`"
-          />
-        <field-error-message :error="errors.collect('form.action.startDate')"/>
-      </div>
-    </div>
-
-    <div class="col-lg-3" v-if="form.action.endDate">
-      <div class="form-group" id="group.form.action.endDate">
-        <label  for="form.action.endDate"> {{ $t(`End Date`) }} </label>
-        <input class="form-control" 
-          @input      ="update"
-          id          ="form.action.endDate"
-          type        ="date"
-          v-model.trim="form.action.endDate"
-          :class      ="[ getValidationClass(`form.action.endDate`) ]"
-          :name       ="`form.action.endDate`"
-          />
-        <field-error-message :error="errors.collect('form.action.endDate')"/>
-      </div>
-    </div> 
-
-  </div>
-  </div>
-  </div>
-
-<!-- Action line ends -->
-
-<!-- ActionDetails line starts -->
-  <legend >{{ $t(`Commitment Linkages`) }}</legend>
-    <div class="card">
-    <div class="card-body">
-    <div class="row">
-    <div class="col-lg-6" v-if="form.actionDetails.actionCategories">
-
-        <div class="form-group" id="group.form.actionDetails.actionCategories" >
-          <label for="form.actionDetails.actionCategories"> {{ $t(`Action Themes (s)`) }} </label>
-          <SCBDSelect
-            @input="update"
-            type="actionCategories"
-            id="form.actionDetails.actionCategories"
-            v-model="form.actionDetails.actionCategories"
-            multi
-            tag-view
-            :state="validateState(`form.actionDetails.actionCategories`,form.actionDetails.actionCategories)"
-            :name="'form.actionDetails.actionCategories'"
-            v-validate="'required'"
-            />
-          <field-error-message :error="errors.collect(`form.actionDetails.actionCategories`)"/>
-        </div>
-
-      </div>
-
-     <div class="col-lg-6" v-if="form.actionDetails.operationalAreas">
-        <div class="form-group" id="group.form.actionDetails.operationalAreas">
-          <label for="form.actionDetails.operationalAreas"> {{ $t(`Geographic Area (s)`) }} </label>
-          <SCBDSelect
-            type="geoLocations"
-            id="form.actionDetails.operationalAreas"
-            v-model="form.actionDetails.operationalAreas"
-            multi
-            tag-view
-            :state="validateState(`form.actionDetails.operationalAreas`,form.actionDetails.operationalAreas)"
-            :name="`form.actionDetails.operationalAreas`"
-            v-validate="'required'"
-          />
-          <field-error-message :error="errors.collect(`form.actionDetails.operationalAreas`)"/>
-        </div>
-      </div> 
-
-    </div>
-
-    <div class="row" >
-      <div class="col-lg-6" v-if="form.actionDetails.aichiTargets">
-
-        <div class="form-group" id="group.form.actionDetails.aichiTargets">
-          <label for="form.actionDetails.aichiTargets"> {{ $t(`Aichi Biodiversity Target (s)`) }} </label>
-          <SCBDSelect
-            @input="update"
-            type="aichis"
-            id="form.actionDetails.aichiTargets"
-            v-model="form.actionDetails.aichiTargets"
-            multi
-            tag-view
-            :state="validateState(`form.actionDetails.aichiTargets`,form.actionDetails.aichiTargets)"
-            :name="`form.actionDetails.aichiTargets`"
-            v-validate="'required'"
-          />
-          <field-error-message :error="errors.collect(`form.actionDetails.aichiTargets`)"/>
-        </div>
-
-      </div>
-      <div class="col-lg-6" v-if="form.actionDetails.sdgs">
-
-        <div class="form-group" id="group.form.actionDetails.sdgs">
-          <label for="form.actionDetails.sdgs"> {{ $t(`Sustainable Development Goal (s)`) }} </label>
-          <SCBDSelect
-            @input="update"
-              type="sdgs"
-              id="form.actionDetails.sdgs"
-              v-model="form.actionDetails.sdgs"
-              multi
-              tag-view
-              :state="validateState(`form.actionDetails.sdgs`,form.actionDetails.sdgs)"
-              :name="`form.actionDetails.sdgs`"
-              v-validate="'required'"
-          />
-          <field-error-message :error="errors.collect(`form.actionDetails.sdgs`)"/>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-12" v-if="form.actionDetails.thematicAreas">
-
-        <div class="form-group" id="group.form.actionDetails.thematicAreas">
-          <label for="form.actionDetails.thematicAreas"> {{ $t(`Thematic Areas (s)`) }} </label>
-          <SCBDSelect
-            type="subjects"
-            id="form.actionDetails.subjects"
-            v-model="form.actionDetails.thematicAreas"
-            multi
-            tag-view
-            :state="validateState(`form.actionDetails.thematicAreas`,form.actionDetails.thematicAreas)"
-            :name="`form.actionDetails.thematicAreas`"
-            />
-          <field-error-message :error="errors.collect(`form.actionDetails.thematicAreas`)"/>
-        </div>
-
-      </div>
-    </div>
-
-   <div class="row" v-if="form.actionDetails.progressMeasured">
-      <div class="col">
-        <div class="form-group" id="group.form.actionDetails.progressMeasured">
-          <label for="form.actionDetails.progressMeasured"> {{ $t(`Progress tracking`) }} </label>
-          <textarea
-            @input="update"
-            id="form.actionDetails.progressMeasured"
-            v-model="form.actionDetails.progressMeasured[$i18n.locale]"
-            v-validate="'max:1000'"
-            class="form-control" 
-            :class="[ getValidationClass(`form.action.progressMeasured`) ]" 
-            :rows="3"
-            :name="`form.actionDetails.progressMeasured`"
-            :placeholder="$t(`Describe how you measure progress. Provide a link if relevant.`)"
-          />
-          <field-error-message :error="errors.collect(`form.actionDetails.progressMeasured`)"/>
-        </div>
-      </div>
-    </div> 
-
-    </div>
-    </div> 
-<!-- ActionDetails line ends -->
-
-
-<!-- Contact line starts -->
-    <legend>{{ $t('Contacts') }}  </legend>
-    <div class="card" >
-      <div class="card-body">
-
-        <div class="row" v-if="me.isAuthenticated">
-          <div class="col-lg-12">
-
-
-            <div  class="form-group" :id="`group.form.contact.useAccount`" >
-                <div class="form-check-inline">
-                  <input
-                    v-model="input.useAccount"
-                    :value="true"
-                    type="checkbox"
-                    id="form.contact.useAccount"
-                    :name="'form.contact.useAccount'"
-                    class="form-check-input"
-                    v-on:change="useAccountToggle()"
-                  >
-                  <label class="form-check-label align-text-bottom" for="form.contact.useAccount" >{{'form.contact.useAccount'}}</label>
-                </div>
-              <hr>
-            </div>
-            
-          </div>
-        </div>
-
-        <div class="row" v-if="me.isAuthenticated">
-          <div class="col-lg-6">
-            
-            <div class="form-group" id="group.form.contact.name">
-              <label  for="form.contact.name"> {{ $t(`Name`) }} </label>
-              <input class="form-control" 
-                @input      ="update"
-                id          ="form.contact.name"
-                type        ="text"
-                v-model.trim="form.contact.name[$i18n.locale]"
-                v-validate  ="'required|max:140'"
-                :class      ="[ getValidationClass(`form.contact.name`) ]" 
-                :name       ="`form.contact.name`"
-                />
-              <field-error-message :error="errors.collect(`form.contact.name`)"/>
-            </div>
-
-          </div>
-
-          <div class="col-lg-6">
-
-            <div class="form-group" id="group.form.contact.email" >
-              <label  for="form.contact.email"> {{ $t(`Email`) }} </label>
-              <input class="form-control" 
-                @input      ="update"
-                id          ="form.contact.email"
-                type        ="text"
-                v-model.trim="form.contact.email"
-                v-validate  ="'email|required'"
-                :class      ="[ getValidationClass(`form.contact.email`) ]" 
-                :name       ="`form.contact.email`"
-              />
-    
-              <field-error-message :error="errors.collect(`form.contact.email`)"/>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-<!-- Contact line ends -->
+          </section>
 
           <div id="ss" class="text-right mb-3">
             <!-- :disabled="!this.userLoaded" -->
@@ -617,114 +74,80 @@
 </template>
 
 <script>
-import   i18n                 from './locales/index.js'
-import   Vue                  from 'vue'
-import   Icons                from '@action-agenda/icons'
-import   axios                from 'axios'
-import   consola              from 'consola'
-import   FormMixin            from './components/form-mixin.js'
-import   getDefaultOptions    from './default-options.js'
-import   SCBDSelect           from './components/controls/SCBDSelect.vue'
-import   Links                from './components/controls/Links/index.vue'
-import   HumanParser          from 'humanparser'
-
-import { camelCase          } from 'change-case'
+import i18n from './locales/index.js'
+import Vue        from 'vue'
+import Icons      from '@action-agenda/icons'
+import axios      from 'axios'
+import consola    from 'consola'
+import {camelCase} from 'change-case'
 import { initializeApiStore } from '@action-agenda/cached-apis'
-
+import FormMixin from './components/form-mixin.js'
+import getDefaultOptions from './default-options.js'
 //scbd controls
-import   FormFeedback            from './components/FeedbackList/index.vue'
-import   Partners                from './components/Partners.vue'
-import   getLocale               from './components/locale.js'
-import { getAction             } from './components/api'
+import ActorSelect   from './components/controls/ActorSelect/index.vue'
+import FormFeedback  from './components/FeedbackList/index.vue'
+import Contact       from './components/Contact.vue'
+import Action        from './components/Action.vue'
+import ActionDetails from './components/ActionDetails.vue'
+import ActionDetailsRequired from './components/ActionDetailsRequired.vue'
+import Partners      from './components/Partners.vue'
+import getLocale from './components/locale.js'
 
 export default {
   name      : 'AAForm',
   mixins    : [ FormMixin ],
   props     : { 
-                options : { type: Object},
-                value   : { type: Object, required: true }
+                options : { type: Object, required: true}
               },
-  components: { FormFeedback, Partners, SCBDSelect, Links, Icons,
+  components: { FormFeedback, ActorSelect, Action, ActionDetails, ActionDetailsRequired, Contact, Partners, Icons,
                 DebugForm: () => import('./components/DebugForm.vue') //async load of component ... only if needed
               },
-  methods   : { loadExistingAction, addError, deleteFeedback, loadCaptcha, save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup, updateContacts, validate, isSelectedType, showImage, deleteLogo, useAccount, beforeUpdate, useAccountToggle, notUseAccount, parseName },
-  computed  : { config, actionComplete, opts: config, isOther },
+  methods   : { addError, deleteFeedback, loadCaptcha, save, getRecaptchaToken, onSubmit, toggleSubscription, toggleAccountSignup, updateContacts, validate },
+  computed  : { config, actionComplete, opts: config },
   data, 
   created,
   mounted,
   i18n
 }
+
+  function data (){
+
+    const formType = (this.options || {}).formType || ((this.$route || {}).params || {}).type || 'organization'
+
+    return {
+      actorType : formType,
+      DEBUG     : true,
+      error     : {},
+      feedback  : {
+                    actorType       : formType,
+                    publishRequested: false,
+                    error           : ''
+                  },
+      input     : { subscription:true },
+      form      : {
+                    actor         : {},
+                    action        : {},
+                    actionDetails : {
+                      aichiTargets     : [],
+                      sdgs             : [],
+                      actionCategories : [],
+                      operationalAreas : [],
+                      progressMeasured : { },
+                      thematicAreas    : [],
+                    },
+                    partners      : [{ name: { } }],
+                    contacts      : [  ],
+                    subscription  : {},
+                    accountSignup : new Date()
+                  }
+    }
+}
+
 function created(){ initializeApiStore() }
 
 async function mounted(){
   this.toggleSubscription()
   await this.loadCaptcha()
-  await this.loadExistingAction()
-}
-
-function data (){
-  const formType = (this.options || {}).formType || ((this.$route || {}).params || {}).type || 'organization'
-
-  return {
-    actorType : formType,
-    DEBUG     : true,
-    error     : {},
-    feedback  : {
-                  actorType       : formType,
-                  publishRequested: false,
-                  error           : ''
-                },
-    input     : { subscription:true, type: null, person: {}, organization: {}, party: {}, public: {}, useAccountInit: false, useAccount: false  },
-    values    : this.value,
-    form      : {
-                  actor         : {
-                      salutation : { [this.$i18n.locale]: '' },
-                      firstName  : { [this.$i18n.locale]: '' },
-                      middleName : { [this.$i18n.locale]: '' },
-                      lastName   : { [this.$i18n.locale]: '' },
-                      suffix     : { [this.$i18n.locale]: '' },
-                      name       : { [this.$i18n.locale]: '' },
-                      email      : '',        
-                      name     : {  [this.$i18n.locale]: ''  },
-                      url      : '',
-                      image    : { url: '' },
-                      types    : [],
-                      country  : '',
-                      typeOther: { },
-                      actorType: formType
-                  },
-                  orgLogo : '', //temp holder for uploaded image
-                  action        : {
-                      name        : { [this.$i18n.locale]: '' },
-                      description : { [this.$i18n.locale]: '' },
-                      attachments : [],
-                      startDate   : { [Date]: ''},
-                      endDate     : { [Date]: ''}
-                    },
-                  actionDetails   : {
-                      aichiTargets     : [],
-                      sdgs             : [],
-                      progressMeasured : { [this.$i18n.locale]:'' },
-                      thematicAreas    : [],
-                      operationalAreas : [],
-                      actionCategories : []
-                  },
-                  partners      : [{ name: { } }],
-                  contact: {
-                    name       : { [this.$i18n.locale]: '' },
-                    email      : '',
-                    actorType  : 'person'
-                  },
-                  subscription  : {},
-                  accountSignup : new Date()
-                }
-  }
-}
-
-async function loadExistingAction(){
-  const formData = await getAction(this.opts)
-
-  this.form = formData? formData : this.form
 }
 
 async function loadCaptcha (){
@@ -738,105 +161,6 @@ async function loadCaptcha (){
   })
 }
 
-function isSelectedType(type) {
-  if(!this.form || !this.form.actor) return false
-
-  if (this.form.actor.actorType === type) return true;
-
-  return false;
-}
-
-// actor function
-function isOther(){
-  if (!this.form.actor.types || !this.form.actor.types.length) return false
-
-  if(this.form.actor.types.includes('ORG-TYPE-OTHER'))
-      return true
-    
-  return false
-}
-
-function deleteLogo(){
-  this.form.orgLogo = ''
-  this.form.actor.organization.image = ''
-  this.form.$refs.logo.reset()
-}
-
-function showImage({ srcElement }){
-  if (srcElement.files && srcElement.files[0]){
-    const reader = new FileReader()
-    const self   = this
-
-    reader.onload = (e) => {
-      self.orgLogo = e.target.result
-      self.$forceUpdate()
-    }
-    reader.readAsDataURL(srcElement.files[0])
-  }
-}
-
-  function useAccount() {
-    this.$set(this.form.actor, 'name', { en: this.me.name })
-    this.$set(this.form.actor, 'email', this.me.email)
-    this.$set(this.form.actor, 'country', {identifier:this.me.country})
-
-    this.$set(this.form.contact, 'name', { en: this.me.name })
-    this.$set(this.form.contact, 'email', this.me.email)
-
-    this.form.input.useAccountInit = true
-
-  }
-
-  function beforeUpdate() {
-    if (!this.input.useAccountInit && this.me.isAuthenticated) this.useAccountToggle(true)
-  }
-
-  function useAccountToggle(value){
-    if(value != undefined) this.input.useAccount = value
-
-      if(!this.input.useAccount)
-        this.notUseAccount()
-      else
-        this.useAccount()
-
-      this.update()
-  }
-
-  function notUseAccount() {
-    let person = this.form.actor
-    let personC = this.form.contact
-    
-
-    person.country        = ''
-    person.email          = ''
-    person.salutation .en = ''
-    person.firstName  .en = ''
-    person.middleName .en = ''
-    person.lastName   .en = ''
-    person.suffix     .en = ''
-    person.name       .en = ''
-
-    personC.name      .en = ''
-    personC.email         = ''
-
-    this.$children.forEach(this.validateComponent)
-  }
-
-  function parseName() {
-
-    let person = this.form.actor
-    if(!person.name || !person.name.en) return
-
-    let parsedName = HumanParser.parseName(person.name.en)
-
-    person.salutation.en = parsedName.salutation
-    person.firstName .en = parsedName.firstName
-    person.middleName.en = parsedName.middleName
-    person.lastName  .en = parsedName.lastName
-    person.suffix    .en = parsedName.suffix
-  }
-// end actor functions
-
 function actionComplete(){
   const locale   = getLocale()
   const { name, description } = this.form.action
@@ -847,12 +171,13 @@ function actionComplete(){
 }
 
 function updateContacts(){
-  if(this.actorType === 'person') this.form.contact = [this.form.actor]
+  if(this.actorType === 'person') this.form.contacts = [this.form.actor]
 }
 
 function config(){
-console.log('getDefaultOptions(propsOptions)[this.actorType]', getDefaultOptions(this.actorType))
-  return getDefaultOptions(this.actorType)
+  const propsOptions = this.options? this.options[this.actorType] || this.options : {}
+
+  return getDefaultOptions(propsOptions)[this.actorType]
 }
 
 function validate(){
@@ -954,7 +279,7 @@ function addError(e){
 </script>
 
 <style>
-  .logo { max-height: 100px  }  
+  
 </style>
 <style >
   @import url('https://cdn.cbd.int/vue-multiselect@2.1.6/dist/vue-multiselect.min.css');

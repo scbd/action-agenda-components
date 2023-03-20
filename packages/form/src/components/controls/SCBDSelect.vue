@@ -29,8 +29,9 @@
 </template>
 
 <script>
-  import   Multiselect                                from 'vue-multiselect'
-  import { getData     , lookUp, initializeApiStore } from '@action-agenda/cached-apis'
+  import Multiselect    from 'vue-multiselect'
+  import { getData, lookUp } from '@action-agenda/cached-apis'
+
 
   import 'vue-multiselect/dist/vue-multiselect.min.css'
 
@@ -47,10 +48,11 @@
                   placeholder : { type: String, default: ' ' }
                 },
     methods: { update, load, loadModelWatch },
-    data, created
+    data,
+    created
   }
 
-  function data() {
+  function   data() {
     return {
               values   : this.value,
               options  : [],
@@ -60,34 +62,42 @@
   }
 
   async function  created() {
-    await initializeApiStore()
-
     this.options = await this.load()
-    this.$watch('value',loadModelWatch)
+    this.killWatch = this.$watch('value',loadModelWatch)
   }
 
-  async function loadModelWatch(newValue){
-    const lookUpType = this.type === 'geoLocations'? 'all' : this.type
+  async function loadModelWatch(newValue,oldValue){
+    if(!oldValue && newValue){
+      this.values=newValue
+      this.killWatch()
 
-    this.values = await lookUp(lookUpType, newValue)
+      const lookUpType = this.type === 'geoLocations'? 'all' : this.type
+
+      this.values = await lookUp(lookUpType, newValue)
+    }
   }
 
   function update() {
-    if(!this.multi) return this.$emit('input', clean(this.values))
+    let returnValues 
 
-    return this.$emit('input', this.values.map(clean))
+    if(!this.multi)
+      returnValues = clean(this.values)
+    else 
+      returnValues = this.values.map(clean)
+
+    this.$emit('input',returnValues )
   }
 
   function clean(item) {
-    if(item.code) return { code: item.code }
-
+    if(item.code)
+      return { code: item.code}
     return { identifier: item.identifier }
   }
 
-  function load() { return getData(this.type) }
+  function load() {  return getData(this.type) }
 </script>
 
-<style scoped>
+<style  scoped>
   .fix            { padding: 0 0 0 0; background-color: #ddd; border-radius: 5px; border-color: transparent; }
   .fix.is-invalid { border-color: #dc3545; border-width: 1px; border-style: solid; }
   .fix.is-valid   { border-color: #28a745; border-width: 1px; border-style: solid; }

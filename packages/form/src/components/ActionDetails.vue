@@ -28,7 +28,7 @@
           <textarea
             @input="update"
             id="actionDetails.progressMeasured"
-            v-model="actionDetails.progressMeasured[$i18n.locale]"
+            v-model="actionDetails.progressMeasured['en']"
             v-validate="'max:1000'"
             class="form-control" 
             :class      ="[ getValidationClass(`action.progressMeasured`) ]" 

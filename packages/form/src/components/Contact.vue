@@ -36,7 +36,7 @@
                 @input      ="update"
                 id          ="contact.name"
                 type        ="text"
-                v-model.trim="contact.name[$i18n.locale]"
+                v-model.trim="contact.name['en']"
                 v-validate  ="'required|max:140'"
                 :class      ="[ getValidationClass(`contact.name`) ]" 
                 :name       ="`contact.name`"

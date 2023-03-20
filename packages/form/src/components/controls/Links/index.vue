@@ -44,7 +44,7 @@
                 id          ="links.name"
                 ref          ="links.name"
                 type        ="text"
-                v-model.trim="input.name[$i18n.locale]"
+                v-model.trim="input.name['en']"
                 v-validate  ="'required|max:140'"
                 :class      ="[ getValidationClass(`name.label`) ]"
                 :name       ="`name.label`"

@@ -13,9 +13,9 @@
                 :ref        ="`partner${index}`"
                 :id         ="`partner${index}`"
                 type        ="text"
-                v-model     ="partners[index].name[$i18n.locale]"
+                v-model     ="partners[index].name['en']"
                 v-validate  ="'required|max:140'"
-                :state      ="validateState(`partner${index}`,partners[index].name[$i18n.locale])"
+                :state      ="validateState(`partner${index}`,partners[index].name['en'])"
                 :name       ="`partner${index}`"
                 />
               <field-error-message v-if="!isLast(index)" :error="errors.collect(`partner${index}`)" />

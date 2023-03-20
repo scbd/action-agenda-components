@@ -32,7 +32,7 @@
             @input      ="update"
             :id         ="`${actor.actorType}.name`"
             type        ="text"
-            v-model.trim="actor.name[$i18n.locale]"
+            v-model.trim="actor.name['en']"
             v-validate  ="'required|max:140'"
             :class      ="[ getValidationClass(`${actor.actorType}.name`) ]"
             :name       ="`${actor.actorType}.name`"
