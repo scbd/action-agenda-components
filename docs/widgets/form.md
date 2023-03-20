@@ -19,9 +19,9 @@ This component's options can be passed as an attribute on the script tag.
 
 ```html
 
-<script nomodule=""  id="form-legacy" src="https://cdn.cbd.int/@action-agenda/form@1.0.5/dist/widget/index.umd.min.js"></script>
+<script nomodule=""  id="form-legacy" src="https://cdn.cbd.int/@action-agenda/form@1.0.6/dist/widget/index.umd.min.js"></script>
 
-<script  type="module"  id="form" src="https://cdn.cbd.int/@action-agenda/form@1.0.5/dist/widget/index.min.js"></script>
+<script  type="module"  id="form" src="https://cdn.cbd.int/@action-agenda/form@1.0.6/dist/widget/index.min.js"></script>
 
 
 ```
@@ -31,7 +31,7 @@ This component's options can be passed as an attribute on the script tag.
 
 ```html
 
-<script  type="module"  id="form" src="https://cdn.cbd.int/@action-agenda/form@1.0.6/dist/widget/index.min.js"></script>
+<script  type="module"  id="form" src="https://cdn.cbd.int/@action-agenda/form@1.0.5/dist/widget/index.min.js"></script>
 
 
 ```
@@ -41,7 +41,7 @@ This component's options can be passed as an attribute on the script tag.
 
 ```html
 
-<script nomodule=""  id="form-legacy" src="https://cdn.cbd.int/@action-agenda/form@1.0.6/dist/widget/index.umd.min.js"></script>
+<script nomodule=""  id="form-legacy" src="https://cdn.cbd.int/@action-agenda/form@1.0.5/dist/widget/index.umd.min.js"></script>
 
 ```
 </code-block>
