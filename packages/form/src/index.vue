@@ -8,8 +8,8 @@
           <div class="card">
             <div class="card-body">
               <ActorSelect v-if="actorType" class="mb-3"  v-model="form.actor" :type="actorType" @input="updateContacts"/>
-
-              <legend >{{ $t(`Commitment`) }}</legend>
+              
+<!--             <legend >{{ $t(`Commitment`) }}</legend>
 
               <div class="card">
                 <div class="card-body">
@@ -26,7 +26,7 @@
               </div>
 
               <Contact v-if="config.contacts" class="mb-3" v-model="form.contacts[0]"/>
-
+-->
               <div  class="row" v-if="config.mailingList">
                 <div class="col-lg-12">
                       <div class="form-check-inline">
