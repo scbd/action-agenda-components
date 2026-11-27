@@ -1,5 +1,5 @@
 export default {
-  $id            : 'https://cdn.cbd.int/@action-agenda/schema/dist/props/image.mjs',
+  $id            : 'https://cdn.jsdelivr.net/npm/@action-agenda/schema/dist/props/image.mjs',
   $source        : 'http://schema.org/image',
   title          : 'image',
   description    : 'An image of the item. This can be a <a class="localLink" href="https://schema.org/URL">URL</a> or a fully described <a class="localLink" href="https://schema.org/ImageObject">ImageObject</a>.',
@@ -9,9 +9,9 @@ export default {
   additionalItems: false,
   items          : {
     anyOf: [ {
-      $ref: 'https://cdn.cbd.int/@action-agenda/schema/dist/types/URL.mjs'
+      $ref: 'https://cdn.jsdelivr.net/npm/@action-agenda/schema/dist/types/URL.mjs'
     }, {
-      $ref: 'https://cdn.cbd.int/@action-agenda/schema/dist/classes/ImageObject.mjs'
+      $ref: 'https://cdn.jsdelivr.net/npm/@action-agenda/schema/dist/classes/ImageObject.mjs'
     } ]
   }
 }

@@ -1,5 +1,5 @@
 export default {
-  $id                 : 'https://cdn.cbd.int/@action-agenda/schema/dist/classes/DataType.mjs',
+  $id                 : 'https://cdn.jsdelivr.net/npm/@action-agenda/schema/dist/classes/DataType.mjs',
   $source             : 'http://schema.org/DataType',
   title               : 'DataType',
   description         : 'The basic data types such as Integers, Strings, etc.',

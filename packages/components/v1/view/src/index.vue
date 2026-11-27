@@ -146,7 +146,7 @@ function hasDetails(){
 </script>
 
 <style scoped>
-  @import url('https://cdn.cbd.int/@action-agenda/icons/dist/esm/index.min.css');
+  @import url('https://cdn.jsdelivr.net/npm/@action-agenda/icons/dist/esm/index.min.css');
   .card { margin-bottom:2em; }
   .partner { background-color: rgba(0,0,0,.02); }
   .desc { white-space: pre-wrap; }

@@ -153,7 +153,7 @@ function errorCaptured(err){
 </script>
 
 <style scoped>
-  @import url('https://cdn.cbd.int/@action-agenda/icons/dist/esm/index.min.css');
+  @import url('https://cdn.jsdelivr.net/npm/@action-agenda/icons/dist/esm/index.min.css');
 
   #scbd-search { position: relative; width: 100%; }
   .loading{ position: fixed; bottom: 0; left: 50%; background-color: burlywood; }

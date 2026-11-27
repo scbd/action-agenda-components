@@ -5,7 +5,7 @@ const legacy = { umd, cjs }
 const modern = { output: { dir: './dist/browser' } }
 const ssr    = { output: { dir: './dist/esm' } }
 
-const cdnUrl = 'https://cdn.cbd.int'
+const cdnUrl = 'https://cdn.jsdelivr.net/npm'
 
 const  browserEsmPackages = {
   '@houlagins/default-options': `${cdnUrl}/@houlagins/default-options@~1.0.0/dist/browser/index.min.js`,

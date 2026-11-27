@@ -15,7 +15,7 @@ To install as a copy and paste widget. As seen here:  <a href="https://www.cbd.i
 This component's options can be passed as an attribute on the script tag. [See options details](/components/view/#options)
 ```html
 
-<script  type="module" id="pie-chart" source="aichis" src="https://cdn.cbd.int/@action-agenda/pie-chartdist/widget/index.min.js"></script> 
+<script  type="module" id="pie-chart" source="aichis" src="https://cdn.jsdelivr.net/npm/@action-agenda/pie-chartdist/widget/index.min.js"></script> 
 
 ```
 :::
@@ -25,8 +25,8 @@ This component's options can be passed as an attribute on the script tag. [See o
 
 ```html
 
-<script nomodule="" id="pie-chart-legacy" src="https://cdn.cbd.int/@action-agenda/pie-chart/dist/widget/index.umd.min.js"></script>
-<script  type="module" id="pie-chart" src="https://cdn.cbd.int/@action-agenda/pie-chartdist/widget/index.min.js"></script> 
+<script nomodule="" id="pie-chart-legacy" src="https://cdn.jsdelivr.net/npm/@action-agenda/pie-chart/dist/widget/index.umd.min.js"></script>
+<script  type="module" id="pie-chart" src="https://cdn.jsdelivr.net/npm/@action-agenda/pie-chartdist/widget/index.min.js"></script> 
 
 
 ```
@@ -36,7 +36,7 @@ This component's options can be passed as an attribute on the script tag. [See o
 
 ```html
 
-<script  type="module" id="view" src="https://cdn.cbd.int/@action-agenda/pie-chart/dist/widget/index.min.js"></script> 
+<script  type="module" id="view" src="https://cdn.jsdelivr.net/npm/@action-agenda/pie-chart/dist/widget/index.min.js"></script> 
 
 
 ```
@@ -46,7 +46,7 @@ This component's options can be passed as an attribute on the script tag. [See o
 
 ```html
 
-<script nomodule="" id="view-legacy" src="https://cdn.cbd.int/@action-agenda/pie-chart/dist/widget/index.umd.min.js"></script>
+<script nomodule="" id="view-legacy" src="https://cdn.jsdelivr.net/npm/@action-agenda/pie-chart/dist/widget/index.umd.min.js"></script>
 
 ```
 </code-block>

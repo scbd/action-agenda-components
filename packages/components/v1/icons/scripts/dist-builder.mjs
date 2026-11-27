@@ -5,7 +5,7 @@ const legacy = { umd, cjs }
 const modern = true
 const ssr    = true
 
-const cdnUrl = 'https://cdn.cbd.int'
+const cdnUrl = 'https://cdn.jsdelivr.net/npm'
 
 export default {
   legacy, modern, ssr, cdnUrl

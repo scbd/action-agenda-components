@@ -1,4 +1,4 @@
-export const schemaIdRoot  = 'https://cdn.cbd.int/@action-agenda/schema/dist'
+export const schemaIdRoot  = 'https://cdn.jsdelivr.net/npm/@action-agenda/schema/dist'
 export const typesId       = `${schemaIdRoot}/types`
 export const propsId       = `${schemaIdRoot}/props`
 export const classesId     = `${schemaIdRoot}/classes`
