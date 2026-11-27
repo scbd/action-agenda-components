@@ -8,10 +8,10 @@ const   propsData = { options }
 
 const { VUE, VUE_I18N} = dependencyRef
 const selfUrl = 'http://localhost:8089/dist/browser/index.min.js'
-const  SCBD_SSO_AUTH = { url: 'https://cdn.cbd.int/@scbd/sso-vue-plugin-scbd@~1.0.4/dist/browser/index.js', name: 'sso-vue-plugin-scbd' }
+const  SCBD_SSO_AUTH = { url: 'https://cdn.jsdelivr.net/npm/@scbd/sso-vue-plugin-scbd@~1.0.4/dist/browser/index.js', name: 'sso-vue-plugin-scbd' }
 const dependencies      = { all       : [ VUE, VUE_I18N, SCBD_SSO_AUTH ],
                             vuePlugins: [ VUE_I18N, SCBD_SSO_AUTH ],
-                            css       : [ 'https://cdn.cbd.int/@scbd/www-css'] }
+                            css       : [ 'https://cdn.jsdelivr.net/npm/@scbd/www-css'] }
 
 const config            = { version, name: libName, propsData, dependencies, selfUrl }
 

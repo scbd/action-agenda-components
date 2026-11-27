@@ -20,8 +20,8 @@ This component's property 'minVersion' can be passed as an attribute on the scri
 
 ```html
 
-<script nomodule="" id="view-legacy" src="https://cdn.cbd.int/@action-agenda/legacy-notice@~1.0.1/dist/widget/index.umd.min.js"></script>
-<script  type="module" id="view" src="https://cdn.cbd.int/@action-agenda/legacy-notice@~1.0.1/dist/widget/index.min.js"></script> 
+<script nomodule="" id="view-legacy" src="https://cdn.jsdelivr.net/npm/@action-agenda/legacy-notice@~1.0.1/dist/widget/index.umd.min.js"></script>
+<script  type="module" id="view" src="https://cdn.jsdelivr.net/npm/@action-agenda/legacy-notice@~1.0.1/dist/widget/index.min.js"></script> 
 
 
 ```
@@ -31,7 +31,7 @@ This component's property 'minVersion' can be passed as an attribute on the scri
 
 ```html
 
-<script  type="module" id="view" src="https://cdn.cbd.int/@action-agenda/legacy-notice@~1.0.1/dist/widget/index.min.js"></script> 
+<script  type="module" id="view" src="https://cdn.jsdelivr.net/npm/@action-agenda/legacy-notice@~1.0.1/dist/widget/index.min.js"></script> 
 
 
 ```
@@ -41,7 +41,7 @@ This component's property 'minVersion' can be passed as an attribute on the scri
 
 ```html
 
-<script nomodule="" id="view-legacy" src="https://cdn.cbd.int/@action-agenda/legacy-notice@~1.0.1/dist/widget/index.umd.min.js"></script>
+<script nomodule="" id="view-legacy" src="https://cdn.jsdelivr.net/npm/@action-agenda/legacy-notice@~1.0.1/dist/widget/index.umd.min.js"></script>
 
 ```
 </code-block>

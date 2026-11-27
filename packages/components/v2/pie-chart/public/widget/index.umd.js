@@ -109715,7 +109715,7 @@ var dist_esm = __webpack_require__("7e6f");
 var esm_name = "@action-agenda/cached-apis";
 var esm_version = "1.0.7";
 
-const libName     = esm_name.replace('https://cdn.cbd.int/', ''); // replace is a hack alack for browser build
+const libName     = esm_name.replace('https://cdn.jsdelivr.net/npm/', ''); // replace is a hack alack for browser build
 
 const esm_expiry      = 30;
 
@@ -112495,7 +112495,7 @@ const { VUE, VUE_I18N } = dependencyRef.legacy
 
 const widget_legacy_dependencies      = { all       : [ VUE, VUE_I18N ],
                             vuePlugins: [ VUE_I18N ],
-                            css       : [ 'https://cdn.cbd.int/@scbd/www-css' ] }
+                            css       : [ 'https://cdn.jsdelivr.net/npm/@scbd/www-css' ] }
 
 const widget_legacy_config            = { version: package_0["b" /* version */], name: widget_legacy_libName, propsData, dependencies: widget_legacy_dependencies }
 

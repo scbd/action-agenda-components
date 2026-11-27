@@ -13,7 +13,7 @@ const { VUE, VUE_I18N } = dependencyRef.legacy
 
 const dependencies      = { all       : [ VUE, VUE_I18N, SSO ],
                             vuePlugins: [ VUE_I18N, SSO ],
-                            css       : [ 'https://cdn.cbd.int/@scbd/www-css' ] }
+                            css       : [ 'https://cdn.jsdelivr.net/npm/@scbd/www-css' ] }
 
 const config            = { version, name: libName, propsData, dependencies }
 

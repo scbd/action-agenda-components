@@ -12,8 +12,8 @@
 */
 
 import { buildWidget, dependencyRef } from 'http://localhost:8089/dist/widget/dist/browser/index.min.js';
-import { getDefaultOptionsFunction, setDefaultOptions } from 'https://cdn.cbd.int/@houlagins/default-options@~1.0.0/dist/browser/index.js';
-import { getUnLocale } from 'https://cdn.cbd.int/@houlagins/locale@~1.0.0/dist/browser/index.js';
+import { getDefaultOptionsFunction, setDefaultOptions } from 'https://cdn.jsdelivr.net/npm/@houlagins/default-options@~1.0.0/dist/browser/index.js';
+import { getUnLocale } from 'https://cdn.jsdelivr.net/npm/@houlagins/locale@~1.0.0/dist/browser/index.js';
 
 var name = "@action-agenda/pie-chart";
 var version = "0.0.3";
@@ -131,11 +131,11 @@ const selfUrl = 'http://localhost:8089/dist/browser/index.js';
 
 const { VUE, VUE_I18N } = dependencyRef;
 
-const  SCBD_SSO_AUTH = { url: `https://cdn.cbd.int/@scbd/sso-vue-plugin-scbd@1.0.4/dist/browser/index.js`, name: 'sso-vue-plugin-scbd' };
+const  SCBD_SSO_AUTH = { url: `https://cdn.jsdelivr.net/npm/@scbd/sso-vue-plugin-scbd@1.0.4/dist/browser/index.js`, name: 'sso-vue-plugin-scbd' };
 
 const dependencies      = { all       : [ VUE, VUE_I18N, SCBD_SSO_AUTH ],
                             vuePlugins: [ VUE_I18N, SCBD_SSO_AUTH ],
-                            css       : [ 'https://cdn.cbd.int/@scbd/www-css' ] };
+                            css       : [ 'https://cdn.jsdelivr.net/npm/@scbd/www-css' ] };
 
 const config$1            = { version, name: libName, propsData, dependencies, selfUrl };
 

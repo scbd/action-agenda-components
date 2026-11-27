@@ -1,7 +1,7 @@
 import { setDefaultOptions, getDefaultOptionsFunction } from '@houlagins/default-options'
 import { name, version                                } from '../package.json'
 
-const libName     = name.replace('https://cdn.cbd.int/', '') // replace is a hack alack for browser build
+const libName     = name.replace('https://cdn.jsdelivr.net/npm/', '') // replace is a hack alack for browser build
 
 const expiry      = 30
 

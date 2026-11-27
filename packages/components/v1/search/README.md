@@ -34,8 +34,8 @@ This component's options can be passed as an attribute on the script tag. [See o
 
 ```html
 
-<script nomodule="" id="search-legacy" src="https://cdn.cbd.int/@action-agenda/search@~1.0.0/dist/widget/index.umd.min.js"></script>
-<script  type="module" id="search" src="https://cdn.cbd.int/@action-agenda/search@~1.0.0/dist/widget/index.min.js"></script> 
+<script nomodule="" id="search-legacy" src="https://cdn.jsdelivr.net/npm/@action-agenda/search@~1.0.0/dist/widget/index.umd.min.js"></script>
+<script  type="module" id="search" src="https://cdn.jsdelivr.net/npm/@action-agenda/search@~1.0.0/dist/widget/index.min.js"></script> 
 
 ```
 </code-block>
@@ -44,7 +44,7 @@ This component's options can be passed as an attribute on the script tag. [See o
 
 ```html
 
-<script  type="module" id="view" src="https://cdn.cbd.int/@action-agenda/search@~1.0.0/dist/widget/index.min.js"></script> 
+<script  type="module" id="view" src="https://cdn.jsdelivr.net/npm/@action-agenda/search@~1.0.0/dist/widget/index.min.js"></script> 
 
 
 ```
@@ -54,7 +54,7 @@ This component's options can be passed as an attribute on the script tag. [See o
 
 ```html
 
-<script nomodule="" id="view-legacy" src="https://cdn.cbd.int/@action-agenda/search@~1.0.0/dist/widget/index.umd.min.js"></script>
+<script nomodule="" id="view-legacy" src="https://cdn.jsdelivr.net/npm/@action-agenda/search@~1.0.0/dist/widget/index.umd.min.js"></script>
 
 ```
 </code-block>

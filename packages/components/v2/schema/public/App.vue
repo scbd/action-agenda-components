@@ -30,7 +30,7 @@ export default {
     // }
     ajv.addSchema(await getJsonSchema())
     console.log(ajv)
-    const validate = ajv.compile(ajv._schemas['https://cdn.cbd.int/@action-agenda/schema/dist/classes/Thing.mjs'].schema)
+    const validate = ajv.compile(ajv._schemas['https://cdn.jsdelivr.net/npm/@action-agenda/schema/dist/classes/Thing.mjs'].schema)
     console.log(validate({}))
     console.log(validate.errors)
 
